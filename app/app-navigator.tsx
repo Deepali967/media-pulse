@@ -7,6 +7,9 @@ import ExistingAccount from './components/login/comonents/existing/existing';
 import Status from './components/login/comonents/status/status';
 import Apply from './components/login/comonents/apply/apply';
 
+import Creator from './components/creator/components/creator';
+
+
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
@@ -27,6 +30,7 @@ const AppNavigator = () => {
       <Stack.Screen name="Status" component={Status} />
       <Stack.Screen name="Existing" component={ExistingAccount} />
       <Stack.Screen name="Apply" component={Apply} />
+      <Stack.Screen name="Creator" component={Creator} />
     </Stack.Navigator>
   );
 };

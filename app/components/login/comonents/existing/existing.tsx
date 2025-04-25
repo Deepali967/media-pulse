@@ -98,7 +98,7 @@ const ExistingAccount = () => {
                     </View>
 
                     <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>verify</Text>
+                        <Text style={styles.buttonText} onPress={() => navigation.navigate('Creator' as never) }>verify</Text>
                     </TouchableOpacity>
                 </>
             )}
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
+        overflowY: 'auto',
     },
     backButton: {
         position: 'absolute',
