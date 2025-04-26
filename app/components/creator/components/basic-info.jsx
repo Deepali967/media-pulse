@@ -15,7 +15,7 @@ const BasicInfo = () => {
       {/* Image Upload Section */}
       <View style={styles.imageContainer}>
         <Image 
-          source={{ uri: 'https://via.placeholder.com/150' }} 
+          source={require("../../../../assets/images/creator/sample.svg")} 
           style={styles.image}
         />
         <TouchableOpacity style={styles.replaceButton}>
@@ -62,7 +62,7 @@ const BasicInfo = () => {
       {/* Socials */}
       <View style={styles.socialContainer}>
         <View style={styles.socialRow}>
-          <Text style={styles.socialIcon}>📸</Text>
+          <Image source={require('../../../../assets/images/creator/instagram.svg')} style={styles.socialIcon} />
           <TextInput
             style={styles.socialInput}
             value={instagram}
@@ -71,7 +71,7 @@ const BasicInfo = () => {
         </View>
 
         <View style={styles.socialRow}>
-          <Text style={styles.socialIcon}>▶️</Text>
+          <Image source={require('../../../../assets/images/creator/youtube.svg')} style={styles.socialIcon} />
           <TextInput
             style={styles.socialInput}
             value={youtube}
@@ -93,11 +93,14 @@ const styles = StyleSheet.create({
   container: { 
     padding: 20, 
     paddingBottom: 40, 
-    backgroundColor: '#fff' 
+    backgroundColor: '#fff',
+    overflowY: 'scroll',
+    height: '100%',
+    width: '100%',
   },
   
-  imageContainer: { alignItems: 'center', marginBottom: 20 },
-  image: { width: 150, height: 200, borderRadius: 10 },
+  imageContainer: { alignItems: 'center', marginBottom: 20, width:'100%' },
+  image: { width: 250, height: 200, borderRadius: 10 },
   replaceButton: { marginTop: 10, paddingVertical: 5, paddingHorizontal: 15, backgroundColor: '#eee', borderRadius: 5 },
   replaceButtonText: { color: '#333' },
 

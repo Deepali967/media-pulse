@@ -63,7 +63,7 @@ const Creator = () => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
-  tabContainer: { flexDirection: 'row', justifyContent: 'space-around', paddingTop: 50, backgroundColor: '#f0f0f0' },
+  tabContainer: { flexDirection: 'row', justifyContent: 'space-around', backgroundColor: '#f0f0f0' },
   tabButton: { paddingVertical: 10, paddingHorizontal: 20 },
   tabText: { fontSize: 16, color: '#555' },
   activeTab: { borderBottomWidth: 2, borderBottomColor: '#000' },
