@@ -33,7 +33,7 @@ const AppNavigator = () => {
     if (isAuthenticated && profileCompleted) {
       setInitialScreen('DashboardScreen');
     } else if (!isAuthenticated) {
-      setInitialScreen('Login');
+      setInitialScreen('Splash');
     } else if (isAuthenticated && !profileCompleted) {
       setInitialScreen('Creator');
     }

@@ -35,24 +35,27 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     overlay: {
-        width: '100%',
+        flex: 1, // Allows the overlay to take up the full available space
+        alignItems: 'center', // Centers content horizontally
+        justifyContent: 'flex-end', // Positions content at the bottom
         position: 'absolute',
-        bottom: 20,
+        width: '100%',
+        height: '100%', // Ensures the overlay covers the entire screen
         left: 0,
         right: 0,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center', 
+        paddingBottom: 20, // Adds spacing from the bottom
     },
     buttontext: {
         color : COLORS.white,
         ...globalStyles.paragraph
     },
-    button : {
+    button: {
         backgroundColor: COLORS.primary,
         borderRadius: 10,
-        padding: 10,
+        padding: 15,
         margin: 10,
-        width: '80%',
+        width: '70%',
+        alignSelf: 'center', // Ensures the button is centered horizontally
+        ...globalStyles.notificationText
     }
 })
