@@ -2,54 +2,110 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import localStorageService from '../../../../service/localstorage.service';
+
 const ExistingAccount = () => {
     const [currentScreen, setCurrentScreen] = useState('login');
     const [emailOrPhone, setEmailOrPhone] = useState('');
     const [otp, setOtp] = useState(['', '', '', '']);
     const [timer, setTimer] = useState(60);
     const navigation = useNavigation();
+
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [usernameError, setUsernameError] = React.useState('');
+    const [passwordError, setPasswordError] = React.useState('');
+
+    const localstorageService = localStorageService();
+
+    const handleLogin = () => {
+        let valid = true;
+
+        // Reset errors
+        setUsernameError('');
+        setPasswordError('');
+
+        // Validate username
+        if (!username.trim()) {
+            setUsernameError('Username is required');
+            valid = false;
+        }
+
+        // Validate password
+        if (!password.trim()) {
+            setPasswordError('Password is required');
+            valid = false;
+        }
+
+        if (valid) {
+            // Perform login logic here
+            // Example: Call an API or navigate to another screen
+            console.log('Logging in with:', { username, password });
+            localstorageService.setStoreItem('isAuthenticated', true);
+            navigation.navigate('Creator' as never);
+        }
+    };
+
     // OTP Timer
     useEffect(() => {
-        let interval:any;
+        let interval: any;
         if (currentScreen === 'otp' && timer > 0) {
             interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
         }
         return () => clearInterval(interval);
     }, [currentScreen, timer]);
 
-    const handleOtpChange = (index:any, value:any) => {
+    const handleOtpChange = (index: any, value: any) => {
         const newOtp = [...otp];
         newOtp[index] = value;
         setOtp(newOtp);
     };
 
     const handleNavigation = () => {
-        if(currentScreen === 'forgot' || currentScreen === 'otp') {
+        if (currentScreen === 'forgot' || currentScreen === 'otp') {
             setCurrentScreen('login');
-            return
+            return;
         }
 
         navigation.navigate('Login' as never);
-    }
+    };
+
+    const handleUserLogin = () => {};
 
     return (
         <View style={styles.container}>
             {/* Back Button */}
-
-                <TouchableOpacity onPress={() => handleNavigation()} style={styles.backButton}>
-                    <Text style={styles.backText}>←</Text>
-                </TouchableOpacity>
-
+            <TouchableOpacity onPress={() => handleNavigation()} style={styles.backButton}>
+                <Text style={styles.backText}>←</Text>
+            </TouchableOpacity>
 
             {/* Login Screen */}
             {currentScreen === 'login' && (
                 <>
-                    <TextInput style={styles.input} placeholder="username" placeholderTextColor="#A9A9A9" />
-                    <TextInput style={styles.input} placeholder="password" placeholderTextColor="#A9A9A9" secureTextEntry />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="username"
+                        placeholderTextColor="#A9A9A9"
+                        value={username}
+                        onChangeText={(text) => setUsername(text)}
+                    />
+                    {usernameError ? <Text style={styles.errorText}>{usernameError}</Text> : null}
+
+                    <TextInput
+                        style={styles.input}
+                        placeholder="password"
+                        placeholderTextColor="#A9A9A9"
+                        secureTextEntry
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}
+                    />
+                    {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+
                     <TouchableOpacity onPress={() => setCurrentScreen('forgot')}>
                         <Text style={styles.forgotText}>forgot password</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('Creator' as never)} style={styles.button}>
+
+                    <TouchableOpacity onPress={handleLogin} style={styles.button}>
                         <Text style={styles.buttonText}>get in</Text>
                     </TouchableOpacity>
                 </>
@@ -98,7 +154,9 @@ const ExistingAccount = () => {
                     </View>
 
                     <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText} onPress={() => navigation.navigate('Creator' as never) }>verify</Text>
+                        <Text style={styles.buttonText} onPress={() => navigation.navigate('Creator' as never)}>
+                            verify
+                        </Text>
                     </TouchableOpacity>
                 </>
             )}
@@ -190,6 +248,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         color: '#1B1B1B',
+    },
+    errorText: {
+        color: 'red',
+        fontSize: 12,
+        marginTop: 5,
+        marginBottom: 10,
     },
 });
 

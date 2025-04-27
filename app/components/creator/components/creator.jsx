@@ -8,10 +8,12 @@ import { globalStyles } from '@/assets/typography/typography';
 import { tabs } from '@/assets/constants/constants';
 
 import { useNavigation } from '@react-navigation/native';
+import localStorageService from '@/app/service/localstorage.service';
 
 const Creator = () => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const navigation = useNavigation();
+  const localstorageService = localStorageService()
 
   const renderContent = () => {
     switch (activeTab.route) {
@@ -34,6 +36,7 @@ const Creator = () => {
     switch(type){
       case 'next' :
         if(activeTab.id === 2) {
+          localstorageService.setStoreItem('profileCompletion', true)
           navigation.navigate('DashboardScreen');
           return
         }
@@ -54,6 +57,7 @@ const Creator = () => {
   };
 
   const handleSkip = () => {
+    localstorageService.setStoreItem('profileCompletion', true)
     navigation.navigate('DashboardScreen');
   }
 
