@@ -1,31 +1,86 @@
-export default function DeliverablesTab() {
-    return (
-      <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Deliverable Type</label>
-            <select className="w-full border rounded-md p-2">
-              <option>Select deliverable</option>
-              <option>Post</option>
-              <option>Story</option>
-              <option>Video</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Quantity</label>
-            <input type="number" placeholder="Number of deliverables" className="w-full border rounded-md p-2" />
-          </div>
-        </div>
-  
-        <div>
-          <label className="block text-sm font-medium mb-1">Notes for Creators</label>
-          <textarea placeholder="Additional instructions" className="w-full border rounded-md p-2 h-28" />
-        </div>
-  
-        <button className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600">
-          Add Deliverable
-        </button>
-      </div>
-    );
-  }
-  
+import { globalStyles } from '@/assets/typography/typography';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const DeliverablesTab = ({campaign}) => {
+  const deliverables = campaign?.campaignDetails?.deliverables || []
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>total deliverables</Text>
+        <View style={styles.counterBox}>
+          <Text style={styles.counterText}>{deliverables.length.toString().padStart(2, '0')}</Text>
+        </View>
+      </View>
+
+      {deliverables.map((item, index) => (
+        <View 
+          key={index} 
+          style={[
+            styles.itemContainer, 
+            index === 2 && styles.lastItemBorder // Highlight the last item with a border
+          ]}
+        >
+          <Text style={styles.titleText}>{item.title}</Text>
+          <Text style={styles.priceText}>{item.price}</Text>
+        </View>
+      ))}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  headerText: {
+    color: '#555',
+    ...globalStyles.paragraph,
+    fontSize: 14,
+  },
+  counterBox: {
+    backgroundColor: '#091C380D',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+  },
+  counterText: {
+    ...globalStyles.notificationText,
+    fontSize: 14,
+    fontWeight: 600
+  },
+  itemContainer: {
+    backgroundColor: '#08193205',
+    borderRadius: 10,
+    padding: 16,
+    marginBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#0819321A',
+  },
+  lastItemBorder: {
+    borderWidth: 1,
+    borderColor: '#60A5FA', // light blue border
+  },
+  titleText: {
+    ...globalStyles.paragraph,
+    fontSize: 14,
+    color: "#081932"
+  },
+  priceText: {
+    ...globalStyles.paragraph,
+    fontSize: 14,
+    color: "#081932"
+  },
+});
+
+export default DeliverablesTab;

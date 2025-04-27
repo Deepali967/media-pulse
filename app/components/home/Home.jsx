@@ -2,9 +2,19 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';;
 import { Ionicons, Feather } from '@expo/vector-icons'; // Using Expo Icons
 import { useNavigation } from '@react-navigation/native';
+import { CampaignCard } from '@/assets/constants/constants';
+import { globalStyles } from '@/assets/typography/typography';
+
+import { setCampaign } from './../../service/campaign-service'; // Adjust the import path as necessary
 
 const DashboardScreen = () => {
   const navigation = useNavigation();
+
+
+  const handleCampaignView = (campaign) => {
+    setCampaign(campaign);
+    navigation.navigate('CampaignScreen');
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -40,32 +50,36 @@ const DashboardScreen = () => {
       {/* Campaigns Section */}
       <View style={styles.campaignHeader}>
         <Text style={styles.sectionTitle}>campaigns</Text>
-        <Text style={styles.exploreText}>explore</Text>
       </View>
 
       {/* Campaign Card */}
-     <TouchableOpacity onPress={() => navigation.navigate('CampaignScreen')}> 
-      <View style={styles.campaignCard}>
-        <Image
-          source={{ uri: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9' }} // Plant image
-          style={styles.campaignImage}
-        />
-        <View style={styles.campaignInfo}>
-          <Text style={styles.campaignTitle}>simple skincare</Text>
-          <Text style={styles.campaignLabel}>campaign name</Text>
-          <Text style={styles.campaignValue}>non beauty 2.0</Text>
 
-          <Text style={styles.campaignLabel}>total deliverables</Text>
-          <Text style={styles.campaignValue}>3</Text>
+    {
+      CampaignCard.map((item, index) => (
+        <TouchableOpacity key={index} onPress={() => handleCampaignView(item)}> 
+          <View style={styles.campaignCard}>
+            <Image
+              source={{ uri: item.image }} // Campaign image
+              style={styles.campaignImage}
+            />
+            <View style={styles.campaignInfo}>
+              <Text style={styles.campaignTitle}>{item.campaignTitle}</Text>
+              <Text style={styles.campaignLabel}>campaign name</Text>
+              <Text style={styles.campaignValue}>{item.campaignDetails?.campaignName}</Text>
 
-          <Text style={styles.campaignLabel}>timeline</Text>
-          <Text style={styles.campaignValue}>feb 2025 - mar 2025</Text>
+              <Text style={styles.campaignLabel}>total deliverables</Text>
+              <Text style={styles.campaignValue}>{item?.campaignDetails?.totalDeliverables}</Text>
 
-          <Text style={styles.campaignLabel}>deal cost</Text>
-          <Text style={styles.campaignCost}>₹ 2,00,000</Text>
-        </View>
-      </View>
-      </TouchableOpacity> 
+              <Text style={styles.campaignLabel}>timeline</Text>
+              <Text style={styles.campaignValue}>{item?.campaignDetails?.timeline}</Text>
+
+              <Text style={styles.campaignLabel}>deal cost</Text>
+              <Text style={styles.campaignCost}>{item?.campaignDetails?.dealCost}</Text>
+            </View>
+          </View>
+        </TouchableOpacity> 
+      ))
+    }
     </ScrollView>
   );
 };
@@ -106,15 +120,16 @@ const styles = StyleSheet.create({
   },
   completeProfileText: {
     color: '#ffffff',
-    fontSize: 18,
-    fontWeight: 'bold',
     marginBottom: 8,
     textTransform: 'capitalize',
+    ...globalStyles.paragraph,
+    fontSize: 16,
   },
   subText: {
     color: '#b0bec5',
-    fontSize: 12,
     marginBottom: 16,
+    ...globalStyles.paragraph,
+    fontSize: 12,
   },
   button: {
     backgroundColor: '#1A2B4C',
@@ -128,8 +143,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 14,
-    fontWeight: 'bold',
     textTransform: 'capitalize',
+    ...globalStyles.paragraph,
+    fontSize: 12,
   },
   progressCircle: {
     width: 80,
@@ -143,8 +159,8 @@ const styles = StyleSheet.create({
   },
   progressText: {
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 18,
+    ...globalStyles.paragraph,
+    fontSize: 16,
   },
   campaignHeader: {
     flexDirection: 'row',
@@ -153,10 +169,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
     color: '#1c1c1e',
     textTransform: 'capitalize',
+    ...globalStyles.paragraph,
+    fontSize: 14,
   },
   exploreText: {
     color: '#1c1c1e',
@@ -184,23 +200,36 @@ const styles = StyleSheet.create({
   campaignTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 6,
+    marginTop: 6,
+    marginBottom: 10,
     color: '#1c1c1e',
+    textTransform: 'capitalize',
+    ...globalStyles.paragraph,
+    textAlign: 'center',
   },
   campaignLabel: {
-    fontSize: 12,
     color: '#8e8e93',
     marginTop: 8,
+    textTransform: 'capitalize',
+    ...globalStyles.paragraph,
+    fontSize: 10,
+    textAlign: 'center',
   },
   campaignValue: {
-    fontSize: 14,
     color: '#1c1c1e',
     marginTop: 2,
+    marginBottom: 7,
+    textTransform: 'capitalize',
+    ...globalStyles.paragraph,
+    fontSize: 12,
+    textAlign: 'center',
   },
   campaignCost: {
-    fontSize: 16,
     color: '#1c1c1e',
     fontWeight: 'bold',
+    ...globalStyles.notificationText,
+    fontSize: 14,
     marginTop: 2,
+    textAlign: 'center',
   },
 });

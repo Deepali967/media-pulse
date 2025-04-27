@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
   app : {
     height: '100%',
     width: '100%',
-    flex: 1
+    flex: 1,
+    backgroundColor: '#F7FAFC',
   },
 
   scrollContainer: {

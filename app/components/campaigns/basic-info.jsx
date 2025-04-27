@@ -1,33 +1,102 @@
-export default function BasicInfoTab() {
+import { globalStyles } from "@/assets/typography/typography";
+import { ScrollView, View, StyleSheet, Image, Text } from "react-native";
+
+const BasicInfoTab = ({campaign}) => {
     return (
-      <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Campaign Name</label>
-            <input type="text" placeholder="Enter campaign name" className="w-full border rounded-md p-2" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Objective</label>
-            <input type="text" placeholder="Enter objective" className="w-full border rounded-md p-2" />
-          </div>
-        </div>
-  
-        <div>
-          <label className="block text-sm font-medium mb-1">Description</label>
-          <textarea placeholder="Describe the campaign" className="w-full border rounded-md p-2 h-28" />
-        </div>
-  
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Start Date</label>
-            <input type="date" className="w-full border rounded-md p-2" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">End Date</label>
-            <input type="date" className="w-full border rounded-md p-2" />
-          </div>
-        </div>
-      </div>
+      <ScrollView style={{ flex: 1 }}>
+          <View style={styles.basicInfoContainer}>
+          <Image
+              source={{ uri: campaign.image }} // Campaign image
+              style={styles.campaignImage}
+            />
+            
+            <View style={styles.campaignInfo}>
+              <Text style={styles.campaignLabel}>campaign name</Text>
+              <Text style={styles.campaignValue}>{campaign.campaignDetails?.campaignName}</Text>
+
+              <Text style={styles.campaignLabel}>total deliverables</Text>
+              <Text style={styles.campaignValue}>{campaign?.campaignDetails?.totalDeliverables}</Text>
+
+              <Text style={styles.campaignLabel}>timeline</Text>
+              <Text style={styles.campaignValue}>{campaign?.campaignDetails?.timeline}</Text>
+
+              <Text style={styles.campaignLabel}>deal cost</Text>
+              <Text style={styles.campaignCost}>{campaign?.campaignDetails?.dealCost}</Text>
+
+              <Text style={styles.campaignLabel}>campaign description</Text>
+              <Text style={styles.campaignDescription}>{campaign?.campaignDetails?.description}</Text>
+            </View>
+          </View>
+      </ScrollView>
     );
   }
   
+export default BasicInfoTab;
+
+  const styles = StyleSheet.create({
+    campaignInfo: {
+      flex: 1,
+    },
+    basicInfoContainer : {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
+    },
+
+    campaignImage: {
+      width: 300,
+      height: 200,
+      borderRadius: 12,
+      marginRight: 16,
+      marginBottom: 20,
+    },
+    campaignTitle: {
+      fontWeight: 'bold',
+      marginTop: 6,
+      marginBottom: 10,
+      color: '#1c1c1e',
+      textTransform: 'capitalize',
+      ...globalStyles.paragraph,
+      textAlign: 'center',
+      fontSize: 18,
+    },
+    campaignLabel: {
+      color: '#8e8e93',
+      marginTop: 8,
+      marginBottom: 8,
+      textTransform: 'capitalize',
+      ...globalStyles.paragraph,
+      textAlign: 'center',
+      fontSize: 12,
+    },
+    campaignValue: {
+      color: '#1c1c1e',
+      marginTop: 2,
+      marginBottom: 20,
+      textTransform: 'capitalize',
+      ...globalStyles.paragraph,
+      textAlign: 'center',
+      fontSize: 16,
+    },
+    campaignCost: {
+      color: '#1c1c1e',
+      fontWeight: 'bold',
+      ...globalStyles.notificationText,
+      fontSize: 16,
+      marginTop: 2,
+      textAlign: 'center',
+      marginBottom: 20,
+    },
+
+    campaignDescription :{
+      color: '#081932',
+      marginTop: 2,
+      marginBottom: 20,
+      textTransform: 'capitalize',
+      ...globalStyles.paragraph,
+      textAlign: 'center',
+      fontSize: 12,
+      paddingHorizontal: 20,
+    }
+  })
