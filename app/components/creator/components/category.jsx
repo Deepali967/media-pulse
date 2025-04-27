@@ -1,3 +1,4 @@
+import { globalStyles } from '@/assets/typography/typography';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 
@@ -16,7 +17,7 @@ const lifestyleCategories = [
   "athlete", "fitness trainer", "diy decor", "finance", "gardening", "handcrafts"
 ];
 
-const CategoriesScreen = ({ navigation }) => {
+const CategoriesScreen = ({ handleNextClick }) => {
   const [selectedFashion, setSelectedFashion] = useState([]);
   const [selectedBeauty, setSelectedBeauty] = useState([]);
   const [selectedLifestyle, setSelectedLifestyle] = useState([]);
@@ -38,58 +39,78 @@ const CategoriesScreen = ({ navigation }) => {
   };
 
   const renderCategories = (data, type, selected) => (
-    <View style={styles.section}>
-      {data.map((item) => (
-        <TouchableOpacity 
-          key={item}
-          style={[styles.categoryButton, selected.includes(item) && styles.selectedCategory]}
-          onPress={() => toggleSelection(item, type)}
-        >
-          <Text style={[styles.categoryText, selected.includes(item) && styles.selectedCategoryText]}>
-            {item}
-          </Text>
+      <View style={styles.section}>
+        {data.map((item) => (
+          <TouchableOpacity 
+            key={item}
+            style={[styles.categoryButton, selected.includes(item) && styles.selectedCategory]}
+            onPress={() => toggleSelection(item, type)}
+          >
+            <Text style={[styles.categoryText, selected.includes(item) && styles.selectedCategoryText]}>
+              {item}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    );
+  
+    const renderCategorySection = (title, categories, type, selectedItems) => {
+      return (
+          <View style={styles.categorySection}>
+            <View style={styles.title}>
+            <Text>{title}</Text> 
+            <Text>{selectedItems.length >= 2 ? selectedItems.length : '0' + selectedItems.length }</Text>
+            </View>
+
+          <View>
+            {renderCategories(categories, type, selectedItems)}
+          </View>  
+          </View>
+      );
+    };
+  
+    return (
+      <View style={styles.container}>
+        {renderCategorySection('Fashion', fashionCategories, 'fashion', selectedFashion)}
+        {renderCategorySection('Beauty', beautyCategories, 'beauty', selectedBeauty)}
+        {renderCategorySection('Lifestyle', lifestyleCategories, 'lifestyle', selectedLifestyle)}
+  
+        <TouchableOpacity style={styles.nextButton} onPress={handleNextClick}>
+          <Text style={styles.nextButtonText}>Next</Text>
         </TouchableOpacity>
-      ))}
-    </View>
-  );
-
-  return (
-    <View style={styles.container}>
-      <ScrollView>
-        <Text style={styles.header}>Fashion 0{selectedFashion.length}</Text>
-        {renderCategories(fashionCategories, 'fashion', selectedFashion)}
-        
-        <Text style={styles.header}>Beauty 0{selectedBeauty.length}</Text>
-        {renderCategories(beautyCategories, 'beauty', selectedBeauty)}
-        
-        <Text style={styles.header}>Lifestyle 0{selectedLifestyle.length}</Text>
-        {renderCategories(lifestyleCategories, 'lifestyle', selectedLifestyle)}
-      </ScrollView>
-
-      <TouchableOpacity style={styles.nextButton} onPress={() => navigation.navigate('RecentWork')}>
-        <Text style={styles.nextButtonText}>Next</Text>
-      </TouchableOpacity>
-    </View>
-  );
+      </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', padding: 20 },
-  header: { fontSize: 18, fontWeight: 'bold', marginTop: 20, marginBottom: 10 },
+  container: { flex: 1, backgroundColor: '#fff'},
+
+  categorySection: { fontSize: 18,marginBottom: 20, width: '100%',...globalStyles.paragraph},
+
+  title :{
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+
   section: { flexDirection: 'row', flexWrap: 'wrap' },
+
   categoryButton: {
     borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 20,
+    borderColor: '#081932',
+    borderRadius: 10,
     paddingVertical: 8,
     paddingHorizontal: 15,
     margin: 5,
   },
+
   selectedCategory: {
-    backgroundColor: '#0a0a23', // dark navy background
-    borderColor: '#0a0a23',
+    backgroundColor: '#081932', // dark navy background
+    borderColor: '#081932',
   },
-  categoryText: { color: '#000' },
+  categoryText: { color: '#091C38', ...globalStyles.btnText, fontSize: 12 },
   selectedCategoryText: { color: '#fff' },
   nextButton: {
     backgroundColor: '#0a0a23',

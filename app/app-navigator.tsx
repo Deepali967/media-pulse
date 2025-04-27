@@ -8,7 +8,8 @@ import Status from './components/login/comonents/status/status';
 import Apply from './components/login/comonents/apply/apply';
 
 import Creator from './components/creator/components/creator';
-
+import DashboardScreen from './components/home/Home';
+import CampaignScreen from './components/campaigns/campaigns';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,8 @@ const AppNavigator = () => {
       <Stack.Screen name="Existing" component={ExistingAccount} />
       <Stack.Screen name="Apply" component={Apply} />
       <Stack.Screen name="Creator" component={Creator} />
+      <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
+      <Stack.Screen name='CampaignScreen' component={CampaignScreen} />
     </Stack.Navigator>
   );
 };

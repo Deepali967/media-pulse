@@ -49,7 +49,7 @@ const ExistingAccount = () => {
                     <TouchableOpacity onPress={() => setCurrentScreen('forgot')}>
                         <Text style={styles.forgotText}>forgot password</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setCurrentScreen('otp')} style={styles.button}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Creator' as never)} style={styles.button}>
                         <Text style={styles.buttonText}>get in</Text>
                     </TouchableOpacity>
                 </>
@@ -66,7 +66,7 @@ const ExistingAccount = () => {
                         value={emailOrPhone}
                         onChangeText={setEmailOrPhone}
                     />
-                    <TouchableOpacity style={styles.button} onPress={() => setCurrentScreen('otp')}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Creator' as never)}>
                         <Text style={styles.buttonText}>next</Text>
                     </TouchableOpacity>
                 </>

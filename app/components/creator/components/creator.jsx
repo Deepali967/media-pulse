@@ -1,73 +1,127 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import BasicInfo from './basic-info';
 import Categories from './category';
+import FeeCardComponent from './fee-card';
+
+import { globalStyles } from '@/assets/typography/typography';
+import { tabs } from '@/assets/constants/constants';
+
+import { useNavigation } from '@react-navigation/native';
 
 const Creator = () => {
-  const [activeTab, setActiveTab] = useState('BasicInfo');
+  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const navigation = useNavigation();
 
   const renderContent = () => {
-    switch (activeTab) {
+    switch (activeTab.route) {
       case 'BasicInfo':
-        return <BasicInfo />;
+        return <BasicInfo handleNextClick={() => handleNavigation('next')}/>;
       case 'Categories':
-        return <Categories />;
-    //   case 'RecentWork':
-    //     return <RecentWork />;
+        return <Categories handleNextClick={() => handleNavigation('next')} />;
+
+      case 'FeeCard':
+        return <FeeCardComponent handleNextClick={() => handleNavigation('next')} />;
+
       default:
-        return <BasicInfo />;
+        return <BasicInfo handleNextClick={() => handleNavigation('next')} />;
+        
     }
   };
 
+  const handleNavigation = (type) => {
+    debugger;
+    switch(type){
+      case 'next' :
+        if(activeTab.id === 2) {
+          navigation.navigate('DashboardScreen');
+          return
+        }
+
+        setTabs(tabs[activeTab.id + 1]);
+        break;
+      
+      case 'previous':
+        setTabs(tabs[activeTab.id - 1]);
+        break;
+    }
+  }
+  
+  const setTabs = (tab) => {
+    if (activeTab === tab) return;
+
+    setActiveTab(tab);
+  };
+
+  const handleSkip = () => {
+    navigation.navigate('DashboardScreen');
+  }
+
+  useEffect(() => {
+    setActiveTab(tabs[0]);
+  },[])
+
   return (
     <View style={styles.container}>
-      
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => handleNavigation('previous')}>
+        <Image
+         onPress={() => handleNavigation('previous')}
+          source={require('../../../../assets/images/creator/back.png')}
+          style={{
+            width: 10,
+            height: 20,
+            visibility: activeTab.id === 0 ? 'hidden' : 'visible',
+            pointerEvents: activeTab.id === 0  ? 'none' : 'auto',
+          }}
+        />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 16, color: '#555' }} onPress={() => handleSkip()}>skip</Text>
+      </View>
+
       {/* Tab List */}
       <View style={styles.tabContainer}>
-        <TouchableOpacity 
-          style={[styles.tabButton, activeTab === 'BasicInfo' && styles.activeTab]}
-          onPress={() => setActiveTab('BasicInfo')}
-        >
-          <Text style={[styles.tabText, activeTab === 'BasicInfo' && styles.activeTabText]}>
-            Basic Info
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={[styles.tabButton, activeTab === 'Categories' && styles.activeTab]}
-          onPress={() => setActiveTab('Categories')}
-        >
-          <Text style={[styles.tabText, activeTab === 'Categories' && styles.activeTabText]}>
-            Categories
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={[styles.tabButton, activeTab === 'RecentWork' && styles.activeTab]}
-          onPress={() => setActiveTab('RecentWork')}
-        >
-          <Text style={[styles.tabText, activeTab === 'RecentWork' && styles.activeTabText]}>
-            Recent Work
-          </Text>
-        </TouchableOpacity>
+        {
+          tabs.map((tab) => (
+            <TouchableOpacity
+              key={tab.id}
+              style={[styles.tabButton, activeTab.id === tab.id && styles.activeTab]}
+              onPress={() => setTabs(tab)}
+            >
+              <Text style={[styles.tabText, activeTab === tab.route && styles.activeTabText]}>
+                {tab.text}
+              </Text>
+            </TouchableOpacity>
+          ))
+        }
       </View>
 
       {/* Tab Content */}
-      <View style={styles.contentContainer}>
+      <ScrollView style={styles.contentContainer}>
         {renderContent()}
-      </View>
-
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
   container: { flex: 1, backgroundColor: '#fff' },
-  tabContainer: { flexDirection: 'row', justifyContent: 'space-around', backgroundColor: '#f0f0f0' },
+  tabContainer: { flexDirection: 'row', justifyContent: 'space-around' },
   tabButton: { paddingVertical: 10, paddingHorizontal: 20 },
-  tabText: { fontSize: 16, color: '#555' },
-  activeTab: { borderBottomWidth: 2, borderBottomColor: '#000' },
-  activeTabText: { fontWeight: 'bold', color: '#000' },
+  tabText: { ...globalStyles.paragraph, fontSize: 14, color: '#091C38' },
+  activeTabText: { ...globalStyles.notificationText, fontSize: 14, color: '#091C38', fontWeight: '600' },
   contentContainer: { flex: 1, padding: 20 },
 });
 

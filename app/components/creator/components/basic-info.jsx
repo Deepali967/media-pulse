@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 
-const BasicInfo = () => {
+const BasicInfo = (props) => {
   const [name, setName] = useState('');
   const [titles, setTitles] = useState(['model', 'skincare enthusiast']);
   const [location, setLocation] = useState('chandigarh');
@@ -15,7 +15,7 @@ const BasicInfo = () => {
       {/* Image Upload Section */}
       <View style={styles.imageContainer}>
         <Image 
-          source={require("../../../../assets/images/creator/sample.svg")} 
+          source={require("../../../../assets/images/creator/sample.png")} 
           style={styles.image}
         />
         <TouchableOpacity style={styles.replaceButton}>
@@ -62,7 +62,7 @@ const BasicInfo = () => {
       {/* Socials */}
       <View style={styles.socialContainer}>
         <View style={styles.socialRow}>
-          <Image source={require('../../../../assets/images/creator/instagram.svg')} style={styles.socialIcon} />
+          <Image source={require('../../../../assets/images/creator/instagram.png')} style={styles.socialIcon} />
           <TextInput
             style={styles.socialInput}
             value={instagram}
@@ -71,7 +71,7 @@ const BasicInfo = () => {
         </View>
 
         <View style={styles.socialRow}>
-          <Image source={require('../../../../assets/images/creator/youtube.svg')} style={styles.socialIcon} />
+          <Image source={require('../../../../assets/images/creator/youtube.png')} style={styles.socialIcon} />
           <TextInput
             style={styles.socialInput}
             value={youtube}
@@ -81,7 +81,10 @@ const BasicInfo = () => {
       </View>
 
       {/* Next Button */}
-      <TouchableOpacity style={styles.nextButton}>
+      <TouchableOpacity style={styles.nextButton} onPress={() => {
+        console.log('Next clicked:');
+        props?.handleNextClick()
+      }}>
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
 
@@ -121,7 +124,7 @@ const styles = StyleSheet.create({
 
   socialContainer: { marginBottom: 20 },
   socialRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
-  socialIcon: { fontSize: 20, marginRight: 10 },
+  socialIcon: { fontSize: 20 },
   socialInput: { flex: 1, borderBottomWidth: 1, borderBottomColor: '#ccc', fontSize: 16 },
 
   nextButton: { backgroundColor: '#000', padding: 15, borderRadius: 10, alignItems: 'center', marginTop: 10 },

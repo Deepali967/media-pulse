@@ -14,6 +14,16 @@ export const globalStyles = {
     notificationText : {
       fontFamily: 'medium',
       fontSize: 18
-    }
+    },
+    body: {
+      flex: 1,
+      padding: 16,
+      backgroundColor: '#ffffff',
+    },
+    image: {
+      maxWidth: '100%',
+      maxHeight: '100%',
+      resizeMode: 'contain', // Ensures the image scales properly
+    },
   };
   
