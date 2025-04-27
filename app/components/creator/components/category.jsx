@@ -59,7 +59,7 @@ const CategoriesScreen = ({ handleNextClick }) => {
           <View style={styles.categorySection}>
             <View style={styles.title}>
             <Text>{title}</Text> 
-            <Text>{selectedItems.length >= 2 ? selectedItems.length : '0' + selectedItems.length }</Text>
+            <Text>{selectedItems.length.toString().padStart(2, '0') }</Text>
             </View>
 
           <View>

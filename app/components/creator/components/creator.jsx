@@ -71,13 +71,13 @@ const Creator = () => {
           source={require('../../../../assets/images/creator/back.png')}
           style={{
             width: 10,
-            height: 20,
+            height: 10,
             visibility: activeTab.id === 0 ? 'hidden' : 'visible',
             pointerEvents: activeTab.id === 0  ? 'none' : 'auto',
           }}
         />
         </TouchableOpacity>
-        <Text style={{ fontSize: 16, color: '#555' }} onPress={() => handleSkip()}>skip</Text>
+        <Text style={{ color: '#555', ...globalStyles.paragraph,fontSize: 14 }} onPress={() => handleSkip()}>skip</Text>
       </View>
 
       {/* Tab List */}
@@ -120,8 +120,8 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   tabContainer: { flexDirection: 'row', justifyContent: 'space-around' },
   tabButton: { paddingVertical: 10, paddingHorizontal: 20 },
-  tabText: { ...globalStyles.paragraph, fontSize: 14, color: '#091C38' },
-  activeTabText: { ...globalStyles.notificationText, fontSize: 14, color: '#091C38', fontWeight: '600' },
+  tabText: { ...globalStyles.paragraph, fontSize: 14, color: '#091C38'},
+  activeTabText: { ...globalStyles.notificationText, fontSize: 14, color: '#091C38', fontWeight: 'bold' },
   contentContainer: { flex: 1, padding: 20 },
 });
 
