@@ -33,7 +33,7 @@ const AppNavigator = () => {
     if (isAuthenticated && profileCompleted) {
       setInitialScreen('DashboardScreen');
     } else if (!isAuthenticated) {
-      setInitialScreen('Existing');
+      setInitialScreen('Login');
     } else if (isAuthenticated && !profileCompleted) {
       setInitialScreen('Creator');
     }
@@ -44,7 +44,7 @@ const AppNavigator = () => {
   // Check authentication and profile status
   React.useEffect(() => {
     setIsLoading(true); // Set loading to true while checking authentication
-    
+
     const checkAuthentication = async () => {
       const isUserAuthenticated = await localstorageService.getStoreItem('isAuthenticated');
       const profile = await localstorageService.getStoreItem('profileCompletion');
