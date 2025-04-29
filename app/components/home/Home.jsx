@@ -21,6 +21,10 @@ const DashboardScreen = () => {
       case 'payment':
         navigation.navigate('Payment');
         break;
+
+      case 'profile':
+        navigation.navigate('Profile');
+        break;  
     }
   }
 
@@ -28,10 +32,12 @@ const DashboardScreen = () => {
     <ScrollView style={styles.container}>
       {/* Top Header */}
       <View style={styles.header}>
+        <TouchableOpacity onPress={() => handleNavigation('profile')}>
         <Image
-          source={{ uri: 'https://via.placeholder.com/40' }} // Profile Pic
+          source={require('../../../assets/images/sample-avatar.png')} // Profile Pic
           style={styles.profilePic}
         />
+        </TouchableOpacity>
         <View style={styles.headerIcons}>
           <Ionicons name="notifications-outline" size={24} color="black" style={styles.icon} />
           <TouchableOpacity onPress={() => handleNavigation('payment')}>
