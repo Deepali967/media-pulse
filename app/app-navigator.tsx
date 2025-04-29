@@ -10,7 +10,8 @@ import Creator from './components/creator/components/creator';
 import DashboardScreen from './components/home/Home';
 import CampaignScreen from './components/campaigns/campaigns';
 import localStorageService from './service/localstorage.service';
-import { tabs } from '@/assets/constants/constants';
+
+import Payment from './components/payment/payment';
 
 const Stack = createStackNavigator();
 
@@ -82,6 +83,7 @@ const AppNavigator = () => {
           <Stack.Screen name="Creator" component={Creator} />
           <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
           <Stack.Screen name="CampaignScreen" component={CampaignScreen} />
+          <Stack.Screen name="Payment" component={Payment} />
         </Stack.Navigator>
       )
   );

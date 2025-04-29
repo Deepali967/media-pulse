@@ -16,6 +16,14 @@ const DashboardScreen = () => {
     navigation.navigate('CampaignScreen');
   }
 
+  const handleNavigation = (type) => {
+    switch(type) {
+      case 'payment':
+        navigation.navigate('Payment');
+        break;
+    }
+  }
+
   return (
     <ScrollView style={styles.container}>
       {/* Top Header */}
@@ -26,7 +34,9 @@ const DashboardScreen = () => {
         />
         <View style={styles.headerIcons}>
           <Ionicons name="notifications-outline" size={24} color="black" style={styles.icon} />
-          <Feather name="briefcase" size={24} color="black" />
+          <TouchableOpacity onPress={() => handleNavigation('payment')}>
+         <Image resizeMode="contain" source={require('../../../assets/images/payment.png')} style={{width:20, height:20}} ></Image>
+          </TouchableOpacity>
         </View>
       </View>
 
