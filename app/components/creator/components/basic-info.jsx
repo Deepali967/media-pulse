@@ -3,15 +3,15 @@ import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView 
 import { Ionicons } from '@expo/vector-icons'; // For radio buttons & close icons (optional)
 import { globalStyles } from '@/assets/typography/typography';
 
-const BasicInfo = ({ handleNextClick }) => {
-  const [name, setName] = useState('karina bedi');
-  const [titles, setTitles] = useState(['model', 'skincare enthusiast']);
-  const [location, setLocation] = useState('chandigarh');
-  const [locations, setLocations] = useState(['chandigarh', 'mumbai']);
-  const [bio, setBio] = useState('');
-  const [instagram, setInstagram] = useState('@karina_bedi');
-  const [youtube, setYoutube] = useState('karinabedi');
-  const [currentLocation, setCurrentLocation] = useState('chandigarh');
+const BasicInfo = ({ data, handleNextClick }) => {
+  const [basicInfo, setBasicInfo] = useState(data);
+  
+  const updateBasicInfo = (key, value) => {
+    setBasicInfo((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
@@ -33,8 +33,8 @@ const BasicInfo = ({ handleNextClick }) => {
         <TextInput
           style={styles.input}
           placeholder="Enter name"
-          value={name}
-          onChangeText={setName}
+          value={basicInfo['name']}
+          onChangeText={(e) => updateBasicInfo('name', e)}
         />
       </View>
 
@@ -42,7 +42,7 @@ const BasicInfo = ({ handleNextClick }) => {
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>title</Text>
         <View style={styles.tagsWrapper}>
-          {titles.map((title, index) => (
+          {basicInfo['titles'].map((title, index) => (
             <View key={index} style={styles.tag}>
               <Text style={styles.tagText}>{title}</Text>
             </View>
@@ -53,13 +53,13 @@ const BasicInfo = ({ handleNextClick }) => {
       {/* Location */}
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>location</Text>
-        {locations.map((loc, index) => (
-          <TouchableOpacity key={index} style={styles.locationRow} onPress={() => setCurrentLocation(loc)}>
+        {basicInfo['locations'].map((loc, index) => (
+          <TouchableOpacity key={index} style={styles.locationRow} onPress={() => updateBasicInfo('currentLocation', loc)}>
             <View style={styles.radioButtonOuter}>
-              {currentLocation === loc && <View style={styles.radioButtonInner} />}
+              {basicInfo?.currentLocation === loc && <View style={styles.radioButtonInner} />}
             </View>
             <Text style={styles.locationText}>{loc}</Text>
-            {currentLocation === loc && <Text style={styles.hereText}>i’m here</Text>}
+            {basicInfo?.currentLocation === loc && <Text style={styles.hereText}>i'm here</Text>}
           </TouchableOpacity>
         ))}
       </View>
@@ -70,8 +70,8 @@ const BasicInfo = ({ handleNextClick }) => {
         <TextInput
           style={[styles.input, { height: 80 }]}
           placeholder="Write something..."
-          value={bio}
-          onChangeText={setBio}
+          value={basicInfo['bio']}
+          onChangeText={(e) => updateBasicInfo('bio', e)}
           multiline
         />
       </View>
@@ -81,28 +81,28 @@ const BasicInfo = ({ handleNextClick }) => {
         <Image source={require('../../../../assets/images/creator/instagram.png')} style={styles.socialIcon} />
         <TextInput
           style={styles.socialInput}
-          value={instagram}
-          onChangeText={setInstagram}
+          value={basicInfo['instagram']}
+          onChangeText={(e) => updateBasicInfo('instagram',e)}
         />
-        <TouchableOpacity>
+        {basicInfo['instagram'] ? <TouchableOpacity onPress={() => updateBasicInfo('instagram','')}>
           <Ionicons name="close" size={20} color="#000" />
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
       </View>
 
       <View style={styles.socialRow}>
         <Image source={require('../../../../assets/images/creator/youtube.png')} style={styles.socialIcon} />
         <TextInput
           style={styles.socialInput}
-          value={youtube}
-          onChangeText={setYoutube}
+          value={basicInfo['youtube']}
+          onChangeText={(e) => updateBasicInfo('youtube', e)}
         />
-        <TouchableOpacity>
+       {basicInfo['youtube'] ? <TouchableOpacity onPress={() => updateBasicInfo('youtube','')}>
           <Ionicons name="close" size={20} color="#000" />
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
       </View>
 
       {/* Next Button */}
-      <TouchableOpacity style={styles.nextButton} onPress={handleNextClick}>
+      <TouchableOpacity style={styles.nextButton} onPress={() => handleNextClick(basicInfo)}>
         <Text style={styles.nextButtonText}>next</Text>
       </TouchableOpacity>
 

@@ -2,80 +2,65 @@ import { globalStyles } from '@/assets/typography/typography';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 
-const fashionCategories = [
-  "streetwear", "luxury fashion", "y2k", "diy", "haute", "bridal clothing",
-  "vintage", "boho", "formal wear", "beach wear", "mens wear", "performance wear", "kids fashion"
-];
+const CategoriesScreen = ({ data, handleNextClick }) => {
+  const [categories, setCategories] = useState(data);
 
-const beautyCategories = [
-  "premium beauty", "makeup artist", "vfx makeup", "body care", "haircare", "skincare",
-  "nailcare", "deromatologist", "nailart", "beauty appliance", "product review", "fragrances"
-];
+  const handleCategorySelect = (category, title) => {
+    const updatedCategories = { ...categories };
+    const selectedItems = updatedCategories[category].map((item) => {
+      if (item.title === title) {
+        return { ...item, selected: !item.selected };
+      }
+      return item;
+    });
+    updatedCategories[category] = selectedItems;
+    setCategories(updatedCategories);
+  }
 
-const lifestyleCategories = [
-  "travel blogger", "chef", "travel photographer", "food blogger", "mom blogger",
-  "athlete", "fitness trainer", "diy decor", "finance", "gardening", "handcrafts"
-];
-
-const CategoriesScreen = ({ handleNextClick }) => {
-  const [selectedFashion, setSelectedFashion] = useState([]);
-  const [selectedBeauty, setSelectedBeauty] = useState([]);
-  const [selectedLifestyle, setSelectedLifestyle] = useState([]);
-
-  const toggleSelection = (category, type) => {
-    if (type === 'fashion') {
-      setSelectedFashion(prev => 
-        prev.includes(category) ? prev.filter(item => item !== category) : [...prev, category]
-      );
-    } else if (type === 'beauty') {
-      setSelectedBeauty(prev => 
-        prev.includes(category) ? prev.filter(item => item !== category) : [...prev, category]
-      );
-    } else if (type === 'lifestyle') {
-      setSelectedLifestyle(prev => 
-        prev.includes(category) ? prev.filter(item => item !== category) : [...prev, category]
-      );
-    }
-  };
-
-  const renderCategories = (data, type, selected) => (
-      <View style={styles.section}>
-        {data.map((item) => (
-          <TouchableOpacity 
-            key={item}
-            style={[styles.categoryButton, selected.includes(item) && styles.selectedCategory]}
-            onPress={() => toggleSelection(item, type)}
-          >
-            <Text style={[styles.categoryText, selected.includes(item) && styles.selectedCategoryText]}>
-              {item}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    );
+  const getSelectedCount = (category) => {
+    const selectedItems = categories[category].filter(item => item.selected);
+    return selectedItems.length.toString().padStart(2, '0');
+  }
   
-    const renderCategorySection = (title, categories, type, selectedItems) => {
-      return (
+  const renderCategorySection = (categoryData, key) => {
+    return (
           <View style={styles.categorySection}>
             <View style={styles.title}>
-            <Text>{title}</Text> 
-            <Text>{selectedItems.length.toString().padStart(2, '0') }</Text>
+            <Text>{key}</Text> 
+            <Text>{getSelectedCount(key)}</Text>
             </View>
 
-          <View>
-            {renderCategories(categories, type, selectedItems)}
-          </View>  
-          </View>
-      );
-    };
-  
+        <View style={styles.section}>
+          {categoryData.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[styles.categoryButton, item.selected && styles.selectedCategory]}
+              onPress={() => handleCategorySelect(key, item.title)}
+            >
+              <Text style={[styles.categoryText, item.selected && styles.selectedCategoryText]}>
+                {item.title}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+    );
+  }
+
     return (
       <View style={styles.container}>
-        {renderCategorySection('Fashion', fashionCategories, 'fashion', selectedFashion)}
-        {renderCategorySection('Beauty', beautyCategories, 'beauty', selectedBeauty)}
-        {renderCategorySection('Lifestyle', lifestyleCategories, 'lifestyle', selectedLifestyle)}
-  
-        <TouchableOpacity style={styles.nextButton} onPress={handleNextClick}>
+        {
+          Object.keys(categories).map((key) => {
+            const categoryData = categories[key];
+            const selectedItems = categoryData.selectedItems || [];
+            return (
+              <View key={key}>
+                {renderCategorySection(categoryData, key)}
+              </View>
+            );
+          })
+        }
+        <TouchableOpacity style={styles.nextButton} onPress={() => handleNextClick(categories)}>
           <Text style={styles.nextButtonText}>Next</Text>
         </TouchableOpacity>
       </View>

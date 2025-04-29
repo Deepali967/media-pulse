@@ -21,13 +21,65 @@ export const tabs = [
         id:0,
         text :'Basic Info',
         route: 'BasicInfo',
-        data : {}
+        data : {
+          name: 'karina bedi',
+          titles: ['model', 'skincare enthusiast'],
+          location: 'chandigarh',
+          locations: ['chandigarh', 'mumbai'],
+          bio: '',
+          instagram: '@karina_bedi',
+          youtube: 'karinabedi',
+          currentLocation: 'chandigarh',
+        }
     },
     {
         id:1,
         text :'Categories',
         route: 'Categories', 
-        data : {}
+        data : {
+          fashion: [
+            { title: "streetwear", selected: false },
+            { title: "luxury fashion", selected: false },
+            { title: "y2k", selected: false },
+            { title: "diy", selected: false },
+            { title: "haute", selected: false },
+            { title: "bridal clothing", selected: false },
+            { title: "vintage", selected: false },
+            { title: "boho", selected: false },
+            { title: "formal wear", selected: false },
+            { title: "beach wear", selected: false },
+            { title: "mens wear", selected: false },
+            { title: "performance wear", selected: false },
+            { title: "kids fashion", selected: false }
+          ],
+          beauty: [
+            { title: "premium beauty", selected: false },
+            { title: "makeup artist", selected: false },
+            { title: "vfx makeup", selected: false },
+            { title: "body care", selected: false },
+            { title: "haircare", selected: false },
+            { title: "skincare", selected: false },
+            { title: "nailcare", selected: false },
+            { title: "deromatologist", selected: false },
+            { title: "nailart", selected: false },
+            { title: "beauty appliance", selected: false },
+            { title: "product review", selected: false },
+            { title: "fragrances", selected: false }
+          ],
+          lifestyle: [
+            { title: "travel blogger", selected: false },
+            { title: "chef", selected: false },
+            { title: "travel photographer", selected: false },
+            { title: "food blogger", selected: false },
+            { title: "mom blogger", selected: false },
+            { title: "athlete", selected: false },
+            { title: "fitness trainer", selected: false },
+            { title: "diy decor", selected: false },
+            { title: "finance", selected: false },
+            { title: "gardening", selected: false },
+            { title: "handcrafts", selected: false }
+          ]
+        }
     },
     {
         id:2,
@@ -58,21 +110,25 @@ export const feecardContent = {
     'instagram' : {
         title : 'Instagram',
         fields : [
-            { label: 'ig reel', field: 'igReel' },
-            { label: 'ig carousel post', field: 'igCarouselPost' },
-            { label: 'ig static post', field: 'igStaticPost' },
-            { label: 'ig story', field: 'igStory' },
-            { label: 'ig giveaway', field: 'igGiveaway' },
-            { label: 'ig collaborator', field: 'igCollaborator' },
-            { label: 'ig live session (15-30 min)', field: 'igLiveSession' },
+            {
+                igReel: { label: 'ig reel', value: '' },
+                igCarouselPost: { label: 'ig carousel post', value: '' },
+                igStaticPost: { label: 'ig static post', value: '' },
+                igStory: { label: 'ig story', value: '' },
+                igGiveaway: { label: 'ig giveaway', value: '' },
+                igCollaborator: { label: 'ig collaborator', value: '' },
+                igLiveSession: { label: 'ig live session (15-30 min)', value: '' },
+            }
         ]
     },
     'youtube' :  {
         title : 'YouTube',
         fields : [
-            { label: 'Youtube integrated video', field: 'ytVideo' },
-            { label: 'Youtube Shots', field: 'ytShots' },
-            { label: 'Youtube Collab', field: 'ytCollab' },
+            {
+                ytVideo: { label: 'Youtube integrated video', value: '' },
+                ytShots: { label: 'Youtube Shots', value: '' },
+                ytCollab: { label: 'Youtube Collab', value: '' },
+            },
         ]
     }
 }

@@ -1,57 +1,55 @@
-import { feecardContent } from '@/assets/constants/constants';
+import { feecardContent as initialFeeCardContent } from '@/assets/constants/constants';
 import { globalStyles } from '@/assets/typography/typography';
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
-const FeeCardComponent = ({handleNextClick}) => {
-  const [formData, setFormData] = useState({});
-  const tabs = Object.keys(feecardContent);
-  const [activeTab, setActiveTab] = useState(feecardContent[tabs[0]]);
+const FeeCardComponent = ({data, handleNextClick }) => {
+  const tabs = Object.keys(data);
+  const [activeTabKey, setActiveTabKey] = useState(tabs[0]);
+  const [feeCardContent, setFeeCardContent] = useState(data);
+
+  const activeTab = feeCardContent[activeTabKey];
+  const activeFieldsObject = activeTab?.fields?.[0] || {};
 
   const handleChange = (field, value) => {
-    setFormData({ ...formData, [field]: value });
+    setFeeCardContent((prevContent) => {
+      const updatedContent = { ...prevContent };
+      // Update the specific field's value inside the active tab
+      updatedContent[activeTabKey].fields[0][field].value = value;
+      return updatedContent;
+    });
   };
 
-  useEffect(() => {
-    const initialData = {};
-    activeTab?.fields?.forEach((item) => {
-      initialData[item.field] = '';
-    });
-    setFormData(initialData);
-
-  }, [activeTab])
-
-
-  useEffect(() => {
-    setActiveTab(feecardContent[tabs[0]]);
-  },[])
+  const handleUpdate = () => {
+    handleNextClick(feeCardContent); // or just call handleNextClick
+  };
 
   return (
     <View style={styles.container}>
       {/* Tabs */}
       <View style={styles.tabContainer}>
         {tabs.map((tab, index) => (
-            <TouchableOpacity
-                key={index}
-                style={[styles.tabButton, activeTab.title === feecardContent[tab].title && styles.activeTab]}
-                onPress={() => setActiveTab(feecardContent[tab])}
-            >
-                <Text style={[styles.tabText, activeTab.title === feecardContent[tab].title && styles.activeTabText]}>
-                {feecardContent[tab].title}
-                </Text>
-            </TouchableOpacity>
-            ))}
+          <TouchableOpacity
+            key={index}
+            style={[styles.tabButton, activeTabKey === tab && styles.activeTab]}
+            onPress={() => setActiveTabKey(tab)}
+          >
+            <Text style={[styles.tabText, activeTabKey === tab && styles.activeTabText]}>
+              {feeCardContent[tab].title}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
 
       {/* Form */}
       <ScrollView style={styles.formContainer}>
-        {activeTab?.fields?.map((item, index) => (
+        {Object.entries(activeFieldsObject).map(([fieldKey, fieldData], index) => (
           <View key={index} style={styles.inputRow}>
-            <Text style={styles.label}>{item.label}</Text>
+            <Text style={styles.label}>{fieldData.label}</Text>
             <TextInput
               style={styles.input}
-              value={formData[item.field] ?? ''}
-              onChangeText={(text) => handleChange(item.field, text)}
+              value={fieldData.value ?? ''}
+              onChangeText={(text) => handleChange(fieldKey, text)}
               placeholder=""
               placeholderTextColor="#ccc"
             />
@@ -59,8 +57,8 @@ const FeeCardComponent = ({handleNextClick}) => {
         ))}
 
         {/* Update Button */}
-        <TouchableOpacity style={styles.updateButton} onPress={() => handleNextClick()}>
-          <Text style={styles.updateButtonText}>update</Text>
+        <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
+          <Text style={styles.updateButtonText}>Update</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -68,6 +66,7 @@ const FeeCardComponent = ({handleNextClick}) => {
 };
 
 export default FeeCardComponent;
+
 
 const styles = StyleSheet.create({
   container: {

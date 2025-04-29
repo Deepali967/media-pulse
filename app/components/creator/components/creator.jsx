@@ -11,19 +11,20 @@ import { useNavigation } from '@react-navigation/native';
 import localStorageService from '@/app/service/localstorage.service';
 
 const Creator = () => {
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [allTabs, setTabs] = useState(tabs)
+  const [activeTab, setActiveTab] = useState(allTabs[0]);
   const navigation = useNavigation();
   const localstorageService = localStorageService()
 
   const renderContent = () => {
     switch (activeTab.route) {
       case 'BasicInfo':
-        return <BasicInfo handleNextClick={() => handleNavigation('next')}/>;
+        return <BasicInfo data={activeTab.data} handleNextClick={(basicInfo) => handleNavigation(basicInfo, 'next')}/>;
       case 'Categories':
-        return <Categories handleNextClick={() => handleNavigation('next')} />;
+        return <Categories data={activeTab.data} handleNextClick={(categories) => handleNavigation(categories, 'next')} />;
 
       case 'FeeCard':
-        return <FeeCardComponent handleNextClick={() => handleNavigation('next')} />;
+        return <FeeCardComponent data={activeTab.data} handleNextClick={(info) => handleNavigation(info, 'next')} />;
 
       default:
         return <BasicInfo handleNextClick={() => handleNavigation('next')} />;
@@ -31,28 +32,36 @@ const Creator = () => {
     }
   };
 
-  const handleNavigation = (type) => {
-    debugger;
-    switch(type){
-      case 'next' :
-        if(activeTab.id === 2) {
-          localstorageService.setStoreItem('profileCompletion', true)
+  const handleNavigation = (info, type) => {
+    switch (type) {
+      case 'next':
+        const updatedTabs = tabs.map((tab) => {
+          if (tab.id === activeTab.id) {
+            return { ...tab, data: info };
+          }
+          return tab;
+        });
+
+        setTabs(updatedTabs);
+
+        localstorageService.setStoreItem('tabs', updatedTabs);
+
+        if (activeTab.id === 2) {
+          localstorageService.setStoreItem('profileCompletion', true);
           navigation.navigate('DashboardScreen');
-          return
+          return;
         }
 
-        setTabs(tabs[activeTab.id + 1]);
+        setActiveTab(updatedTabs[activeTab.id + 1]);
         break;
-      
+
       case 'previous':
-        setTabs(tabs[activeTab.id - 1]);
+        setActiveTab(allTabs[activeTab.id - 1]);
         break;
     }
-  }
-  
-  const setTabs = (tab) => {
+  };
+  const setActiveTabData = (tab) => {
     if (activeTab === tab) return;
-
     setActiveTab(tab);
   };
 
@@ -62,7 +71,19 @@ const Creator = () => {
   }
 
   useEffect(() => {
-    setActiveTab(tabs[0]);
+    const importTabs = async () => {
+      const tabs = await localstorageService.getStoreItem('tabs');
+
+      if (tabs) {
+        setTabs(tabs);
+        setActiveTab(tabs[0]);
+      } else {
+        setTabs(allTabs);
+        setActiveTab(allTabs[0]);
+      }
+    };
+
+    importTabs();
   },[])
 
   return (
@@ -71,7 +92,7 @@ const Creator = () => {
       <View style={styles.header}>
         <TouchableOpacity onPress={() => handleNavigation('previous')}>
         <Image
-         onPress={() => handleNavigation('previous')}
+         onPress={() => handleNavigation('', 'previous')}
           source={require('../../../../assets/images/creator/back.png')}
           style={{
             width: 10,
@@ -87,11 +108,11 @@ const Creator = () => {
       {/* Tab List */}
       <View style={styles.tabContainer}>
         {
-          tabs.map((tab) => (
+          allTabs.map((tab) => (
             <TouchableOpacity
               key={tab.id}
               style={[styles.tabButton, activeTab.id === tab.id && styles.activeTab]}
-              onPress={() => setTabs(tab)}
+              onPress={() => setActiveTabData(tab)}
             >
               <Text style={[styles.tabText, activeTab === tab.route && styles.activeTabText]}>
                 {tab.text}
