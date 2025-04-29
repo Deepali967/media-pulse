@@ -13,7 +13,7 @@ import localStorageService from './service/localstorage.service';
 
 import Payment from './components/payment/payment';
 import Profile from './components/profile/profile';
-
+import UserProfile from './components/user-profile/userProfile';
 
 const Stack = createStackNavigator();
 
@@ -87,6 +87,7 @@ const AppNavigator = () => {
           <Stack.Screen name="CampaignScreen" component={CampaignScreen} />
           <Stack.Screen name="Payment" component={Payment} />
           <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="UserProfile" component={UserProfile} />
         </Stack.Navigator>
       )
   );

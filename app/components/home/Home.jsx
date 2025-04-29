@@ -10,7 +10,6 @@ import { setCampaign } from './../../service/campaign-service'; // Adjust the im
 const DashboardScreen = () => {
   const navigation = useNavigation();
 
-
   const handleCampaignView = (campaign) => {
     setCampaign(campaign);
     navigation.navigate('CampaignScreen');
@@ -25,6 +24,10 @@ const DashboardScreen = () => {
       case 'profile':
         navigation.navigate('Profile');
         break;  
+
+      case 'userProfile':  
+      navigation.navigate('UserProfile');
+        break; 
     }
   }
 
@@ -53,7 +56,7 @@ const DashboardScreen = () => {
           <Text style={styles.subText}>
             completing your profile boosts your visibility to more brands.
           </Text>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity onPress={() => handleNavigation('userProfile')} style={styles.button}>
             <Text style={styles.buttonText}>let's complete</Text>
             <Ionicons name="arrow-forward" size={18} color="white" style={{ marginLeft: 8 }} />
           </TouchableOpacity>

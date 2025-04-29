@@ -31,7 +31,7 @@ export default function Profile() {
           style={styles.profileImage}
         />
         <Text style={styles.userName}>karina bedi</Text>
-        <TouchableOpacity onPress={() => handleNaviagation('profile')} style={styles.viewProfileBtn}>
+        <TouchableOpacity onPress={() => handleNaviagation('userProfile')} style={styles.viewProfileBtn}>
           <Text style={styles.viewProfileText}>view profile</Text>
         </TouchableOpacity>
       </View>
