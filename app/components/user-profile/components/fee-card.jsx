@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-nati
 
 const FeeCard = ({ data }) => {
   const [activePlatform, setActivePlatform] = useState('instagram');
-  const platforms = Object.keys(data || {});
+  const platforms = Object.keys(data);
 
   const currentFields = data?.[activePlatform]?.fields?.[0] || {};
 
@@ -51,7 +51,7 @@ const FeeCard = ({ data }) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 16,
-    padding: 30
+    paddingHorizontal: 30
   },
   tabsContainer: {
     flexDirection: 'row',

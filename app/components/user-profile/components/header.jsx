@@ -11,7 +11,9 @@ const Header = () => {
       <TouchableOpacity onPress={() => naviation.goBack()}>
         <Ionicons name="chevron-back" size={24} color="#0A1B31" />
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => naviation.navigate('Creator')}>
       <Feather name="edit" size={20} color="#0A1B31" />
+      </TouchableOpacity>
     </View>
   );
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 const BasicInfo = ({ data }) => {
-debugger;
 const {name, titles, location, locations, bio} = data || {};
   return (
     <View style={styles.container}>

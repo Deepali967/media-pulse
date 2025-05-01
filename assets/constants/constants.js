@@ -16,6 +16,35 @@ export const loginTypes = [
     }
 ]
 
+
+
+export const feecardContent = {
+  'instagram' : {
+      title : 'Instagram',
+      fields : [
+          {
+              igReel: { label: 'ig reel', value: '' },
+              igCarouselPost: { label: 'ig carousel post', value: '' },
+              igStaticPost: { label: 'ig static post', value: '' },
+              igStory: { label: 'ig story', value: '' },
+              igGiveaway: { label: 'ig giveaway', value: '' },
+              igCollaborator: { label: 'ig collaborator', value: '' },
+              igLiveSession: { label: 'ig live session (15-30 min)', value: '' },
+          }
+      ]
+  },
+  'youtube' :  {
+      title : 'YouTube',
+      fields : [
+          {
+              ytVideo: { label: 'Youtube integrated video', value: '' },
+              ytShots: { label: 'Youtube Shots', value: '' },
+              ytCollab: { label: 'Youtube Collab', value: '' },
+          },
+      ]
+  }
+}
+
 export const tabs = [
     {
         id:0,
@@ -85,7 +114,7 @@ export const tabs = [
         id:2,
         text :'Fee card',
         route: 'FeeCard', 
-        data : {}
+        data : feecardContent
     }
 ]
 
@@ -104,34 +133,6 @@ export const campaignTabs = [
       data : {}
   },
 ]
-
-
-export const feecardContent = {
-    'instagram' : {
-        title : 'Instagram',
-        fields : [
-            {
-                igReel: { label: 'ig reel', value: '' },
-                igCarouselPost: { label: 'ig carousel post', value: '' },
-                igStaticPost: { label: 'ig static post', value: '' },
-                igStory: { label: 'ig story', value: '' },
-                igGiveaway: { label: 'ig giveaway', value: '' },
-                igCollaborator: { label: 'ig collaborator', value: '' },
-                igLiveSession: { label: 'ig live session (15-30 min)', value: '' },
-            }
-        ]
-    },
-    'youtube' :  {
-        title : 'YouTube',
-        fields : [
-            {
-                ytVideo: { label: 'Youtube integrated video', value: '' },
-                ytShots: { label: 'Youtube Shots', value: '' },
-                ytCollab: { label: 'Youtube Collab', value: '' },
-            },
-        ]
-    }
-}
 
 
 export const CampaignCard = [

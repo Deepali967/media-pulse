@@ -33,7 +33,7 @@ const UserProfile = () => {
   if (isLoading) return null;
 
   return (
-    <ScrollView className="bg-[#F8FCFF] flex-1 px-4">
+    <ScrollView style={{backgroundColor:'#f1f5f9'}} className="bg-[#F8FCFF] flex-1 px-4">
       <Header />
       <BasicInfo data={data?.basic} />
 

@@ -7,8 +7,9 @@ const CategoriesAccordion = ({categoryData}) => {
   return (
     <ScrollView style={styles.container}>
       {Object.keys(categoryData).map((category) => {
-        const selectedItems = categoryData[category].filter(item => item.selected);
 
+        const selectedItems = categoryData[category].filter(item => item.selected);
+        
         return (
           <View key={category} style={styles.section}>
             <Text style={styles.title}>{category}</Text>
