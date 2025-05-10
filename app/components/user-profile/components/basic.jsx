@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 const BasicInfo = ({ data }) => {
-const {name, titles, location, locations, bio} = data || {};
+const {name, titles,currentLocation, locations, bio} = data || {};
   return (
     <View style={styles.container}>
       <Image
@@ -19,13 +19,13 @@ const {name, titles, location, locations, bio} = data || {};
             key={loc}
             style={[
               styles.locationButton,
-              loc === location ? styles.activeLocation : styles.inactiveLocation,
+              loc === currentLocation ? styles.activeLocation : styles.inactiveLocation,
             ]}
           >
             <Text
               style={[
                 styles.locationText,
-                loc === location ? styles.activeText : styles.inactiveText,
+                loc === currentLocation ? styles.activeText : styles.inactiveText,
               ]}
             >
               {loc}

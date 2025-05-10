@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import { useNavigation } from '@react-navigation/native';
 
 import localStorageService from '../../../../service/localstorage.service';
+import { globalStyles } from '@/assets/typography/typography';
 
 const ExistingAccount = () => {
     const [currentScreen, setCurrentScreen] = useState('login');
@@ -191,6 +192,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         backgroundColor: '#FFFFFF',
         marginBottom: 15,
+        ...globalStyles.paragraph
     },
     button: {
         width: '100%',
@@ -200,17 +202,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 20,
+        marginBottom: 20,
     },
     buttonText: {
         color: '#FFFFFF',
-        fontSize: 18,
-        fontWeight: 'bold',
+        ...globalStyles.btnText,
     },
     forgotText: {
         color: '#1B1B1B',
-        fontSize: 14,
         alignSelf: 'flex-end',
-        marginBottom: 20,
+        ...globalStyles.btnText,
     },
     infoText: {
         textAlign: 'center',

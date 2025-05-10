@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { globalStyles } from '@/assets/typography/typography';
+import { COLORS } from '@/assets/typography/colors';
 
 const Apply = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -45,7 +47,9 @@ const Apply = () => {
 
             {/* Step 1: Name, Email, Phone Input */}
             {currentStep === 1 && (
-                <>
+                <View style={{paddingHorizontal: 20,  width: '100%',
+                    height: '100%',
+                    flex: 1,justifyContent: 'flex-end',  paddingBottom: 20,}}>
                     <TextInput
                         style={styles.input}
                         placeholder="name"
@@ -72,13 +76,15 @@ const Apply = () => {
                     <TouchableOpacity style={styles.button} onPress={() => setCurrentStep(2)}>
                         <Text style={styles.buttonText}>next</Text>
                     </TouchableOpacity>
-                </>
+                </View>
             )}
 
             {/* Step 2: OTP Verification */}
             {currentStep === 2 && (
-                <>
-                    <Text style={styles.infoText}>enter otp you received on email or on phone no.</Text>
+                        <View style={{paddingHorizontal: 20,  width: '100%',
+                            height: '100%',
+                            flex: 1,justifyContent: 'flex-end',  paddingBottom: 20,}}>
+                    <Text style={styles.infoText}>enter otp you received on email <br /> or on phone no.</Text>
                     <View style={styles.otpContainer}>
                         {otp.map((digit, index) => (
                             <TextInput
@@ -103,20 +109,20 @@ const Apply = () => {
                     <TouchableOpacity style={styles.button} onPress={() => setCurrentStep(3)}>
                         <Text style={styles.buttonText}>verify</Text>
                     </TouchableOpacity>
-                </>
+                </View>
             )}
 
             {/* Step 3: Confirmation Message */}
             {currentStep === 3 && (
-                <>
-                    <Text style={styles.infoText}>thank you!</Text>
+                <View style={styles.confirmation}>
+                    <Text style={styles.infoTextTy}>thank you!</Text>
                     <Text style={styles.subText}>
-                        we have received your application. we will notify you once it gets verified.
+                        we have received your application. <br /> we will notify you once it gets verified.
                     </Text>
                     <TouchableOpacity style={styles.button} onPress={() => setCurrentStep(4)}>
                         <Text style={styles.buttonText}>close</Text>
                     </TouchableOpacity>
-                </>
+                </View>
             )}
         </View>
     );
@@ -128,7 +134,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#F3F5F7',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        paddingHorizontal: 20,
+    },
+    confirmation:{
+        backgroundColor: COLORS.primary,
+        width: '100%',
+        height: '100%',
+        flex: 1,
+        paddingLeft: 0,
+        paddingRight: 0,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        paddingBottom: 20,
     },
     backButton: {
         position: 'absolute',
@@ -148,6 +164,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         backgroundColor: '#FFFFFF',
         marginBottom: 15,
+        ...globalStyles.btnText,
+        fontSize : 18
     },
     button: {
         width: '100%',
@@ -160,21 +178,27 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#FFFFFF',
-        fontSize: 18,
-        fontWeight: 'bold',
+        ...globalStyles.btnText,
+         fontSize : 18
     },
     infoText: {
         textAlign: 'center',
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#1B1B1B',
         marginBottom: 10,
+        ...globalStyles.btnText,
+        color : COLORS.primary
+    },
+    infoTextTy: {
+        textAlign: 'center',
+        marginBottom: 10,
+        ...globalStyles.notificationText,
+        color : COLORS.white,
+        fontSize: 20,
     },
     subText: {
         textAlign: 'center',
-        fontSize: 14,
-        color: '#1B1B1B',
+        color: COLORS.white,
         marginBottom: 20,
+        ...globalStyles.btnText
     },
     otpContainer: {
         flexDirection: 'row',
@@ -188,9 +212,10 @@ const styles = StyleSheet.create({
         borderColor: '#D1D5DB',
         borderRadius: 8,
         textAlign: 'center',
-        fontSize: 18,
         backgroundColor: '#FFFFFF',
         marginHorizontal: 5,
+        ...globalStyles.btnText,
+        fontSize : 18
     },
     resendContainer: {
         flexDirection: 'row',
@@ -198,15 +223,18 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 15,
         paddingHorizontal: 20,
+        ...globalStyles.btnText,
+        fontSize : 18
     },
     resendText: {
-        fontSize: 14,
-        color: '#1B1B1B',
+        color: 'rgba(8, 25, 50, 0.5)',
+        ...globalStyles.btnText,
+        fontSize : 12
     },
     timerText: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#1B1B1B',
+        ...globalStyles.btnText,
+        fontSize : 12,
+        color : COLORS.primary
     },
 });
 

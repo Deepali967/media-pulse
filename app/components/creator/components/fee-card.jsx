@@ -71,7 +71,8 @@ export default FeeCardComponent;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
   },
   tabContainer: {
     flexDirection: 'row',
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
   },
   updateButtonText: {
     color: '#FFFFFF',
-    fontSize: 18,
+    ...globalStyles.paragraph,
     fontWeight: '600',
   },
 });

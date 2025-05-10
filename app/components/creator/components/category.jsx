@@ -68,7 +68,7 @@ const CategoriesScreen = ({ data, handleNextClick }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff'},
+  container: { flex: 1, paddingHorizontal: 20, paddingVertical: 20 },
 
   categorySection: { fontSize: 18,marginBottom: 20, width: '100%',...globalStyles.paragraph},
 
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 20,
   },
-  nextButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  nextButtonText: { color: '#fff', fontWeight: 'bold', ...globalStyles.paragraph, },
 });
 
 export default CategoriesScreen;

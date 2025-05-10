@@ -16,6 +16,8 @@ const Creator = () => {
   const navigation = useNavigation();
   const localstorageService = localStorageService()
 
+  const [isLoading, setLoading] = useState(true);
+
   const renderContent = () => {
     switch (activeTab.route) {
       case 'BasicInfo':
@@ -35,7 +37,7 @@ const Creator = () => {
   const handleNavigation = (info, type) => {
     switch (type) {
       case 'next':
-        const updatedTabs = tabs.map((tab) => {
+        const updatedTabs = allTabs.map((tab) => {
           if (tab.id === activeTab.id) {
             return { ...tab, data: info };
           }
@@ -66,6 +68,7 @@ const Creator = () => {
   };
 
   const handleSkip = () => {
+    localstorageService.setStoreItem('tabs', tabs)
     localstorageService.setStoreItem('profileCompletion', true)
     navigation.navigate('DashboardScreen');
   }
@@ -81,13 +84,15 @@ const Creator = () => {
         setTabs(allTabs);
         setActiveTab(allTabs[0]);
       }
+
+      setLoading(false);
     };
 
     importTabs();
   },[])
 
   return (
-    <View style={styles.container}>
+   !isLoading ? <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => handleNavigation('previous')}>
@@ -114,7 +119,7 @@ const Creator = () => {
               style={[styles.tabButton, activeTab.id === tab.id && styles.activeTab]}
               onPress={() => setActiveTabData(tab)}
             >
-              <Text style={[styles.tabText, activeTab === tab.route && styles.activeTabText]}>
+              <Text style={[styles.tabText, activeTab === tab.id && styles.activeTabText]}>
                 {tab.text}
               </Text>
             </TouchableOpacity>
@@ -127,6 +132,9 @@ const Creator = () => {
         {renderContent()}
       </ScrollView>
     </View>
+    : <View style={{flex:1, backgroundColor:'#fff', justifyContent:'center', alignItems:'center'}}>
+        <Text style={{...globalStyles.paragraph, fontSize: 14}}>Loading...</Text>
+      </View>
   );
 };
 
@@ -142,12 +150,12 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
   },
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1,  backgroundColor: "rgba(245, 251, 255, 1)" },
   tabContainer: { flexDirection: 'row', justifyContent: 'space-around' },
   tabButton: { paddingVertical: 10, paddingHorizontal: 20 },
   tabText: { ...globalStyles.paragraph, fontSize: 14, color: '#091C38'},
-  activeTabText: { ...globalStyles.notificationText, fontSize: 14, color: '#091C38', fontWeight: 'bold' },
-  contentContainer: { flex: 1, padding: 20 },
+  activeTabText: { ...globalStyles.notificationText, fontSize: 14, color: '#091C38', fontWeight: 700 },
+  contentContainer: { flex: 1, paddingBottom: 20 },
 });
 
 export default Creator;

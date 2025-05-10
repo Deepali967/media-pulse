@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // For radio buttons & close icons (optional)
 import { globalStyles } from '@/assets/typography/typography';
+import { COLORS } from '@/assets/typography/colors';
 
 const BasicInfo = ({ data, handleNextClick }) => {
   const [basicInfo, setBasicInfo] = useState(data);
@@ -68,7 +69,7 @@ const BasicInfo = ({ data, handleNextClick }) => {
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>bio</Text>
         <TextInput
-          style={[styles.input, { height: 80 }]}
+          style={[styles.input, { height: 100, paddingVertical: 10 }]}
           placeholder="Write something..."
           value={basicInfo['bio']}
           onChangeText={(e) => updateBasicInfo('bio', e)}
@@ -121,21 +122,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   profileImage: {
-    width: 280,
-    height: 300,
+    width: '100%',
     borderRadius: 20,
   },
   replaceBtn: {
     marginTop: 10,
-    borderColor: '#000',
+    borderColor: COLORS.primary,
     borderWidth: 1,
     borderRadius: 10,
-    paddingVertical: 4,
-    paddingHorizontal: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 40,
   },
   replaceText: {
     ...globalStyles.btnText,
-    color: '#000',
+    color: COLORS.primary,
   },
   inputWrapper: {
     marginBottom: 20,
@@ -147,14 +147,14 @@ const styles = StyleSheet.create({
     textTransform: 'lowercase',
   },
   input: {
-    backgroundColor: '#fff',
     borderRadius: 10,
     paddingHorizontal: 15,
-    paddingVertical: 10,
     fontSize: globalStyles.paragraph.fontSize,
     fontFamily: globalStyles.paragraph.fontFamily,
     borderWidth: 1,
     borderColor: '#ddd',
+    height: 50,
+    color: COLORS.primary,
   },
   tagsWrapper: {
     flexDirection: 'row',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     paddingHorizontal: 10,
     paddingVertical: 5,
-    borderRadius: 15,
+    borderRadius: 5,
     marginRight: 5,
     marginTop: 5,
   },
@@ -199,11 +199,12 @@ const styles = StyleSheet.create({
     fontFamily: globalStyles.paragraph.fontFamily,
     color: '#333',
     marginRight: 10,
+    color: COLORS.primary,
   },
   hereText: {
     fontSize: globalStyles.btnText.fontSize,
     fontFamily: globalStyles.btnText.fontFamily,
-    color: '#666',
+    color: COLORS.primary,
   },
   addLocation: {
     marginTop: 5,
@@ -211,18 +212,18 @@ const styles = StyleSheet.create({
   addLocationText: {
     fontSize: globalStyles.paragraph.fontSize,
     fontFamily: globalStyles.paragraph.fontFamily,
-    color: '#007BFF',
+    color: COLORS.primary,
   },
   socialRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 10,
     marginBottom: 10,
     borderWidth: 1,
     borderColor: '#ddd',
+    height: 50,
+    color: COLORS.primary,
   },
   socialIcon: {
     width: 20,
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: globalStyles.paragraph.fontSize,
     fontFamily: globalStyles.paragraph.fontFamily,
-    color: '#000',
+    color: COLORS.primary,
   },
   nextButton: {
     marginTop: 20,
@@ -245,7 +246,7 @@ const styles = StyleSheet.create({
   },
   nextButtonText: {
     ...globalStyles.notificationText,
-    color: '#fff',
+    color: COLORS.white,
     textTransform: 'lowercase',
   },
 });
