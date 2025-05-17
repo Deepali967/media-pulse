@@ -50,7 +50,6 @@ const FeeCard = ({ data }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 16,
     paddingHorizontal: 30
   },
   tabsContainer: {
@@ -85,13 +84,8 @@ const styles = StyleSheet.create({
   feeRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#FFFFFF',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: 8,
     marginBottom: 12,
-    borderRadius: 12,
-    borderColor: '#E2E8F0',
-    borderWidth: 1
   },
   label: {
     fontSize: 14,

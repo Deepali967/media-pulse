@@ -7,6 +7,7 @@ import BasicInfo from './components/basic';
 import CategoriesAccordion from './components/category';
 import FeeCard from './components/fee-card';
 import { globalStyles } from '@/assets/typography/typography';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const TABS = ['categories', 'fee card'];
 
@@ -33,12 +34,13 @@ const UserProfile = () => {
   if (isLoading) return null;
 
   return (
+    <SafeAreaView style={{ flex: 1 }}>
     <ScrollView style={{backgroundColor:'#f1f5f9'}} className="bg-[#F8FCFF] flex-1 px-4">
       <Header />
       <BasicInfo data={data?.basic} />
 
       {/* Tabs */}
-      <View style={{ flexDirection: 'row', backgroundColor: '#F1F5F9', padding: 20, borderRadius: 10, marginTop: 16 }}>
+      <View style={{ flexDirection: 'row', backgroundColor: '#F1F5F9', padding: 20, borderRadius: 10}}>
         {TABS.map(tab => (
           <TouchableOpacity
             key={tab}
@@ -63,6 +65,7 @@ const UserProfile = () => {
       {activeTab === 'categories' && <CategoriesAccordion categoryData={data?.categories} />}
       {activeTab === 'fee card' && <FeeCard data={data?.feeCard} />}
     </ScrollView>
+    </SafeAreaView>
   );
 };
 

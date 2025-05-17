@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Profile() {
 
@@ -20,6 +21,7 @@ export default function Profile() {
     }
 
   return (
+    <SafeAreaView style={{ flex: 1 }}>
     <ScrollView style={styles.container}>
       <TouchableOpacity onPress={() => handleNaviagation('back')}>
         <Image style={styles.backButton} source={require('../../../assets/images/creator/back.png')} />
@@ -47,6 +49,7 @@ export default function Profile() {
         />
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 }
 

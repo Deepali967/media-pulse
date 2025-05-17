@@ -7,6 +7,7 @@ import { globalStyles } from "@/assets/typography/typography";
 import { campaignTabs } from "@/assets/constants/constants";
 
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CampaignScreen() {
   const [activeTab, setActiveTab] = useState(campaignTabs[0]);
@@ -20,6 +21,7 @@ export default function CampaignScreen() {
   }
 
   return (
+    <SafeAreaView style={{ flex: 1 }}>
     <View style={styles.container}>
       
       {/* Header */}
@@ -59,6 +61,7 @@ export default function CampaignScreen() {
       </View>
 
     </View>
+    </SafeAreaView>
   );
 }
 
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: '#F7FAFC',
   },
   header: {
     flexDirection: "row",

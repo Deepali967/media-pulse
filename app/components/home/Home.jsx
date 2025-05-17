@@ -6,6 +6,7 @@ import { CampaignCard } from '@/assets/constants/constants';
 import { globalStyles } from '@/assets/typography/typography';
 
 import { setCampaign } from './../../service/campaign-service'; // Adjust the import path as necessary
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DashboardScreen = () => {
   const navigation = useNavigation();
@@ -32,6 +33,7 @@ const DashboardScreen = () => {
   }
 
   return (
+    <SafeAreaView style={{ flex: 1 }}>
     <ScrollView style={styles.container}>
       {/* Top Header */}
       <View style={styles.header}>
@@ -100,6 +102,7 @@ const DashboardScreen = () => {
       ))
     }
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F7FAFC',
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingTop: 40,
   },
   header: {
@@ -118,8 +121,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profilePic: {
-    width: 40,
-    height: 40,
+    width: 48,
+    height: 48,
     borderRadius: 20,
   },
   headerIcons: {
@@ -134,21 +137,22 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     flexDirection: 'row',
     padding: 20,
-    marginVertical: 20,
+    marginVertical: 40,
     alignItems: 'center',
   },
   completeProfileText: {
-    color: '#ffffff',
-    marginBottom: 8,
+    color: '#F5FBFF',
+    marginBottom: 12,
     textTransform: 'capitalize',
     ...globalStyles.paragraph,
     fontSize: 16,
   },
   subText: {
-    color: '#b0bec5',
+    color: '#F6FBFE80',
     marginBottom: 16,
     ...globalStyles.paragraph,
     fontSize: 12,
+    lineHeight: 18,
   },
   button: {
     backgroundColor: '#1A2B4C',
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textTransform: 'capitalize',
     ...globalStyles.paragraph,
-    fontSize: 12,
+    fontSize: 10,
   },
   progressCircle: {
     width: 80,
@@ -188,10 +192,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sectionTitle: {
-    color: '#1c1c1e',
+    color: '#091C38',
     textTransform: 'capitalize',
     ...globalStyles.paragraph,
     fontSize: 14,
+    fontWeight:500
   },
   exploreText: {
     color: '#1c1c1e',
@@ -208,8 +213,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   campaignImage: {
-    width: 100,
-    height: 150,
+    width: 150,
+    flex: 0,
     borderRadius: 12,
     marginRight: 16,
   },

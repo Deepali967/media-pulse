@@ -1,29 +1,60 @@
 import { globalStyles } from '@/assets/typography/typography';
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  LayoutAnimation,
+  Platform,
+  UIManager,
+  Image,
+} from 'react-native';
 
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
-const CategoriesAccordion = ({categoryData}) => {
+const CategoriesAccordion = ({ categoryData }) => {
+  const [expandedSections, setExpandedSections] = useState({});
+
+  const toggleSection = (category) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpandedSections((prev) => ({
+      ...prev,
+      [category]: !prev[category],
+    }));
+  };
+
   return (
     <ScrollView style={styles.container}>
       {Object.keys(categoryData).map((category) => {
+        const selectedItems = categoryData[category].filter((item) => item.selected);
+        const isExpanded = expandedSections[category];
 
-        const selectedItems = categoryData[category].filter(item => item.selected);
-        
         return (
           <View key={category} style={styles.section}>
-            <Text style={styles.title}>{category}</Text>
-            <View style={styles.tags}>
-              {selectedItems.length > 0 ? (
-                selectedItems.map((item) => (
-                  <View key={item.title} style={styles.tag}>
-                    <Text style={styles.tagText}>{item.title}</Text>
-                  </View>
-                ))
-              ) : (
-                <Text style={styles.noSelection}>No selections</Text>
-              )}
-            </View>
+            <TouchableOpacity onPress={() => toggleSection(category)}>
+              <Text style={styles.title}>
+                {category} {isExpanded 
+                  ? <Image source={require('../../../../assets/images/arrow-up.svg')} height={12} width={12} /> 
+                  : <Image  source={require('../../../../assets/images/arrow-down.svg')} height={12} width={12} />}
+              </Text>
+            </TouchableOpacity>
+            {isExpanded && (
+              <View style={styles.tags}>
+                {selectedItems.length > 0 ? (
+                  selectedItems.map((item) => (
+                    <View key={item.title} style={styles.tag}>
+                      <Text style={styles.tagText}>{item.title}</Text>
+                    </View>
+                  ))
+                ) : (
+                  <Text style={styles.noSelection}>No selections</Text>
+                )}
+              </View>
+            )}
           </View>
         );
       })}
@@ -34,11 +65,11 @@ const CategoriesAccordion = ({categoryData}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 30,
-    backgroundColor: '#f6f8fa',
+    paddingHorizontal: 30,
+    backgroundColor: '#f1f5f9',
   },
   section: {
-    marginBottom: 24,
+    marginBottom: 12,
   },
   title: {
     fontWeight: '600',
@@ -47,20 +78,28 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     ...globalStyles.paragraph,
     fontSize: 13,
+    backgroundColor: '#0819320D',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   tags: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
   tag: {
-    backgroundColor: '#e0e0e0',
-    borderRadius: 20,
+    borderRadius: 6,
     paddingVertical: 6,
     paddingHorizontal: 12,
     marginRight: 8,
     marginBottom: 8,
     ...globalStyles.paragraph,
     fontSize: 16,
+    borderColor:"#0819320D",
+    borderWidth: 1,
   },
   tagText: {
     fontSize: 14,
@@ -70,6 +109,7 @@ const styles = StyleSheet.create({
     color: '#888',
     ...globalStyles.paragraph,
     fontSize: 14,
+    textAlign: 'center',
   },
 });
 

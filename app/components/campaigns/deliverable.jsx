@@ -18,8 +18,7 @@ const DeliverablesTab = ({campaign}) => {
         <View 
           key={index} 
           style={[
-            styles.itemContainer, 
-            index === 2 && styles.lastItemBorder // Highlight the last item with a border
+            styles.itemContainer
           ]}
         >
           <Text style={styles.titleText}>{item.title}</Text>
@@ -44,6 +43,8 @@ const styles = StyleSheet.create({
     color: '#555',
     ...globalStyles.paragraph,
     fontSize: 14,
+    fontWeight: 600,
+    textTransform: 'capitalize',
   },
   counterBox: {
     backgroundColor: '#091C380D',

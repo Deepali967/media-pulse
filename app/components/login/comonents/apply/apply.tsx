@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import { useNavigation } from '@react-navigation/native';
 import { globalStyles } from '@/assets/typography/typography';
 import { COLORS } from '@/assets/typography/colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Apply = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -39,6 +40,7 @@ const Apply = () => {
     };
 
     return (
+        <SafeAreaView style={{flex: 1}}> 
         <View style={styles.container}>
             {/* Back Button (Hide in the last screen) */}
                 <TouchableOpacity onPress={() =>handleNavigation()} style={styles.backButton}>
@@ -125,6 +127,7 @@ const Apply = () => {
                 </View>
             )}
         </View>
+        </SafeAreaView>
     );
 };
 

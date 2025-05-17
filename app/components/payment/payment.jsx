@@ -2,10 +2,12 @@ import { globalStyles } from "@/assets/typography/typography";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { ScrollView, View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Payment = () => {
     const navigation = useNavigation();
     return (
+      <SafeAreaView style={{ flex: 1 }}>
         <ScrollView style={{ flex: 1 }}>
             <View style={styles.header}>
                <TouchableOpacity onPress={() => navigation.goBack()}> <Image source={require("../../../assets/images/creator/back.png")} style={{ width: 15, height: 15 }}/>
@@ -57,6 +59,7 @@ const Payment = () => {
                 ))}
             </View>
         </ScrollView>
+        </SafeAreaView>
     );
 };
 

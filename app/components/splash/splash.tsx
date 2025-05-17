@@ -3,6 +3,7 @@ import Button from '../../shared/components/button/button'
 import {COLORS} from '../../../assets/typography/colors'
 import {globalStyles} from '../../../assets/typography/typography'
 import { useNavigation } from "@react-navigation/native"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 const Splash = () => {
     const navigation = useNavigation()
@@ -12,6 +13,7 @@ const Splash = () => {
     }
 
     return (
+       <SafeAreaView style={{flex: 1}}> 
         <ImageBackground
             style={styles.container}
             source={require('../../../assets/images/splash/splash.jpg')}
@@ -21,6 +23,7 @@ const Splash = () => {
                 <Button text={'Enter'}  callbackFn={handleNavigation} customStyle={styles.button} textStyle={styles.buttontext}/>
             </View>
         </ImageBackground>
+        </SafeAreaView>    
     )
 }
 

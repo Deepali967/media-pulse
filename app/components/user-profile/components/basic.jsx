@@ -1,3 +1,4 @@
+import { globalStyles } from '@/assets/typography/typography';
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
@@ -10,28 +11,47 @@ const {name, titles,currentLocation, locations, bio} = data || {};
         style={styles.image}
         resizeMode="cover"
       />
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.titles}>{titles?.join(', ')}</Text>
+      
+      <View style={styles.infoHeader}>
+        <View>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.titles}>{titles?.join(', ')}</Text>
+        </View>
+
+        <View style={styles.socialMedia}>
+          <Image source={require('../../../../assets/images/creator/instagram-icn.svg')} style={{width: 30, height: 30}} />
+          <Image source={require('../../../../assets/images/creator/youtube-icn.svg')} style={{width: 30, height:30}} />
+        </View>
+      </View>
 
       <View style={styles.locationContainer}>
-        {locations?.map((loc) => (
-          <TouchableOpacity
-            key={loc}
-            style={[
-              styles.locationButton,
-              loc === currentLocation ? styles.activeLocation : styles.inactiveLocation,
-            ]}
-          >
-            <Text
-              style={[
-                styles.locationText,
-                loc === currentLocation ? styles.activeText : styles.inactiveText,
-              ]}
-            >
-              {loc}
-            </Text>
-          </TouchableOpacity>
-        ))}
+        
+      {locations?.map((loc) => (
+  <View key={loc} style={{ position: 'relative' }}>
+    {loc === currentLocation && (
+      <Image
+        source={require('../../../../assets/images/selected.svg')}
+        style={styles.selectedImage}
+      />
+    )}
+    <TouchableOpacity
+      style={[
+        styles.locationButton,
+        loc === currentLocation ? styles.activeLocation : styles.inactiveLocation,
+      ]}
+    >
+      <Text
+        style={[
+          styles.locationText,
+          loc === currentLocation ? styles.activeText : styles.inactiveText,
+        ]}
+      >
+        {loc}
+      </Text>
+    </TouchableOpacity>
+  </View>
+))}
+
       </View>
 
       <Text style={styles.bio}>{bio}</Text>
@@ -41,23 +61,52 @@ const {name, titles,currentLocation, locations, bio} = data || {};
 
 const styles = StyleSheet.create({
   container: { alignItems: 'center', paddingHorizontal:30 },
-  image: { width: '100%', height: 250, borderRadius: 16 },
-  name: { fontSize: 18, fontWeight: 'bold', color: '#0A1B31', marginTop: 16 },
-  titles: { fontSize: 14, color: '#6B7280' },
+  image: { width: '100%', borderRadius: 16 },
+
+  infoHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '100%',
+  },
+  selectedImage: {
+    position: 'absolute',
+    top: -14,
+    right: 25,
+    width: 12,
+    height: 12,
+    zIndex: 2,
+  },
+  
+  socialMedia : {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 16,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginTop: 16,
+  },
+
+  name: { fontSize: 18, fontWeight: 600, color: '#0A1B31', marginTop: 16, textAlign: 'left', width: '100%',  ...globalStyles.notificationText},
+  titles: { fontSize: 12, color: '#6B7280', marginTop: 4, textAlign: 'left', width: '100%' },
   locationContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    marginVertical: 16,
+    marginTop: 30,
     gap: 8,
+    width: '100%',
+    position: 'relative',
+    marginBottom: 20,
   },
-  locationButton: { paddingHorizontal: 16, paddingVertical: 4, borderRadius: 16 },
-  activeLocation: { backgroundColor: '#0A1B31' },
+  locationButton: { paddingHorizontal: 16, paddingVertical: 4, borderRadius: 4, marginTop: -5 },
+  activeLocation: { backgroundColor: '#0819320D' },
   inactiveLocation: { backgroundColor: '#F1F5F9' },
   locationText: { fontSize: 14 },
-  activeText: { color: '#FFFFFF' },
-  inactiveText: { color: '#0A1B31' },
-  bio: { textAlign: 'center', fontSize: 12, color: '#6B7280', marginBottom: 16 },
+  activeText: { color: '#081932' },
+  inactiveText: { color: '#889197' },
+  bio: { textAlign: 'center', fontSize: 12, color: '#6B7280', marginBottom: 16 , backgroundColor: "#08193205", width: '100%', padding: 5, borderRadius: 10},
 });
 
 export default BasicInfo;

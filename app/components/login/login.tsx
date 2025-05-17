@@ -3,6 +3,7 @@ import { COLORS } from "@/assets/typography/colors";
 import {loginTypes} from '../../../assets/constants/constants'
 import { globalStyles } from "@/assets/typography/typography";
 import { useNavigation } from "@react-navigation/native"
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Login = () => {
     const navigation = useNavigation()
@@ -20,12 +21,14 @@ const Login = () => {
     }
 
     return (
+        <SafeAreaView style={{flex: 1}}> 
         <View style={styles.loginContainer}>
             <Text style={StyleSheet.compose(globalStyles.heading, styles.heading)} >tist</Text>
             <View style={styles.loginOptions}>
                 {renderLoginOptions()}
             </View>
         </View>
+        </SafeAreaView>
     );
 }
 

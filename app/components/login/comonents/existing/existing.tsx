@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import localStorageService from '../../../../service/localstorage.service';
 import { globalStyles } from '@/assets/typography/typography';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ExistingAccount = () => {
     const [currentScreen, setCurrentScreen] = useState('login');
@@ -74,6 +75,7 @@ const ExistingAccount = () => {
     const handleUserLogin = () => {};
 
     return (
+      <SafeAreaView style={{ flex: 1 }}>  
         <View style={styles.container}>
             {/* Back Button */}
             <TouchableOpacity onPress={() => handleNavigation()} style={styles.backButton}>
@@ -162,6 +164,7 @@ const ExistingAccount = () => {
                 </>
             )}
         </View>
+        </SafeAreaView>
     );
 };
 

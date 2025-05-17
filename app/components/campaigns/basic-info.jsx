@@ -64,7 +64,7 @@ export default BasicInfoTab;
     campaignLabel: {
       color: '#8e8e93',
       marginTop: 8,
-      marginBottom: 8,
+      marginBottom: 5,
       textTransform: 'capitalize',
       ...globalStyles.paragraph,
       textAlign: 'center',
@@ -98,5 +98,6 @@ export default BasicInfoTab;
       textAlign: 'center',
       fontSize: 12,
       paddingHorizontal: 20,
+      lineHeight: 20
     }
   })

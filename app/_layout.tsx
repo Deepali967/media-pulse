@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     backgroundColor: '#F7FAFC',
+    marginTop: 20,
   },
 
   scrollContainer: {

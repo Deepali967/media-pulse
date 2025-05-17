@@ -9,6 +9,7 @@ import { tabs } from '@/assets/constants/constants';
 
 import { useNavigation } from '@react-navigation/native';
 import localStorageService from '@/app/service/localstorage.service';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Creator = () => {
   const [allTabs, setTabs] = useState(tabs)
@@ -68,7 +69,7 @@ const Creator = () => {
   };
 
   const handleSkip = () => {
-    localstorageService.setStoreItem('tabs', tabs)
+    localstorageService.setStoreItem('tabs', allTabs)
     localstorageService.setStoreItem('profileCompletion', true)
     navigation.navigate('DashboardScreen');
   }
@@ -92,7 +93,8 @@ const Creator = () => {
   },[])
 
   return (
-   !isLoading ? <View style={styles.container}>
+   <SafeAreaView style={{ flex: 1, backgroundColor: 'rgba(245, 251, 255, 1)' }}> 
+   {!isLoading ? <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => handleNavigation('previous')}>
@@ -134,7 +136,8 @@ const Creator = () => {
     </View>
     : <View style={{flex:1, backgroundColor:'#fff', justifyContent:'center', alignItems:'center'}}>
         <Text style={{...globalStyles.paragraph, fontSize: 14}}>Loading...</Text>
-      </View>
+      </View>}
+     </SafeAreaView> 
   );
 };
 

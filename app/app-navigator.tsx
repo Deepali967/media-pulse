@@ -14,6 +14,7 @@ import localStorageService from './service/localstorage.service';
 import Payment from './components/payment/payment';
 import Profile from './components/profile/profile';
 import UserProfile from './components/user-profile/userProfile';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
@@ -68,7 +69,8 @@ const AppNavigator = () => {
   }, []); // Run once when the component mounts
 
   return (
-      loading ? (
+    <SafeAreaProvider>
+      {loading ? (
         <></>
       ) : (
         <Stack.Navigator
@@ -89,7 +91,8 @@ const AppNavigator = () => {
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="UserProfile" component={UserProfile} />
         </Stack.Navigator>
-      )
+      )}
+    </SafeAreaProvider>  
   );
 };
 

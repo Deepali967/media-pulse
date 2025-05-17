@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ProgressScreen from './progress';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Status = () => {
     const [showProgress, setShowProgress] = useState(false);
@@ -11,6 +12,7 @@ const Status = () => {
         const navigation = useNavigation();
 
         return (
+            <SafeAreaView style={{flex: 1}}>
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Text style={styles.backText}>←</Text>
@@ -37,6 +39,7 @@ const Status = () => {
                     <Text style={styles.buttonText}>check</Text>
                 </TouchableOpacity>
             </View>
+            </SafeAreaView>
         );
     };
 
