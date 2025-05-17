@@ -10,7 +10,8 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.tist"
+      "bundleIdentifier": "com.anonymous.tist",
+       "buildNumber": "11.1"
     },
     "android": {
       "adaptiveIcon": {
