@@ -10,11 +10,15 @@
         "buildType": "apk"
       },
       "ios": {
-        "simulator": true
+        "simulator": true,
+        "buildNumber": "12"
       }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "ios": {
+        "buildNumber": "12"
+      }
     },
     "production": {
       "distribution": "store",
@@ -22,7 +26,8 @@
         "buildType": "apk"
       },
       "ios": {
-        "simulator": false
+        "simulator": false,
+        "buildNumber": "12"
       }
     }
   }
