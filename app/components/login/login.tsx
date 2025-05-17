@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text,Pressable } from "react-native";
+import { View, StyleSheet, Text,Pressable, Image } from "react-native";
 import { COLORS } from "@/assets/typography/colors";
 import {loginTypes} from '../../../assets/constants/constants'
 import { globalStyles } from "@/assets/typography/typography";
@@ -23,7 +23,7 @@ const Login = () => {
     return (
         <SafeAreaView style={{flex: 1}}> 
         <View style={styles.loginContainer}>
-            <Text style={StyleSheet.compose(globalStyles.heading, styles.heading)} >tist</Text>
+            <Image style={styles.heading} source={require("../../../assets/images/logo.png")} />
             <View style={styles.loginOptions}>
                 {renderLoginOptions()}
             </View>
@@ -36,18 +36,19 @@ const styles = StyleSheet.create({
     loginContainer: {
         height:'100%',
         width:'100%',
-        backgroundColor: COLORS.primary
+        backgroundColor: "#091C38"
     },
     heading: {
-        letterSpacing: 4,
-        color: COLORS.white,
+        margin: 30,
+        height: 84,
+        width: 90,
         textAlign: 'center',
-        marginTop: 50
+        alignSelf: 'center',
     },
     loginOptions : {
         position: 'absolute',
         bottom: 20,
-        left:0,
+        left:10,
         right:0,
         display: 'flex',
         justifyContent: 'center',
@@ -56,14 +57,15 @@ const styles = StyleSheet.create({
     },
     option :{
         width: '70%',
-        paddingTop: 20,
-        paddingBottom: 20,
-        backgroundColor: COLORS.secondary,
+       paddingVertical: 15,
+        backgroundColor: "#13131333",
+        marginBottom: 15,
+        borderRadius:5
     },
     optionText : {
         textAlign: 'center',
         color: COLORS.white,
-        ...globalStyles.btnText
+        ...globalStyles.btnText,
     }
 })
 

@@ -1,7 +1,7 @@
 export const loginTypes = [
     {
         id:1,
-        text :'apply with us',
+        text :'Apply with us',
         route: 'Apply'
     },
     {
@@ -11,7 +11,7 @@ export const loginTypes = [
     },
     {
         id:3,
-        text :'check application status',
+        text :'Check application status',
          route: 'Status'
     }
 ]
