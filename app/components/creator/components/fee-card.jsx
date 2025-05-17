@@ -116,10 +116,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   input: {
-    backgroundColor: '#E7ECF3',
+    backgroundColor: '#1313130D',
     borderRadius: 10,
     height: 40,
-    width: '45%',
+    width: '35%',
     paddingHorizontal: 10,
     color: '#081932',
     ...globalStyles.paragraph,
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   updateButton: {
     marginTop: 30,
     backgroundColor: '#0A122A',
-    paddingVertical: 15,
+    paddingVertical: 20,
     borderRadius: 15,
     alignItems: 'center',
   },

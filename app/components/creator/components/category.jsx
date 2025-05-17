@@ -26,8 +26,8 @@ const CategoriesScreen = ({ data, handleNextClick }) => {
     return (
           <View style={styles.categorySection}>
             <View style={styles.title}>
-            <Text>{key}</Text> 
-            <Text>{getSelectedCount(key)}</Text>
+            <Text style={styles.count}>{key}</Text> 
+            <Text style={styles.count} >{getSelectedCount(key)}</Text>
             </View>
 
         <View style={styles.section}>
@@ -91,11 +91,17 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 
+  count: {
+    color: "#081932",
+    ...globalStyles.paragraph,
+    fontSize: 14,
+  },
+
   selectedCategory: {
     backgroundColor: '#081932', // dark navy background
     borderColor: '#081932',
   },
-  categoryText: { color: '#091C38', ...globalStyles.btnText, fontSize: 12 },
+  categoryText: { color: '#091C38', ...globalStyles.btnText, fontSize: 12, letterSpacing:1 },
   selectedCategoryText: { color: '#fff' },
   nextButton: {
     backgroundColor: '#0a0a23',

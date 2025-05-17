@@ -46,7 +46,7 @@ const BasicInfo = ({ data, handleNextClick }) => {
 
       {/* Titles */}
       <View style={styles.inputWrapper}>
-        <Text style={styles.label}>title</Text>
+        <Text style={styles.normalLabel}>title</Text>
         <View style={styles.tagsWrapper}>
           {basicInfo['titles'].map((title, index) => (
             <View key={index} style={styles.tag}>
@@ -58,7 +58,7 @@ const BasicInfo = ({ data, handleNextClick }) => {
 
       {/* Location */}
       <View style={styles.inputWrapper}>
-        <Text style={styles.label}>location</Text>
+        <Text style={styles.normalLabel}>location</Text>
         {basicInfo['locations'].map((loc, index) => (
           <TouchableOpacity key={index} style={styles.locationRow} onPress={() => updateBasicInfo('currentLocation', loc)}>
             <View style={styles.radioButtonOuter}>
@@ -74,8 +74,7 @@ const BasicInfo = ({ data, handleNextClick }) => {
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>bio</Text>
         <TextInput
-          style={[styles.input, { height: 100, paddingVertical: 10 }]}
-          placeholder="Write something..."
+          style={[styles.input, { height: 85, paddingVertical: 15 }]}
           value={basicInfo['bio']}
           onChangeText={(e) => updateBasicInfo('bio', e)}
           multiline
@@ -146,13 +145,29 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     marginBottom: 20,
+    position: 'relative',
   },
   label: {
     ...globalStyles.btnText,
     color: '#888',
-    marginBottom: 5,
+    marginBottom: 10,
+    textTransform: 'lowercase',
+    position: 'absolute',
+    top: -7,
+    left: 15,
+    backgroundColor: '#F8FBFF', // Light background matching your input
+    paddingHorizontal: 5,
+    zIndex: 1,
+    fontSize: 12,
+  },
+
+  normalLabel : {
+    ...globalStyles.btnText,
+    color: '#888',
+    marginBottom: 10,
     textTransform: 'lowercase',
   },
+
   input: {
     borderRadius: 10,
     paddingHorizontal: 15,
@@ -246,7 +261,7 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     marginTop: 20,
-    backgroundColor: '#000',
+    backgroundColor: '#081932',
     paddingVertical: 15,
     borderRadius: 15,
     alignItems: 'center',
