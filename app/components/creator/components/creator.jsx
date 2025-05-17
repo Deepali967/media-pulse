@@ -97,7 +97,7 @@ const Creator = () => {
    {!isLoading ? <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => handleNavigation('previous')}>
+        <TouchableOpacity onPress={() => handleNavigation('', 'previous')}>
         <Image
          onPress={() => handleNavigation('', 'previous')}
           source={require('../../../../assets/images/creator/back.png')}
@@ -121,7 +121,7 @@ const Creator = () => {
               style={[styles.tabButton, activeTab.id === tab.id && styles.activeTab]}
               onPress={() => setActiveTabData(tab)}
             >
-              <Text style={[styles.tabText, activeTab === tab.id && styles.activeTabText]}>
+              <Text style={[styles.tabText, activeTab.id === tab.id && styles.activeTabText]}>
                 {tab.text}
               </Text>
             </TouchableOpacity>
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   tabContainer: { flexDirection: 'row', justifyContent: 'space-around' },
   tabButton: { paddingVertical: 10, paddingHorizontal: 20 },
   tabText: { ...globalStyles.paragraph, fontSize: 14, color: '#091C38'},
-  activeTabText: { ...globalStyles.notificationText, fontSize: 14, color: '#091C38', fontWeight: 700 },
+  activeTabText: { ...globalStyles.notificationText,fontSize: 14 },
   contentContainer: { flex: 1, paddingBottom: 20 },
 });
 
