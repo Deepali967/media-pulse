@@ -54,7 +54,7 @@ const {name, titles,currentLocation, locations, bio} = data || {};
 
       </View>
 
-      <Text style={styles.bio}>{bio}</Text>
+      {bio && <Text style={styles.bio}>{bio}</Text>}
     </View>
   );
 };

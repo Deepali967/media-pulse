@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView,TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // For radio buttons & close icons (optional)
 import { globalStyles } from '@/assets/typography/typography';
 import { COLORS } from '@/assets/typography/colors';
@@ -17,9 +17,10 @@ const BasicInfo = ({ data, handleNextClick }) => {
 
   return (
     <KeyboardAvoidingView  style={{ flex: 1 }}
-    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    behavior="height"
     keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}>
-    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <ScrollView  keyboardShouldPersistTaps="handled" contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       
       {/* Image */}
       <View style={styles.imageWrapper}>
@@ -112,6 +113,7 @@ const BasicInfo = ({ data, handleNextClick }) => {
       </TouchableOpacity>
 
     </ScrollView>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
 };
