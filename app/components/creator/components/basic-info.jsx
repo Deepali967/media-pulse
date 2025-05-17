@@ -132,16 +132,20 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   replaceBtn: {
-    marginTop: 10,
-    borderColor: COLORS.primary,
+    marginTop: 20,
+    marginBottom: 20,
+    borderColor: "#08193280",
     borderWidth: 1,
     borderRadius: 10,
     paddingVertical: 10,
-    paddingHorizontal: 40,
+    textTransform: 'capitalize',
+    width: '50%',
+    textAlign: 'center',
   },
   replaceText: {
     ...globalStyles.btnText,
     color: COLORS.primary,
+    textAlign: 'center',
   },
   inputWrapper: {
     marginBottom: 20,
