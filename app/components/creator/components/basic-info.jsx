@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   nextButtonText: {
     ...globalStyles.notificationText,
     color: COLORS.white,
-    textTransform: 'lowercase',
+    textTransform: 'capitalize',
   },
 });
 

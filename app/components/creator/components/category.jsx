@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   nextButton: {
     backgroundColor: '#0a0a23',
     padding: 15,
-    borderRadius: 30,
+    borderRadius: 15,
     alignItems: 'center',
     marginVertical: 20,
   },
