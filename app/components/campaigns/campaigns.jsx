@@ -69,12 +69,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F7FAFC',
+    backgroundColor: '#F5FBFF',
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20,
+    marginVertical: 20,
   },
   backIcon: {
     width: 10,

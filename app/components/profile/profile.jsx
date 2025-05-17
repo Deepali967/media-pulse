@@ -1,13 +1,16 @@
 import { globalStyles } from '@/assets/typography/typography';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function Profile() {
+import  localStorageService from '../../service/localstorage.service';
 
+export default function Profile() {
+    const [bio, setBio] = React.useState({});
     const navigation = useNavigation();
+    const localStorage = localStorageService();
 
     const handleNaviagation = (type) => {
         switch (type) {
@@ -16,9 +19,24 @@ export default function Profile() {
                 break;
             case 'back':
                 navigation.goBack();
-                break;    
+                break;  
+                
+            case 'payment':
+                navigation.navigate('Payment');
+                break;
         }
     }
+
+    useEffect(() => {
+      const importTabs = async () => {
+        const tabs = await localStorage.getStoreItem('tabs');
+        if (tabs) {
+          setBio(tabs[0].data || {});
+        }
+      };
+  
+      importTabs();
+    },[])
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -32,14 +50,14 @@ export default function Profile() {
           source={require('../../../assets/images/sample-avatar.png')} // Replace with real image URI
           style={styles.profileImage}
         />
-        <Text style={styles.userName}>karina bedi</Text>
+        <Text style={styles.userName}>{bio?.name}</Text>
         <TouchableOpacity onPress={() => handleNaviagation('userProfile')} style={styles.viewProfileBtn}>
           <Text style={styles.viewProfileText}>view profile</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.optionList}>
-        <MenuItem icon="credit-card" text="payments details" />
+        <MenuItem icon="credit-card" text="payments details" navigateURL={'payment'} onPress={() => handleNaviagation('payment')}/>
         <MenuItem icon="settings" text="settings" />
         <MenuItem icon="headphones" text="support" />
         <MenuItem
@@ -53,8 +71,8 @@ export default function Profile() {
   );
 }
 
-const MenuItem = ({ icon, text, alert }) => (
-  <TouchableOpacity style={[styles.menuItem, alert && styles.alertItem]}>
+const MenuItem = ({ icon, text, alert, onPress}) => (
+  <TouchableOpacity style={[styles.menuItem, alert && styles.alertItem]} onPress={onPress}>
     <Icon name={icon} size={20} color={alert ? '#A60000' : '#0A1B31'} style={styles.menuIcon} />
     <Text style={[styles.menuText, alert && styles.alertText]}>{text}</Text>
   </TouchableOpacity>
@@ -67,7 +85,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   backButton: {
-    marginTop: 20,
+    marginVertical: 20,
     alignSelf: 'flex-start',
     height: 10,
     width: 10,
@@ -90,12 +108,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   viewProfileBtn: {
-    borderColor: '#0A1B31',
+    borderColor: '#B6C2CA',
     borderWidth: 1,
     paddingVertical: 6,
     paddingHorizontal: 16,
     borderRadius: 12,
-    backgroundColor: '#fff',
     shadowColor: '#0A1B310D',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,

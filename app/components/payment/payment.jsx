@@ -8,7 +8,7 @@ const Payment = () => {
     const navigation = useNavigation();
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 , backgroundColor:"#F5FBFF"}}>
             <View style={styles.header}>
                <TouchableOpacity onPress={() => navigation.goBack()}> <Image source={require("../../../assets/images/creator/back.png")} style={{ width: 15, height: 15 }}/>
                </TouchableOpacity>
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         flexDirection: "row",
         alignItems: "center",
+        marginVertical: 20,
     },
     headerText: {
         flex: 1,
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
       },
       tabInactive: {
-        backgroundColor: '#EAEAEA',
+        backgroundColor: '#0819320D',
         borderRadius: 10,
         paddingVertical: 8,
         paddingHorizontal: 20,
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
         fontSize: 12
       },
       tabTextInactive: {
-        color: '#999',
+        color: '#13131366',
         ...globalStyles.notificationText,
         fontSize: 12
       },

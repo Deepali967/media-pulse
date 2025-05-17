@@ -111,7 +111,7 @@ export default DashboardScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7FAFC',
+    backgroundColor: '#F5FBFF',
     paddingHorizontal: 20,
     paddingTop: 40,
   },
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   campaignCard: {
-    backgroundColor: '#f9fafb',
+    backgroundColor: 'transparent',
     borderRadius: 16,
     flexDirection: 'row',
     padding: 12,

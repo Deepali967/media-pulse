@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   categoryText: { color: '#091C38', ...globalStyles.btnText, fontSize: 12, letterSpacing:1 },
   selectedCategoryText: { color: '#fff' },
   nextButton: {
-    backgroundColor: '#0a0a23',
+    backgroundColor: '#081932',
     padding: 15,
     borderRadius: 15,
     alignItems: 'center',

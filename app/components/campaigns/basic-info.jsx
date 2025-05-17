@@ -45,11 +45,14 @@ export default BasicInfoTab;
     },
 
     campaignImage: {
-      width: 300,
-      height: 200,
+      height:400,
+      width:'100%',
       borderRadius: 12,
-      marginRight: 16,
       marginBottom: 20,
+      overflow: 'hidden',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     campaignTitle: {
       fontWeight: 'bold',
