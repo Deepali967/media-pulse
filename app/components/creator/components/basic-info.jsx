@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView 
 import { Ionicons } from '@expo/vector-icons'; // For radio buttons & close icons (optional)
 import { globalStyles } from '@/assets/typography/typography';
 import { COLORS } from '@/assets/typography/colors';
+import { KeyboardAvoidingView,Platform } from 'react-native';
 
 const BasicInfo = ({ data, handleNextClick }) => {
   const [basicInfo, setBasicInfo] = useState(data);
@@ -15,6 +16,9 @@ const BasicInfo = ({ data, handleNextClick }) => {
   };
 
   return (
+    <KeyboardAvoidingView  style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}>
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       
       {/* Image */}
@@ -108,6 +112,7 @@ const BasicInfo = ({ data, handleNextClick }) => {
       </TouchableOpacity>
 
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
