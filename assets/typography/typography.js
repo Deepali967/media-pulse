@@ -3,11 +3,15 @@ export const globalStyles = {
       fontFamily: 'regular',
       fontSize: 40,
     },
-    paragraph: {
+    btnTextparagraph: {
       fontFamily: 'regular',
       fontSize: 16,
     },
     btnText : {
+      fontFamily: 'regular',
+      fontSize: 14,
+    },
+    paragraph : {
       fontFamily: 'regular',
       fontSize: 14,
     },

@@ -10,38 +10,15 @@ const FeeCard = ({ data }) => {
 
   return (
     <View style={styles.container}>
-      {/* Tabs */}
-      <View style={styles.tabsContainer}>
-        {platforms.map((platform) => (
-          <TouchableOpacity
-            key={platform}
-            style={[
-              styles.tab,
-              activePlatform === platform && styles.activeTab
-            ]}
-            onPress={() => setActivePlatform(platform)}
-          >
-            <Text
-              style={[
-                styles.tabText,
-                activePlatform === platform && styles.activeTabText
-              ]}
-            >
-              {platform}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
       {/* Fee List */}
       <ScrollView>
         {Object.entries(currentFields).map(([key, { label, value }]) => (
-         value ? <View key={key} style={styles.feeRow}>
+         <View key={key} style={styles.feeRow}>
             <Text style={styles.label}>{label}</Text>
             <Text style={styles.value}>
-               {value ? '₹ ' + Number(value).toLocaleString('en-IN') : 'N/A'}
+               {value ? '₹ ' + Number(value).toLocaleString('en-IN') : '-'}
             </Text>
-          </View> : null
+          </View> 
         ))}
       </ScrollView>
     </View>

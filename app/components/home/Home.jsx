@@ -80,7 +80,7 @@ const DashboardScreen = () => {
         <TouchableOpacity key={index} onPress={() => handleCampaignView(item)}> 
           <View style={styles.campaignCard}>
             <Image
-              source={{ uri: item.image }} // Campaign image
+              source={require("../../../assets/images/creator/sample-campaign.png")} // Campaign image
               style={styles.campaignImage}
             />
             <View style={styles.campaignInfo}>
@@ -204,19 +204,20 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   campaignCard: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#c8d7a51a',
     borderRadius: 16,
     flexDirection: 'row',
     padding: 12,
     marginBottom: 30,
-    borderColor: '#d6d6d6',
+    borderColor: '#C8D7A5',
     borderWidth: 1,
   },
   campaignImage: {
-    width: 150,
     flex: 0,
     borderRadius: 12,
     marginRight: 16,
+    width: 150,
+    height: 223,
   },
   campaignInfo: {
     flex: 1,
@@ -227,20 +228,19 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 10,
     color: '#1c1c1e',
-    textTransform: 'capitalize',
     ...globalStyles.paragraph,
     textAlign: 'center',
   },
   campaignLabel: {
-    color: '#8e8e93',
+    color: '#435D0480',
     marginTop: 8,
     textTransform: 'capitalize',
     ...globalStyles.paragraph,
-    fontSize: 10,
+    fontSize: 8,
     textAlign: 'center',
   },
   campaignValue: {
-    color: '#1c1c1e',
+    color: '#081932',
     marginTop: 2,
     marginBottom: 7,
     textTransform: 'capitalize',
@@ -250,7 +250,6 @@ const styles = StyleSheet.create({
   },
   campaignCost: {
     color: '#1c1c1e',
-    fontWeight: 'bold',
     ...globalStyles.notificationText,
     fontSize: 14,
     marginTop: 2,

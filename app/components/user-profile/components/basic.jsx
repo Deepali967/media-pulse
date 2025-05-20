@@ -15,7 +15,7 @@ const {name, titles,currentLocation, locations, bio} = data || {};
       <View style={styles.infoHeader}>
         <View>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.titles}>{titles?.join(', ')}</Text>
+        <Text style={styles.titles}>{titles?.join(', ') || 'title -'}</Text>
         </View>
 
         <View style={styles.socialMedia}>
@@ -26,35 +26,11 @@ const {name, titles,currentLocation, locations, bio} = data || {};
 
       <View style={styles.locationContainer}>
         
-      {locations?.map((loc) => (
-  <View key={loc} style={{ position: 'relative' }}>
-    {loc === currentLocation && (
-      <Image
-        source={require('../../../../assets/images/selected.svg')}
-        style={styles.selectedImage}
-      />
-    )}
-    <TouchableOpacity
-      style={[
-        styles.locationButton,
-        loc === currentLocation ? styles.activeLocation : styles.inactiveLocation,
-      ]}
-    >
-      <Text
-        style={[
-          styles.locationText,
-          loc === currentLocation ? styles.activeText : styles.inactiveText,
-        ]}
-      >
-        {loc}
-      </Text>
-    </TouchableOpacity>
-  </View>
-))}
+      <Text style={[styles.locationButton, styles.activeLocation, styles.locationText, styles.activeText]}>{data['location'] || 'location-'} </Text>
 
       </View>
 
-      {bio && <Text style={styles.bio}>{bio}</Text>}
+      {<Text style={styles.bio}>{bio}</Text>}
     </View>
   );
 };
@@ -106,7 +82,7 @@ const styles = StyleSheet.create({
   locationText: { fontSize: 14 },
   activeText: { color: '#081932' },
   inactiveText: { color: '#889197' },
-  bio: { textAlign: 'center', fontSize: 12, color: '#6B7280', marginBottom: 16 , backgroundColor: "#08193205", width: '100%', padding: 5, borderRadius: 10},
+  bio: { textAlign: 'center', fontSize: 12, color: '#6B7280', marginBottom: 16 , backgroundColor: "#08193205", width: '100%', padding: 10, borderRadius: 10},
 });
 
 export default BasicInfo;

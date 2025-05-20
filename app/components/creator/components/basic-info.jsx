@@ -1,25 +1,120 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView,TouchableWithoutFeedback,Keyboard } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView,TouchableWithoutFeedback,Keyboard, Platform, KeyboardAvoidingView,FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // For radio buttons & close icons (optional)
 import { globalStyles } from '@/assets/typography/typography';
 import { COLORS } from '@/assets/typography/colors';
-import { KeyboardAvoidingView,Platform } from 'react-native';
+import { CommonStyles } from '@/assets/typography/common-css';
 
 const BasicInfo = ({ data, handleNextClick }) => {
   const [basicInfo, setBasicInfo] = useState(data);
   
+  const [isFocused, setIsFocused] = useState({
+    name: false,
+    bio: false,
+    titles: false,
+    location: false,
+  });
+
+  const [errors, setErrors] = useState({
+    name: 'Field is required',
+    bio: '',
+    titles: '',
+  })
+
+  const titleRef = useRef(null);
+
+  const [currentTitle, setCurrentTitle] = useState('');
+
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [allLocations, setAllLocations] = useState(data?.locations || []);
+  const [query, setQuery] = useState('');
+ const [locations, setLocations] = useState(data?.locations || []);
+
+  const handleTitleChange = (text) => {
+    if (text.includes(',')) {
+      const newTags = text.split(',').map(t => t.trim()).filter(t => t);
+      updateBasicInfo('titles', [...basicInfo.titles, ...newTags]);
+      setCurrentTitle('');
+      setTimeout(() => {
+        titleRef.current?.focus();
+      }, 100)
+    } else {
+      setCurrentTitle(text);
+    }
+  };
+  
+  const removeTag = (indexToRemove) => {
+    const updatedTags = basicInfo.titles.filter((_, i) => i !== indexToRemove);
+    updateBasicInfo('titles', updatedTags);
+    setTimeout(() => {
+      titleRef.current?.focus();
+    }, 100)
+  };
+
   const updateBasicInfo = (key, value) => {
+    if(key === 'name' && value.length) {
+      setErrors((prevState) => ({
+        ...prevState,
+        name: '',
+      }));
+      
+    }
+
+    if(key === 'bio' && value.length > 300) {
+      setErrors((prevState) => ({
+        ...prevState,
+        bio: 'Bio should be less than 300 characters',
+      }));
+    }
+
+
+    if(key === 'titles' && value.length > 5) {
+      setErrors((prevState) => ({
+        ...prevState,
+        titles: 'You can add up to 5 titles',
+      }));
+    }
+
+
     setBasicInfo((prevState) => ({
       ...prevState,
       [key]: value,
     }));
   };
 
+  const handleSelect = (location) => {
+    setBasicInfo((prevState) => ({
+      ...prevState,
+      location: location,
+    }));
+
+    setQuery(location);
+    setShowDropdown(false);
+  };
+
+
+  useEffect(() => {
+    const filteredLocations = allLocations.filter((location) =>
+      location.toLowerCase().includes(query.toLowerCase())
+    );
+  
+    setLocations(filteredLocations);
+  }, [query]);
+
+  useEffect(() => {
+    if (basicInfo?.name) {
+      setErrors((prevState) => ({
+        ...prevState,
+        name: '',
+      }));
+    }
+  },[])
+
   return (
+  <TouchableWithoutFeedback onPress={() =>{if (Platform.OS !== 'web') Keyboard.dismiss();}}>
     <KeyboardAvoidingView  style={{ flex: 1 }}
     behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <ScrollView  keyboardShouldPersistTaps="handled" contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       
       {/* Image */}
@@ -35,50 +130,103 @@ const BasicInfo = ({ data, handleNextClick }) => {
 
       {/* Name */}
       <View style={styles.inputWrapper}>
-        <Text style={styles.label}>name</Text>
+        { isFocused?.name || basicInfo?.name ? <Text style={CommonStyles.focusedLabel}>name</Text> : null }
         <TextInput
           style={styles.input}
-          placeholder="Enter name"
+          placeholder={ (!isFocused?.name && !basicInfo?.name) ? "name" : '' }
+          onFocus={() => setIsFocused({ ...isFocused, name: true })}
+          onBlur={() => setIsFocused({ ...isFocused, name: false })}
           value={basicInfo['name']}
           onChangeText={(e) => updateBasicInfo('name', e)}
         />
+        {errors.name  && <Text style={styles.errors}>{errors.name}</Text>}
       </View>
 
       {/* Titles */}
-      <View style={styles.inputWrapper}>
-        <Text style={styles.normalLabel}>title</Text>
+      <View style={styles.titleWrapper}>
+        {isFocused?.titles || basicInfo?.titles?.length ? <Text style={CommonStyles.focusedLabel}>title</Text> : null}
         <View style={styles.tagsWrapper}>
           {basicInfo['titles'].map((title, index) => (
             <View key={index} style={styles.tag}>
-              <Text style={styles.tagText}>{title}</Text>
+              <Text style={styles.tagText}>{title} </Text>
+              <TouchableOpacity onPress={() => removeTag(index)}>
+          <Image style={styles.removeTag} source={require("../../../../assets/images/creator/remove.png")} />
+        </TouchableOpacity>
             </View>
           ))}
+        <TextInput
+          ref={titleRef}
+          style={styles.titleInput}
+          placeholder={!isFocused?.titles && !basicInfo?.titles?.length ? "title" : ''}
+          onFocus={() => setIsFocused({ ...isFocused, titles: true })}
+          onBlur={() => setIsFocused({ ...isFocused, titles: false })}
+          value={currentTitle}
+          onChangeText={handleTitleChange}
+        />
         </View>
+        {errors.titles && <Text style={styles.errors}>{errors.titles}</Text>}
       </View>
 
       {/* Location */}
-      <View style={styles.inputWrapper}>
-        <Text style={styles.normalLabel}>location</Text>
-        {basicInfo['locations'].map((loc, index) => (
-          <TouchableOpacity key={index} style={styles.locationRow} onPress={() => updateBasicInfo('currentLocation', loc)}>
-            <View style={styles.radioButtonOuter}>
-              {basicInfo?.currentLocation === loc && <View style={styles.radioButtonInner} />}
-            </View>
-            <Text style={styles.locationText}>{loc}</Text>
-            {basicInfo?.currentLocation === loc && <Text style={styles.hereText}>i'm here</Text>}
+      <View style={[styles.inputWrapper, { zIndex: showDropdown ? 10 : 1 }]}>
+  {(basicInfo.location || isFocused.location) && (
+    <Text style={CommonStyles.focusedLabel}>Location</Text>
+  )}
+
+  <TextInput
+    style={[styles.input, { position: 'relative' }]}
+    placeholder={
+      !isFocused.location && !basicInfo.location ? 'location' : ''
+    }
+    value={query}
+    onFocus={() => setShowDropdown(true)}
+    onBlur={() => {
+      // Delay to allow onPress of dropdown items
+      setTimeout(() => setShowDropdown(false), 150);
+      setIsFocused({ ...isFocused, location: false });
+    }}
+    onChangeText={(text) => {
+      setQuery(text);
+      setShowDropdown(true);
+      setIsFocused({ ...isFocused, location: true });
+    }}
+  />
+
+  {showDropdown && (
+    <View style={styles.dropdown}>
+      <FlatList
+        keyboardShouldPersistTaps="handled"
+        data={locations}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => handleSelect(item)}
+            style={styles.dropdownItem}
+          >
+            <Text style={styles.itemText}>{item}</Text>
           </TouchableOpacity>
-        ))}
-      </View>
+        )}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>No matches found</Text>
+        }
+      />
+    </View>
+  )}
+</View>
 
       {/* Bio */}
       <View style={styles.inputWrapper}>
-        <Text style={styles.label}>bio</Text>
+       {isFocused?.bio || basicInfo?.bio ? <Text style={CommonStyles.focusedLabel}>bio</Text> : null}
         <TextInput
           style={[styles.input, { height: 85, paddingVertical: 15 }]}
+          placeholder={ (!isFocused?.bio && !basicInfo?.bio) ? 'bio' : '' }
+          onFocus={() => setIsFocused({ ...isFocused, bio: true })}
+          onBlur={() => setIsFocused({ ...isFocused, bio: false })}
           value={basicInfo['bio']}
           onChangeText={(e) => updateBasicInfo('bio', e)}
           multiline
         />
+        {errors.bio && <Text style={styles.errors}>{errors.bio}</Text>}
       </View>
 
       {/* Socials */}
@@ -89,8 +237,8 @@ const BasicInfo = ({ data, handleNextClick }) => {
           value={basicInfo['instagram']}
           onChangeText={(e) => updateBasicInfo('instagram',e)}
         />
-        {basicInfo['instagram'] ? <TouchableOpacity onPress={() => updateBasicInfo('instagram','')}>
-          <Ionicons name="close" size={20} color="#000" />
+        {basicInfo['instagram'] ? <TouchableOpacity style={styles.socialIconRemove} onPress={() => updateBasicInfo('instagram','')}>
+          <Image style={[styles.socialIcon, {margin: 0}]} source={require('../../../../assets/images/creator/remove.png')}/>
         </TouchableOpacity> : null}
       </View>
 
@@ -101,19 +249,19 @@ const BasicInfo = ({ data, handleNextClick }) => {
           value={basicInfo['youtube']}
           onChangeText={(e) => updateBasicInfo('youtube', e)}
         />
-       {basicInfo['youtube'] ? <TouchableOpacity onPress={() => updateBasicInfo('youtube','')}>
-          <Ionicons name="close" size={20} color="#000" />
+       {basicInfo['youtube'] ? <TouchableOpacity style={styles.socialIconRemove} onPress={() => updateBasicInfo('youtube','')}>
+       <Image style={[styles.socialIcon, {margin: 0}]} source={require('../../../../assets/images/creator/remove.png')}/>
         </TouchableOpacity> : null}
       </View>
 
       {/* Next Button */}
-      <TouchableOpacity style={styles.nextButton} onPress={() => handleNextClick(basicInfo)}>
+      <TouchableOpacity style={[styles.nextButton , errors?.name ? styles.nextButtonDisabled  : {}]} onPress={() => basicInfo.name && handleNextClick(basicInfo)}>
         <Text style={styles.nextButtonText}>next</Text>
       </TouchableOpacity>
 
     </ScrollView>
-      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -122,6 +270,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     paddingBottom: 50,
+    position: 'relative',
+  zIndex: 0,
   },
   imageWrapper: {
     alignItems: 'center',
@@ -150,6 +300,7 @@ const styles = StyleSheet.create({
   inputWrapper: {
     marginBottom: 20,
     position: 'relative',
+    zIndex: 1, 
   },
   label: {
     ...globalStyles.btnText,
@@ -172,15 +323,36 @@ const styles = StyleSheet.create({
     textTransform: 'lowercase',
   },
 
+  titleWrapper : {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    marginBottom: 20,
+    position: 'relative',
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    width: '100%',
+    minHeight: 50,
+    paddingVertical: 10,
+  },
+
+  titleInput: {
+      fontSize: globalStyles.btnText.fontSize,
+      fontFamily: globalStyles.btnText.fontFamily,
+      color: COLORS.primary,
+      height: 30,
+  },
+
   input: {
     borderRadius: 10,
     paddingHorizontal: 15,
-    fontSize: globalStyles.paragraph.fontSize,
-    fontFamily: globalStyles.paragraph.fontFamily,
+    fontSize: globalStyles.btnText.fontSize,
+    fontFamily: globalStyles.btnText.fontFamily,
+    height: 'auto',
+    color: COLORS.primary,
+    minHeight: 50,
     borderWidth: 1,
     borderColor: '#ddd',
-    height: 50,
-    color: COLORS.primary,
+    width: '100%',
   },
   tagsWrapper: {
     flexDirection: 'row',
@@ -194,6 +366,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginRight: 5,
     marginTop: 5,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: 'auto',
+  },
+  removeTag: {
+    color: '#fff',
+    height:15,
+    width: 15,
+    marginLeft: 5,
   },
   tagText: {
     ...globalStyles.btnText,
@@ -221,8 +404,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   locationText: {
-    fontSize: globalStyles.paragraph.fontSize,
-    fontFamily: globalStyles.paragraph.fontFamily,
+    fontSize: globalStyles.btnText.fontSize,
+    fontFamily: globalStyles.btnText.fontFamily,
     color: '#333',
     marginRight: 10,
     color: COLORS.primary,
@@ -236,8 +419,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   addLocationText: {
-    fontSize: globalStyles.paragraph.fontSize,
-    fontFamily: globalStyles.paragraph.fontFamily,
+    fontSize: globalStyles.btnText.fontSize,
+    fontFamily: globalStyles.btnText.fontFamily,
     color: COLORS.primary,
   },
   socialRow: {
@@ -250,6 +433,7 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     height: 50,
     color: COLORS.primary,
+    paddingRight:0
   },
   socialIcon: {
     width: 20,
@@ -257,11 +441,22 @@ const styles = StyleSheet.create({
     marginRight: 10,
     resizeMode: 'contain',
   },
+
+  socialIconRemove: {
+    height: 50,
+    width: 50,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:"#081932",
+    borderRadius: 10,
+  },
   socialInput: {
     flex: 1,
-    fontSize: globalStyles.paragraph.fontSize,
-    fontFamily: globalStyles.paragraph.fontFamily,
+    fontSize: globalStyles.btnText.fontSize,
+    fontFamily: globalStyles.btnText.fontFamily,
     color: COLORS.primary,
+    height: '100%',
   },
   nextButton: {
     marginTop: 20,
@@ -270,11 +465,54 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
   },
+
+  nextButtonDisabled: {
+    opacity: 0.5,
+    pointerEvents: 'none',
+  },
+
   nextButtonText: {
     ...globalStyles.notificationText,
     color: COLORS.white,
     textTransform: 'capitalize',
   },
+
+  errors:{
+    color: 'red',
+    fontSize: 12,
+    marginTop: 5,
+    marginLeft: 10,
+  },
+  dropdown: {
+    marginTop: 4,
+    borderWidth: 1,
+    borderColor: '#1e90ff',
+    borderRadius: 6,
+    maxHeight: 200,
+    backgroundColor: 'white',
+    position: 'absolute',
+    width: '100%',
+    zIndex: 1000,
+    top: 54,
+  },
+  dropdownItem: {
+    paddingVertical:10,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: 'transparent',
+    marginBottom:5
+  },
+  itemText: {
+    color:"#3F3F3F",
+    ...globalStyles.paragraph,
+    fontSize: 12,
+  },
+  emptyText: {
+    padding: 12,
+    fontStyle: 'italic',
+    color: '#999',
+  },
+  
 });
 
 export default BasicInfo;

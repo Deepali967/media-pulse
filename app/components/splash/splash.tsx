@@ -54,10 +54,13 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: COLORS.primary,
-        borderRadius: 10,
-        padding: 15,
+        paddingVertical: 20,
+        borderRadius: 15,
         margin: 10,
-        width: '70%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '85%',
         alignSelf: 'center', // Ensures the button is centered horizontally
         ...globalStyles.notificationText
     }

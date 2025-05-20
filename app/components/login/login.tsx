@@ -13,8 +13,8 @@ const Login = () => {
     }
 
     const renderLoginOptions = () => {
-       return loginTypes.map((loginType:any) => (
-            <Pressable style={styles.option} key={loginType.id} onPress={() => navigateTo(loginType.route)}>
+       return loginTypes.map((loginType:any, index: any) => (
+            <Pressable style={ index !== 2 ?  styles.option : [styles.option, {backgroundColor : "transparent"}]} key={loginType.id} onPress={() => navigateTo(loginType.route)}>
                 <Text style={styles.optionText}>{loginType.text}</Text>
             </Pressable>
         ))

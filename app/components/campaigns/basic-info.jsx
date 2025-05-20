@@ -6,7 +6,7 @@ const BasicInfoTab = ({campaign}) => {
       <ScrollView style={{ flex: 1 }}>
           <View style={styles.basicInfoContainer}>
           <Image
-              source={{ uri: campaign.image }} // Campaign image
+              source={require("../../../assets/images/creator/sample-campaign.png")} // Campaign image
               style={styles.campaignImage}
             />
             
@@ -23,8 +23,10 @@ const BasicInfoTab = ({campaign}) => {
               <Text style={styles.campaignLabel}>deal cost</Text>
               <Text style={styles.campaignCost}>{campaign?.campaignDetails?.dealCost}</Text>
 
+            <View style={{borderRadius:10, borderColor:"#0819320D", backgroundColor:"#08193203"}}>
               <Text style={styles.campaignLabel}>campaign description</Text>
               <Text style={styles.campaignDescription}>{campaign?.campaignDetails?.description}</Text>
+              </View>  
             </View>
           </View>
       </ScrollView>
@@ -45,7 +47,7 @@ export default BasicInfoTab;
     },
 
     campaignImage: {
-      height:400,
+      height:600,
       width:'100%',
       borderRadius: 12,
       marginBottom: 20,
@@ -96,11 +98,10 @@ export default BasicInfoTab;
       color: '#081932',
       marginTop: 2,
       marginBottom: 20,
-      textTransform: 'capitalize',
       ...globalStyles.paragraph,
       textAlign: 'center',
       fontSize: 12,
       paddingHorizontal: 20,
-      lineHeight: 20
+      lineHeight: 15
     }
   })

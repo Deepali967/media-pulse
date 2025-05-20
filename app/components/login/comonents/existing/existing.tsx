@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet , Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Image} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import localStorageService from '../../../../service/localstorage.service';
 import { globalStyles } from '@/assets/typography/typography';
+import { CommonStyles } from '@/assets/typography/common-css';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ExistingAccount = () => {
@@ -17,6 +18,8 @@ const ExistingAccount = () => {
     const [password, setPassword] = React.useState('');
     const [usernameError, setUsernameError] = React.useState('');
     const [passwordError, setPasswordError] = React.useState('');
+
+    const [isFocused, setIsFocused] = useState({username : false, password : false});
 
     const localstorageService = localStorageService();
 
@@ -72,43 +75,58 @@ const ExistingAccount = () => {
         navigation.navigate('Login' as never);
     };
 
-    const handleUserLogin = () => {};
-
     return (
       <SafeAreaView style={{ flex: 1 }}>  
+      <TouchableWithoutFeedback onPress={() =>{if (Platform.OS !== 'web') Keyboard.dismiss();}}>
+      <KeyboardAvoidingView  style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}>
         <View style={styles.container}>
             {/* Back Button */}
             <TouchableOpacity onPress={() => handleNavigation()} style={styles.backButton}>
-                <Text style={styles.backText}>←</Text>
+                <Image style={styles.backText} source={require('../../../../../assets/images/creator/back.png')} height={48} width={48}/>
             </TouchableOpacity>
 
             {/* Login Screen */}
             {currentScreen === 'login' && (
                 <>
+                    <View style={styles.inputWrapperStyles}>
+                    { isFocused.username || username ? <Text style={CommonStyles.focusedLabel}>Username</Text> : <></>}
                     <TextInput
-                        style={styles.input}
-                        placeholder="username"
+                        style={CommonStyles.input}
+                        placeholder={ (!isFocused.username && !username) ? "username" : ''}
                         placeholderTextColor="#A9A9A9"
                         value={username}
+                        onFocus={() => setIsFocused({...isFocused, username : true})}
+                        onBlur={() =>  setIsFocused({...isFocused, username : false})}
                         onChangeText={(text) => setUsername(text)}
                     />
-                    {usernameError ? <Text style={styles.errorText}>{usernameError}</Text> : null}
+                    <Text style={[styles.errorText, {visibility : usernameError ? 'visible' : 'hidden'}]}>{usernameError}</Text>
+                    </View>
 
+                    <View style={styles.inputWrapperStyles}>
+                    {isFocused.password || password ? <Text style={CommonStyles.focusedLabel}>password</Text> : <></>}
                     <TextInput
-                        style={styles.input}
-                        placeholder="password"
+                        style={CommonStyles.input}
+                        placeholder={ (!isFocused.password && !password) ? "passoword" : ''}
                         placeholderTextColor="#A9A9A9"
                         secureTextEntry
                         value={password}
+                        onFocus={() => setIsFocused({...isFocused, password : true})}
+                        onBlur={() => setIsFocused({...isFocused, password : false})}
                         onChangeText={(text) => setPassword(text)}
                     />
-                    {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+                    <Text style={[styles.errorText, {visibility : passwordError ? 'visible' : 'hidden'}]}>{passwordError}</Text>
+                    </View>
 
+
+                    <View style={styles.forgotWrapper}>
                     <TouchableOpacity onPress={() => setCurrentScreen('forgot')}>
                         <Text style={styles.forgotText}>forgot password</Text>
                     </TouchableOpacity>
+                    </View>
 
-                    <TouchableOpacity onPress={handleLogin} style={styles.button}>
+                    <TouchableOpacity onPress={handleLogin} style={[styles.button, CommonStyles.btn]}>
                         <Text style={styles.buttonText}>get in</Text>
                     </TouchableOpacity>
                 </>
@@ -119,7 +137,7 @@ const ExistingAccount = () => {
                 <>
                     <Text style={styles.infoText}>we will send a reset password code to your registered email or phone</Text>
                     <TextInput
-                        style={styles.input}
+                        style={CommonStyles.input}
                         placeholder="email or phone no."
                         placeholderTextColor="#A9A9A9"
                         value={emailOrPhone}
@@ -164,6 +182,8 @@ const ExistingAccount = () => {
                 </>
             )}
         </View>
+        </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
         </SafeAreaView>
     );
 };
@@ -176,6 +196,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
         overflowY: 'auto',
+        width: '100%',
     },
     backButton: {
         position: 'absolute',
@@ -185,21 +206,19 @@ const styles = StyleSheet.create({
     backText: {
         fontSize: 24,
         color: '#1B1B1B',
+        height: 30,
+        width: 60,
     },
-    input: {
-        width: '100%',
-        height: 50,
-        borderWidth: 1,
-        borderColor: '#D1D5DB',
-        borderRadius: 8,
-        paddingHorizontal: 15,
-        backgroundColor: '#FFFFFF',
+
+    inputWrapperStyles : {
         marginBottom: 15,
-        ...globalStyles.paragraph
+        width: '100%',
+        justifyContent: 'center',   
+        alignItems: 'center',
     },
+
     button: {
         width: '100%',
-        height: 50,
         backgroundColor: '#0F172A',
         borderRadius: 8,
         alignItems: 'center',
@@ -211,9 +230,17 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         ...globalStyles.btnText,
     },
+
+    forgotWrapper:{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        marginVertical: 15
+    },
+
     forgotText: {
         color: '#1B1B1B',
-        alignSelf: 'flex-end',
         ...globalStyles.btnText,
     },
     infoText: {
@@ -255,9 +282,12 @@ const styles = StyleSheet.create({
     },
     errorText: {
         color: 'red',
-        fontSize: 12,
+        fontSize: 10,
         marginTop: 5,
-        marginBottom: 10,
+        marginLeft: 15,
+        display: 'flex',
+        width: '100%',
+        justifyContent:'flex-start'
     },
 });
 

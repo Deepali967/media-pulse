@@ -1,64 +1,83 @@
-import { feecardContent as initialFeeCardContent } from '@/assets/constants/constants';
 import { globalStyles } from '@/assets/typography/typography';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
-const FeeCardComponent = ({data, handleNextClick }) => {
+const FeeCardComponent = ({ data, handleNextClick }) => {
   const tabs = Object.keys(data);
   const [activeTabKey, setActiveTabKey] = useState(tabs[0]);
   const [feeCardContent, setFeeCardContent] = useState(data);
+  const [errors, setErrors] = useState({}); // Track errors per field
 
   const activeTab = feeCardContent[activeTabKey];
   const activeFieldsObject = activeTab?.fields?.[0] || {};
 
   const handleChange = (field, value) => {
-    setFeeCardContent((prevContent) => {
-      const updatedContent = { ...prevContent };
-      // Update the specific field's value inside the active tab
-      updatedContent[activeTabKey].fields[0][field].value = value;
-      return updatedContent;
-    });
+    // Remove non-digit characters
+    const numericValue = value.replace(/[^0-9]/g, '');
+    const numberValue = Number(numericValue);
+
+    // Validate number range
+    let errorMessage = '';
+    if (numericValue !== '') {
+      if (numberValue < 0 || numberValue > 9999999) {
+        errorMessage = 'range to be 0 and 9,999,999';
+      }
+    }
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [field]: errorMessage,
+    }));
+
+    // Update value only if valid or empty
+    if (numericValue === '' || (numberValue >= 0 && numberValue <= 9999999)) {
+      setFeeCardContent((prevContent) => {
+        const updatedContent = { ...prevContent };
+        updatedContent[activeTabKey].fields[0][field].value = numericValue;
+        return updatedContent;
+      });
+    }
   };
 
+  const getHasError = (field) => {
+    return Object.values(errors).some((error) => error !== '');
+  }
+
   const handleUpdate = () => {
-    handleNextClick(feeCardContent); // or just call handleNextClick
+    // Optionally prevent update if there are error
+    if(getHasError()){
+      return
+    }
+
+    handleNextClick(feeCardContent);
   };
 
   return (
     <View style={styles.container}>
-      {/* Tabs */}
-      <View style={styles.tabContainer}>
-        {tabs.map((tab, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[styles.tabButton, activeTabKey === tab && styles.activeTab]}
-            onPress={() => setActiveTabKey(tab)}
-          >
-            <Text style={[styles.tabText, activeTabKey === tab && styles.activeTabText]}>
-              {feeCardContent[tab].title}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      {/* Form */}
       <ScrollView style={styles.formContainer}>
         {Object.entries(activeFieldsObject).map(([fieldKey, fieldData], index) => (
           <View key={index} style={styles.inputRow}>
-            <Text style={styles.label}>{fieldData.label}</Text>
-            <TextInput
-              style={styles.input}
-              value={fieldData.value ?? ''}
-              onChangeText={(text) => handleChange(fieldKey, text)}
-              placeholder=""
-              placeholderTextColor="#ccc"
-            />
+            <View style={{ flex: 1, ...styles.inputRow }}>
+              <Text style={styles.label}>{fieldData.label}</Text>
+              <View style={{display: 'flex', justifyContent:'center', alignItems:'flex-end', width:'50%'}}>
+              <TextInput
+                style={styles.input}
+                value={fieldData.value ?? ''}
+                onChangeText={(text) => handleChange(fieldKey, text)}
+                placeholder=""
+                placeholderTextColor="#ccc"
+                keyboardType="numeric"
+              />
+              {errors[fieldKey] ? (
+                <Text style={styles.errorText}>{errors[fieldKey]}</Text>
+              ) : null}
+              </View>
+            </View>
           </View>
         ))}
 
-        {/* Update Button */}
-        <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
-          <Text style={styles.updateButtonText}>Update</Text>
+        <TouchableOpacity style={[styles.updateButton,  getHasError() ? {opacity: 0.5} : {}]} onPress={handleUpdate} >
+          <Text style={[styles.updateButtonText]}>Update</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -66,7 +85,6 @@ const FeeCardComponent = ({data, handleNextClick }) => {
 };
 
 export default FeeCardComponent;
-
 
 const styles = StyleSheet.create({
   container: {
@@ -98,7 +116,6 @@ const styles = StyleSheet.create({
   },
   activeTabText: {
     color: '#FFFFFF',
-    fontWeight: '600',
   },
   formContainer: {
     flex: 1,
@@ -111,7 +128,6 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#081932',
-    flex: 1,
     ...globalStyles.paragraph,
     fontSize: 14,
   },
@@ -119,7 +135,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1313130D',
     borderRadius: 10,
     height: 40,
-    width: '35%',
+    width: '75%',
     paddingHorizontal: 10,
     color: '#081932',
     ...globalStyles.paragraph,
@@ -135,6 +151,10 @@ const styles = StyleSheet.create({
   updateButtonText: {
     color: '#FFFFFF',
     ...globalStyles.paragraph,
-    fontWeight: '600',
+  },
+  errorText : {
+    color: 'red',
+    fontSize: 12,
+    marginTop: 5,
   },
 });

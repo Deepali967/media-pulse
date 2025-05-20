@@ -38,8 +38,8 @@ const CategoriesAccordion = ({ categoryData }) => {
             <TouchableOpacity onPress={() => toggleSection(category)}>
               <Text style={styles.title}>
                 {category} {isExpanded 
-                  ? <Image source={require('../../../../assets/images/arrow-up.svg')} height={12} width={12} /> 
-                  : <Image  source={require('../../../../assets/images/arrow-down.svg')} height={12} width={12} />}
+                  ? <Image source={require('../../../../assets/images/arrow-up.png')} style={{height:15, width:15}} /> 
+                  : <Image  source={require('../../../../assets/images/arrow-down.png')} style={{height:15, width:15}} />}
               </Text>
             </TouchableOpacity>
             {isExpanded && (

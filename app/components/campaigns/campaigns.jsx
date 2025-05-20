@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   backIcon: {
-    width: 10,
-    height:10,
+    width: 62,
+    height:30,
     marginRight: 10,
   },
   hiddenBackIcon: {
@@ -88,9 +88,10 @@ const styles = StyleSheet.create({
     color: "#081932",
     fontWeight: "600",
     textAlign: "center",
-    flex: 1,
+   marginLeft: 25,
     textTransform: "capitalize",
     ...globalStyles.notificationText,
+    
   },
   tabContainer: {
     flexDirection: 'row',

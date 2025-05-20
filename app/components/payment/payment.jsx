@@ -81,22 +81,15 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     paymentScreen :{
-        padding: 20
+        paddingVertical: 20,
+        paddingHorizontal: 30,
     },
     walletCard: {
-        backgroundColor: '#08193205',
+        backgroundColor: '#0819320D',
         borderRadius: 20,
         padding: 25,
         marginBottom: 20,
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 10,
-        elevation: 6, // Android only
       },
       walletTitle: {
         color: '#555',
@@ -156,7 +149,7 @@ const styles = StyleSheet.create({
         fontSize: 12
       },
       dealCard: {
-        backgroundColor: '#0A1B311A',
+        backgroundColor: '#e7f2f9',
         borderRadius: 18,
         padding: 20,
         marginBottom: 20,

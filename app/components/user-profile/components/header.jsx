@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -9,10 +9,10 @@ const Header = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => naviation.goBack()}>
-        <Ionicons name="chevron-back" size={24} color="#0A1B31" />
+      <Image style={{height:48, width:48}} source={require("../../../../assets/images/profile-back.png")}/>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => naviation.navigate('Creator')}>
-      <Feather name="edit" size={20} color="#0A1B31" />
+        <Image style={{height:48, width:48}} source={require("../../../../assets/images/edit.png")}/>
       </TouchableOpacity>
     </View>
   );

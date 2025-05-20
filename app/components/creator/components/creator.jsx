@@ -102,14 +102,14 @@ const Creator = () => {
          onPress={() => handleNavigation('', 'previous')}
           source={require('../../../../assets/images/creator/back.png')}
           style={{
-            width: 10,
-            height: 10,
+            width: 62,
+            height: 30,
             visibility: activeTab.id === 0 ? 'hidden' : 'visible',
             pointerEvents: activeTab.id === 0  ? 'none' : 'auto',
           }}
         />
         </TouchableOpacity>
-        <Text style={{ color: '#555', ...globalStyles.paragraph,fontSize: 14 }} onPress={() => handleSkip()}>skip</Text>
+        {allTabs[0]?.data?.name && <Text style={{ color: '#555', ...globalStyles.paragraph,fontSize: 14 }} onPress={() => handleSkip()}>skip</Text>}
       </View>
 
       {/* Tab List */}
