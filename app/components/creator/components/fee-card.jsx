@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   updateButton: {
-    marginTop: 30,
+    marginTop: 10,
     backgroundColor: '#081932',
     paddingVertical: 20,
     borderRadius: 15,

@@ -89,7 +89,7 @@ const ExistingAccount = () => {
 
             {/* Login Screen */}
             {currentScreen === 'login' && (
-                <>
+                <View style={styles.inputContainers}>
                     <View style={styles.inputWrapperStyles}>
                     { isFocused.username || username ? <Text style={CommonStyles.focusedLabel}>Username</Text> : <></>}
                     <TextInput
@@ -129,7 +129,7 @@ const ExistingAccount = () => {
                     <TouchableOpacity onPress={handleLogin} style={[styles.button, CommonStyles.btn]}>
                         <Text style={styles.buttonText}>get in</Text>
                     </TouchableOpacity>
-                </>
+                </View>
             )}
 
             {/* Forgot Password Screen */}
@@ -198,16 +198,17 @@ const styles = StyleSheet.create({
         overflowY: 'auto',
         width: '100%',
     },
-    backButton: {
-        position: 'absolute',
-        top: 50,
-        left: 20,
-    },
     backText: {
         fontSize: 24,
         color: '#1B1B1B',
         height: 30,
         width: 60,
+    },
+
+    inputContainers : {
+        flex: 1,
+        width: '100%',
+        justifyContent: 'flex-end',
     },
 
     inputWrapperStyles : {
@@ -229,6 +230,14 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#FFFFFF',
         ...globalStyles.btnText,
+    },
+
+    backButton :{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        width: '100%',
+        marginTop: 20,
     },
 
     forgotWrapper:{

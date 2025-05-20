@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '85%',
         alignSelf: 'center', // Ensures the button is centered horizontally
-        ...globalStyles.notificationText
+        ...globalStyles.notificationText,
     }
 })

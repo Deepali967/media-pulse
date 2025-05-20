@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import BasicInfo from './basic-info';
 import Categories from './category';
 import FeeCardComponent from './fee-card';
@@ -64,6 +64,9 @@ const Creator = () => {
     }
   };
   const setActiveTabData = (tab) => {
+    if(!allTabs[0]?.data?.name){
+      return
+    } 
     if (activeTab === tab) return;
     setActiveTab(tab);
   };
@@ -93,7 +96,11 @@ const Creator = () => {
   },[])
 
   return (
-   <SafeAreaView style={{ flex: 1, backgroundColor: 'rgba(245, 251, 255, 1)' }}> 
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'rgba(245, 251, 255, 1)' }}> 
+      <TouchableWithoutFeedback onPress={() =>{if (Platform.OS !== 'web') Keyboard.dismiss();}}>
+    <KeyboardAvoidingView  style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}>
    {!isLoading ? <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
@@ -137,7 +144,9 @@ const Creator = () => {
     : <View style={{flex:1, backgroundColor:'#fff', justifyContent:'center', alignItems:'center'}}>
         <Text style={{...globalStyles.paragraph, fontSize: 14}}>Loading...</Text>
       </View>}
-     </SafeAreaView> 
+     </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
+    </SafeAreaView> 
   );
 };
 

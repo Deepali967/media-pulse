@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   selectedCategoryText: { color: '#fff' },
   nextButton: {
     backgroundColor: '#081932',
-    padding: 15,
+    padding: 20,
     borderRadius: 15,
     alignItems: 'center',
     marginVertical: 20,

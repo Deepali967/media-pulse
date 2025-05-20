@@ -19,20 +19,22 @@ export const CommonStyles = {
     },
 
   focusedLabel: {
-    color: '#888',
+    color: '#081932',
     marginBottom: 10,
     textTransform: 'lowercase',
     position: 'absolute',
     top: -7,
-    left: 15,
-    backgroundColor: '#F8FBFF',
+    left: 10,
+    backgroundColor: '#F5FBFF',
     paddingHorizontal: 5,
-    zIndex: 1,
+    zIndex: 2,
+    paddingHorizontal: 10,
+    ...globalStyles.paragraph,
     fontSize: 12,
   },
 
   normalLabel: {
-    color: '#888',
+    color: '#081932',
     marginBottom: 10,
     textTransform: 'capitalize',
   },

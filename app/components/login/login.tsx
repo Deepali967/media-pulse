@@ -56,11 +56,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     option :{
-        width: '70%',
-       paddingVertical: 15,
+        width: '85%',
         backgroundColor: "#13131333",
-        marginBottom: 15,
-        borderRadius:5
+        marginBottom: 20,
+        borderRadius:5,
+        paddingVertical: 20,
     },
     optionText : {
         textAlign: 'center',

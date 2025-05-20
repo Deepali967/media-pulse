@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
   backButton: {
     marginVertical: 20,
     alignSelf: 'flex-start',
-    height: 10,
-    width: 10,
+    height: 30,
+    width: 62,
   },
   profileSection: {
     alignItems: 'center',

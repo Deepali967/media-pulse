@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
 
   name: { fontSize: 18, fontWeight: 600, color: '#0A1B31', marginTop: 16, textAlign: 'left', width: '100%',  ...globalStyles.notificationText},
-  titles: { fontSize: 12, color: '#6B7280', marginTop: 4, textAlign: 'left', width: '100%' },
+  titles: { fontSize: 12, color: '#6B7280', marginTop: 4, textAlign: 'left', width: '100%', ...globalStyles.paragraph  },
   locationContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -80,9 +80,9 @@ const styles = StyleSheet.create({
   activeLocation: { backgroundColor: '#0819320D' },
   inactiveLocation: { backgroundColor: '#F1F5F9' },
   locationText: { fontSize: 14 },
-  activeText: { color: '#081932' },
+  activeText: { color: '#081932', ...globalStyles.paragraph },
   inactiveText: { color: '#889197' },
-  bio: { textAlign: 'center', fontSize: 12, color: '#6B7280', marginBottom: 16 , backgroundColor: "#08193205", width: '100%', padding: 10, borderRadius: 10},
+  bio: { textAlign: 'center', fontSize: 12, color: '#6B7280', marginBottom: 16 , backgroundColor: "#08193205", width: '100%', padding: 10, borderRadius: 10, ...globalStyles.paragraph },
 });
 
 export default BasicInfo;

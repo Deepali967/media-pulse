@@ -111,10 +111,6 @@ const BasicInfo = ({ data, handleNextClick }) => {
   },[])
 
   return (
-  <TouchableWithoutFeedback onPress={() =>{if (Platform.OS !== 'web') Keyboard.dismiss();}}>
-    <KeyboardAvoidingView  style={{ flex: 1 }}
-    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}>
     <ScrollView  keyboardShouldPersistTaps="handled" contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       
       {/* Image */}
@@ -134,6 +130,7 @@ const BasicInfo = ({ data, handleNextClick }) => {
         <TextInput
           style={styles.input}
           placeholder={ (!isFocused?.name && !basicInfo?.name) ? "name" : '' }
+          placeholderTextColor="#A9A9A9"
           onFocus={() => setIsFocused({ ...isFocused, name: true })}
           onBlur={() => setIsFocused({ ...isFocused, name: false })}
           value={basicInfo['name']}
@@ -158,6 +155,7 @@ const BasicInfo = ({ data, handleNextClick }) => {
           ref={titleRef}
           style={styles.titleInput}
           placeholder={!isFocused?.titles && !basicInfo?.titles?.length ? "title" : ''}
+          placeholderTextColor="#A9A9A9"
           onFocus={() => setIsFocused({ ...isFocused, titles: true })}
           onBlur={() => setIsFocused({ ...isFocused, titles: false })}
           value={currentTitle}
@@ -178,7 +176,8 @@ const BasicInfo = ({ data, handleNextClick }) => {
     placeholder={
       !isFocused.location && !basicInfo.location ? 'location' : ''
     }
-    value={query}
+    value={basicInfo?.location}
+    placeholderTextColor="#A9A9A9"
     onFocus={() => setShowDropdown(true)}
     onBlur={() => {
       // Delay to allow onPress of dropdown items
@@ -216,12 +215,13 @@ const BasicInfo = ({ data, handleNextClick }) => {
 
       {/* Bio */}
       <View style={styles.inputWrapper}>
-       {isFocused?.bio || basicInfo?.bio ? <Text style={CommonStyles.focusedLabel}>bio</Text> : null}
+       {isFocused?.bio || basicInfo?.bio ? <Text style={{...CommonStyles.focusedLabel, backgroundColor: '#F5FBFF'}}>bio</Text> : null}
         <TextInput
           style={[styles.input, { height: 85, paddingVertical: 15 }]}
           placeholder={ (!isFocused?.bio && !basicInfo?.bio) ? 'bio' : '' }
           onFocus={() => setIsFocused({ ...isFocused, bio: true })}
           onBlur={() => setIsFocused({ ...isFocused, bio: false })}
+          placeholderTextColor="#A9A9A9"
           value={basicInfo['bio']}
           onChangeText={(e) => updateBasicInfo('bio', e)}
           multiline
@@ -260,8 +260,6 @@ const BasicInfo = ({ data, handleNextClick }) => {
       </TouchableOpacity>
 
     </ScrollView>
-    </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
   );
 };
 
@@ -461,7 +459,7 @@ const styles = StyleSheet.create({
   nextButton: {
     marginTop: 20,
     backgroundColor: '#081932',
-    paddingVertical: 15,
+    paddingVertical: 20,
     borderRadius: 15,
     alignItems: 'center',
   },
@@ -472,7 +470,7 @@ const styles = StyleSheet.create({
   },
 
   nextButtonText: {
-    ...globalStyles.notificationText,
+    ...globalStyles.paragraph,
     color: COLORS.white,
     textTransform: 'capitalize',
   },

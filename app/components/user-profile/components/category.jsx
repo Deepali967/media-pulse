@@ -35,12 +35,13 @@ const CategoriesAccordion = ({ categoryData }) => {
 
         return (
           <View key={category} style={styles.section}>
-            <TouchableOpacity onPress={() => toggleSection(category)}>
-              <Text style={styles.title}>
-                {category} {isExpanded 
+            <TouchableOpacity style={styles.title} onPress={() => toggleSection(category)}>
+              <Text style={styles.titleText}>
+                {category}
+              </Text>
+              {isExpanded 
                   ? <Image source={require('../../../../assets/images/arrow-up.png')} style={{height:15, width:15}} /> 
                   : <Image  source={require('../../../../assets/images/arrow-down.png')} style={{height:15, width:15}} />}
-              </Text>
             </TouchableOpacity>
             {isExpanded && (
               <View style={styles.tags}>
@@ -72,12 +73,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   title: {
-    fontWeight: '600',
     marginBottom: 8,
-    color: '#333',
-    textTransform: 'capitalize',
-    ...globalStyles.paragraph,
-    fontSize: 13,
     backgroundColor: '#0819320D',
     paddingVertical: 8,
     paddingHorizontal: 16,
@@ -85,7 +81,17 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    width: '100%',
+    flexDirection: 'row',
   },
+
+  titleText : { 
+    color: '#081932',
+    textTransform: 'capitalize',
+    ...globalStyles.paragraph,
+    fontSize: 14
+  },
+
   tags: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -103,13 +109,15 @@ const styles = StyleSheet.create({
   },
   tagText: {
     fontSize: 14,
-    color: '#1a1a1a',
+    color: '#081932',
+    ...globalStyles.paragraph,
   },
   noSelection: {
     color: '#888',
     ...globalStyles.paragraph,
     fontSize: 14,
     textAlign: 'center',
+    marginLeft: 20,
   },
 });
 
