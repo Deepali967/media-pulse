@@ -204,7 +204,7 @@ const Creator = () => {
               {/* Tab Content */}
               <ScrollView
                 keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{ paddingBottom: 100 }}
+                contentContainerStyle={{  minHeight: '100%', paddingBottom: 100 }}
               >
                 {renderContent()}
               </ScrollView>
