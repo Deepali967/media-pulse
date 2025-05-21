@@ -1,5 +1,5 @@
-import { globalStyles } from '@/assets/typography/typography';
-import React, { useState } from 'react';
+import { globalStyles } from "@/assets/typography/typography";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,9 +10,12 @@ import {
   Platform,
   UIManager,
   Image,
-} from 'react-native';
+} from "react-native";
 
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
@@ -30,18 +33,29 @@ const CategoriesAccordion = ({ categoryData }) => {
   return (
     <ScrollView style={styles.container}>
       {Object.keys(categoryData).map((category) => {
-        const selectedItems = categoryData[category].filter((item) => item.selected);
+        const selectedItems = categoryData[category].filter(
+          (item) => item.selected,
+        );
         const isExpanded = expandedSections[category];
 
         return (
           <View key={category} style={styles.section}>
-            <TouchableOpacity style={styles.title} onPress={() => toggleSection(category)}>
-              <Text style={styles.titleText}>
-                {category}
-              </Text>
-              {isExpanded 
-                  ? <Image source={require('../../../../assets/images/arrow-up.png')} style={{height:15, width:15}} /> 
-                  : <Image  source={require('../../../../assets/images/arrow-down.png')} style={{height:15, width:15}} />}
+            <TouchableOpacity
+              style={styles.title}
+              onPress={() => toggleSection(category)}
+            >
+              <Text style={styles.titleText}>{category}</Text>
+              {isExpanded ? (
+                <Image
+                  source={require("../../../../assets/images/arrow-up.png")}
+                  style={{ height: 15, width: 15 }}
+                />
+              ) : (
+                <Image
+                  source={require("../../../../assets/images/arrow-down.png")}
+                  style={{ height: 15, width: 15 }}
+                />
+              )}
             </TouchableOpacity>
             {isExpanded && (
               <View style={styles.tags}>
@@ -67,34 +81,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 30,
-    backgroundColor: '#f1f5f9',
+    backgroundColor: "#f1f5f9",
   },
   section: {
     marginBottom: 12,
   },
   title: {
     marginBottom: 8,
-    backgroundColor: '#0819320D',
+    backgroundColor: "#0819320D",
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 8,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    flexDirection: 'row',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    flexDirection: "row",
   },
 
-  titleText : { 
-    color: '#081932',
-    textTransform: 'capitalize',
+  titleText: {
+    color: "#081932",
+    textTransform: "capitalize",
     ...globalStyles.paragraph,
-    fontSize: 14
+    fontSize: 14,
   },
 
   tags: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   tag: {
     borderRadius: 6,
@@ -104,19 +118,19 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     ...globalStyles.paragraph,
     fontSize: 16,
-    borderColor:"#0819320D",
+    borderColor: "#0819320D",
     borderWidth: 1,
   },
   tagText: {
     fontSize: 14,
-    color: '#081932',
+    color: "#081932",
     ...globalStyles.paragraph,
   },
   noSelection: {
-    color: '#888',
+    color: "#888",
     ...globalStyles.paragraph,
     fontSize: 14,
-    textAlign: 'center',
+    textAlign: "center",
     marginLeft: 20,
   },
 });

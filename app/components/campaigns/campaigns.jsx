@@ -8,59 +8,75 @@ import { campaignTabs } from "@/assets/constants/constants";
 
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BlurView } from "expo-blur";
 
 export default function CampaignScreen() {
   const [activeTab, setActiveTab] = useState(campaignTabs[0]);
 
-  const [campaignDetails, setCampaignDetails] = useState(getCampaign() ||  CampaignCard[0]);
+  const [campaignDetails, setCampaignDetails] = useState(
+    getCampaign() || CampaignCard[0],
+  );
 
   const navigation = useNavigation();
 
   const handleBack = () => {
     navigation.navigate("DashboardScreen");
-  }
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-    <View style={styles.container}>
-      
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => {handleBack()}}>
-          <Image
-            source={require('../../../assets/images/creator/back.png')}
-            style={[
-              styles.backIcon,
-            ]}
-          />
-        </TouchableOpacity>
-        <Text style={styles.titleText}>
-          {campaignDetails?.campaignTitle || "Campaign Title"}
-        </Text>
-      </View>
+    <SafeAreaView style={{ flex: 1, position: "relative" }}>
+      <BlurView
+        intensity={80}
+        tint="light" // 'light', 'dark', or 'default'
+        style={StyleSheet.absoluteFill}
+      />
+      <View style={styles.container}>
+        {/* Header */}
+        <View style={styles.header}>
+          <TouchableOpacity
+            onPress={() => {
+              handleBack();
+            }}
+          >
+            <Image
+              source={require("../../../assets/images/creator/back.png")}
+              style={[styles.backIcon]}
+            />
+          </TouchableOpacity>
+          <Text style={styles.titleText}>
+            {campaignDetails?.campaignTitle || "Campaign Title"}
+          </Text>
+        </View>
 
-      {/* Tabs */}
-      <View style={styles.tabContainer}>
-        {campaignTabs.map((tab, index) => (
+        {/* Tabs */}
+        <View style={styles.tabContainer}>
+          {campaignTabs.map((tab, index) => (
             <TouchableOpacity
-                key={index}
-                style={[styles.tabButton, activeTab.text === tab.text && styles.activeTab]}
-                onPress={() => setActiveTab(tab)}
+              key={index}
+              style={[
+                styles.tabButton,
+                activeTab.text === tab.text && styles.activeTab,
+              ]}
+              onPress={() => setActiveTab(tab)}
             >
-                <Text style={[styles.tabText, activeTab.text === tab.text && styles.activeTabText]}>
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab.text === tab.text && styles.activeTabText,
+                ]}
+              >
                 {tab.text}
-                </Text>
+              </Text>
             </TouchableOpacity>
-            ))}
-      </View>
+          ))}
+        </View>
 
-      {/* Content */}
-      <View style={{ flex: 1 }}>
-        {activeTab.id === 0 && <BasicInfoTab campaign={campaignDetails} />}
-        {activeTab.id === 1 && <DeliverablesTab  campaign={campaignDetails} />}
+        {/* Content */}
+        <View style={{ flex: 1 }}>
+          {activeTab.id === 0 && <BasicInfoTab campaign={campaignDetails} />}
+          {activeTab.id === 1 && <DeliverablesTab campaign={campaignDetails} />}
+        </View>
       </View>
-
-    </View>
     </SafeAreaView>
   );
 }
@@ -69,7 +85,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F5FBFF',
+    backgroundColor: "#F5FBFF",
   },
   header: {
     flexDirection: "row",
@@ -78,7 +94,7 @@ const styles = StyleSheet.create({
   },
   backIcon: {
     width: 62,
-    height:30,
+    height: 30,
     marginRight: 10,
   },
   hiddenBackIcon: {
@@ -88,36 +104,35 @@ const styles = StyleSheet.create({
     color: "#081932",
     fontWeight: "600",
     textAlign: "center",
-   marginLeft: 25,
+    marginLeft: 25,
     textTransform: "capitalize",
     ...globalStyles.notificationText,
-    
   },
   tabContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginTop: 20,
     marginBottom: 20,
   },
   tabButton: {
-    backgroundColor: '#E7ECF3',
+    backgroundColor: "#E7ECF3",
     paddingVertical: 10,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginRight: 10,
     paddingHorizontal: 20,
   },
   activeTab: {
-    backgroundColor: '#0A122A',
+    backgroundColor: "#0A122A",
   },
   tabText: {
-    color: '#0A122A',
-    fontWeight: '400',
+    color: "#0A122A",
+    fontWeight: "400",
     ...globalStyles.paragraph,
     fontSize: 14,
   },
   activeTabText: {
-    color: '#FFFFFF',
-    fontWeight: '600',
+    color: "#FFFFFF",
+    fontWeight: "600",
   },
 });

@@ -1,20 +1,20 @@
-import * as React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import Splash from './components/splash/splash';
-import Login from './components/login/login';
-import useFonts from '../assets/fonts/fonts';
-import ExistingAccount from './components/login/comonents/existing/existing';
-import Status from './components/login/comonents/status/status';
-import Apply from './components/login/comonents/apply/apply';
-import Creator from './components/creator/components/creator';
-import DashboardScreen from './components/home/Home';
-import CampaignScreen from './components/campaigns/campaigns';
-import localStorageService from './service/localstorage.service';
+import * as React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import Splash from "./components/splash/splash";
+import Login from "./components/login/login";
+import useFonts from "../assets/fonts/fonts";
+import ExistingAccount from "./components/login/comonents/existing/existing";
+import Status from "./components/login/comonents/status/status";
+import Apply from "./components/login/comonents/apply/apply";
+import Creator from "./components/creator/components/creator";
+import DashboardScreen from "./components/home/Home";
+import CampaignScreen from "./components/campaigns/campaigns";
+import localStorageService from "./service/localstorage.service";
 
-import Payment from './components/payment/payment';
-import Profile from './components/profile/profile';
-import UserProfile from './components/user-profile/userProfile';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Payment from "./components/payment/payment";
+import Profile from "./components/profile/profile";
+import UserProfile from "./components/user-profile/userProfile";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const Stack = createStackNavigator();
 
@@ -24,9 +24,12 @@ const AppNavigator = () => {
   const [loading, setIsLoading] = React.useState(true);
 
   // Initialize state
-  const [isAuthenticated, setIsAuthenticated] = React.useState<boolean | undefined>(undefined);
-  const [profileCompleted, setProfileCompleted] = React.useState<boolean>(false);
-  const [initialScreen, setInitialScreen] = React.useState<string>('Splash'); // Default initial screen
+  const [isAuthenticated, setIsAuthenticated] = React.useState<
+    boolean | undefined
+  >(undefined);
+  const [profileCompleted, setProfileCompleted] =
+    React.useState<boolean>(false);
+  const [initialScreen, setInitialScreen] = React.useState<string>("Splash"); // Default initial screen
 
   // Wait for fonts to load before rendering anything
   if (!fontsLoaded) {
@@ -36,11 +39,11 @@ const AppNavigator = () => {
   // Set initial screen based on authentication state
   React.useEffect(() => {
     if (isAuthenticated && profileCompleted) {
-      setInitialScreen('DashboardScreen');
+      setInitialScreen("DashboardScreen");
     } else if (!isAuthenticated) {
-      setInitialScreen('Splash');
+      setInitialScreen("Splash");
     } else if (isAuthenticated && !profileCompleted) {
-      setInitialScreen('Creator');
+      setInitialScreen("Creator");
     }
 
     setIsLoading(false); // Set loading to false after determining the initial screen
@@ -51,8 +54,10 @@ const AppNavigator = () => {
     setIsLoading(true); // Set loading to true while checking authentication
 
     const checkAuthentication = async () => {
-      const isUserAuthenticated = await localstorageService.getStoreItem('isAuthenticated');
-      const profile = await localstorageService.getStoreItem('profileCompletion');
+      const isUserAuthenticated =
+        await localstorageService.getStoreItem("isAuthenticated");
+      const profile =
+        await localstorageService.getStoreItem("profileCompletion");
 
       if (isUserAuthenticated) {
         setIsAuthenticated(true);
@@ -92,7 +97,7 @@ const AppNavigator = () => {
           <Stack.Screen name="UserProfile" component={UserProfile} />
         </Stack.Navigator>
       )}
-    </SafeAreaProvider>  
+    </SafeAreaProvider>
   );
 };
 

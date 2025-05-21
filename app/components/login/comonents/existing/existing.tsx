@@ -1,303 +1,393 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet , Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Image} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Platform,
+  Image,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-import localStorageService from '../../../../service/localstorage.service';
-import { globalStyles } from '@/assets/typography/typography';
-import { CommonStyles } from '@/assets/typography/common-css';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import localStorageService from "../../../../service/localstorage.service";
+import { globalStyles } from "@/assets/typography/typography";
+import { CommonStyles } from "@/assets/typography/common-css";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { BlurView } from "expo-blur";
 
 const ExistingAccount = () => {
-    const [currentScreen, setCurrentScreen] = useState('login');
-    const [emailOrPhone, setEmailOrPhone] = useState('');
-    const [otp, setOtp] = useState(['', '', '', '']);
-    const [timer, setTimer] = useState(60);
-    const navigation = useNavigation();
+  const [currentScreen, setCurrentScreen] = useState("login");
+  const [emailOrPhone, setEmailOrPhone] = useState("");
+  const [otp, setOtp] = useState(["", "", "", ""]);
+  const [timer, setTimer] = useState(60);
+  const navigation = useNavigation();
 
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [usernameError, setUsernameError] = React.useState('');
-    const [passwordError, setPasswordError] = React.useState('');
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [usernameError, setUsernameError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
 
-    const [isFocused, setIsFocused] = useState({username : false, password : false});
+  const [isFocused, setIsFocused] = useState({
+    username: false,
+    password: false,
+  });
 
-    const localstorageService = localStorageService();
+  const localstorageService = localStorageService();
 
-    const handleLogin = () => {
-        let valid = true;
+  const handleLogin = () => {
+    let valid = true;
 
-        // Reset errors
-        setUsernameError('');
-        setPasswordError('');
+    // Reset errors
+    setUsernameError("");
+    setPasswordError("");
 
-        // Validate username
-        if (!username.trim()) {
-            setUsernameError('Username is required');
-            valid = false;
-        }
+    // Validate username
+    if (!username.trim()) {
+      setUsernameError("Username is required");
+      valid = false;
+    }
 
-        // Validate password
-        if (!password.trim()) {
-            setPasswordError('Password is required');
-            valid = false;
-        }
+    // Validate password
+    if (!password.trim()) {
+      setPasswordError("Password is required");
+      valid = false;
+    }
 
-        if (valid) {
-            // Perform login logic here
-            // Example: Call an API or navigate to another screen
-            console.log('Logging in with:', { username, password });
-            localstorageService.setStoreItem('isAuthenticated', true);
-            navigation.navigate('Creator' as never);
-        }
-    };
+    if (valid) {
+      // Perform login logic here
+      // Example: Call an API or navigate to another screen
+      console.log("Logging in with:", { username, password });
+      localstorageService.setStoreItem("isAuthenticated", true);
+      navigation.navigate("Creator" as never);
+    }
+  };
 
-    // OTP Timer
-    useEffect(() => {
-        let interval: any;
-        if (currentScreen === 'otp' && timer > 0) {
-            interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
-        }
-        return () => clearInterval(interval);
-    }, [currentScreen, timer]);
+  // OTP Timer
+  useEffect(() => {
+    let interval: any;
+    if (currentScreen === "otp" && timer > 0) {
+      interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
+    }
+    return () => clearInterval(interval);
+  }, [currentScreen, timer]);
 
-    const handleOtpChange = (index: any, value: any) => {
-        const newOtp = [...otp];
-        newOtp[index] = value;
-        setOtp(newOtp);
-    };
+  const handleOtpChange = (index: any, value: any) => {
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+  };
 
-    const handleNavigation = () => {
-        if (currentScreen === 'forgot' || currentScreen === 'otp') {
-            setCurrentScreen('login');
-            return;
-        }
+  const handleNavigation = () => {
+    if (currentScreen === "forgot" || currentScreen === "otp") {
+      setCurrentScreen("login");
+      return;
+    }
 
-        navigation.navigate('Login' as never);
-    };
+    navigation.navigate("Login" as never);
+  };
 
-    return (
-      <SafeAreaView style={{ flex: 1 }}>  
-      <TouchableWithoutFeedback onPress={() =>{if (Platform.OS !== 'web') Keyboard.dismiss();}}>
-      <KeyboardAvoidingView  style={{ flex: 1 }}
-    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}>
-        <View style={styles.container}>
+  return (
+    <SafeAreaView style={{ flex: 1, position: "relative" }}>
+      <BlurView
+        intensity={80}
+        tint="light" // 'light', 'dark', or 'default'
+        style={StyleSheet.absoluteFill}
+      />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          if (Platform.OS !== "web") Keyboard.dismiss();
+        }}
+      >
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+        >
+          <View style={styles.container}>
             {/* Back Button */}
-            <TouchableOpacity onPress={() => handleNavigation()} style={styles.backButton}>
-                <Image style={styles.backText} source={require('../../../../../assets/images/creator/back.png')} height={48} width={48}/>
+            <TouchableOpacity
+              onPress={() => handleNavigation()}
+              style={styles.backButton}
+            >
+              <Image
+                style={styles.backText}
+                source={require("../../../../../assets/images/creator/back.png")}
+                height={48}
+                width={48}
+              />
             </TouchableOpacity>
 
             {/* Login Screen */}
-            {currentScreen === 'login' && (
-                <View style={styles.inputContainers}>
-                    <View style={styles.inputWrapperStyles}>
-                    { isFocused.username || username ? <Text style={CommonStyles.focusedLabel}>Username</Text> : <></>}
-                    <TextInput
-                        style={CommonStyles.input}
-                        placeholder={ (!isFocused.username && !username) ? "username" : ''}
-                        placeholderTextColor="#A9A9A9"
-                        value={username}
-                        onFocus={() => setIsFocused({...isFocused, username : true})}
-                        onBlur={() =>  setIsFocused({...isFocused, username : false})}
-                        onChangeText={(text) => setUsername(text)}
-                    />
-                    <Text style={[styles.errorText, {visibility : usernameError ? 'visible' : 'hidden'}]}>{usernameError}</Text>
-                    </View>
-
-                    <View style={styles.inputWrapperStyles}>
-                    {isFocused.password || password ? <Text style={CommonStyles.focusedLabel}>password</Text> : <></>}
-                    <TextInput
-                        style={CommonStyles.input}
-                        placeholder={ (!isFocused.password && !password) ? "passoword" : ''}
-                        placeholderTextColor="#A9A9A9"
-                        secureTextEntry
-                        value={password}
-                        onFocus={() => setIsFocused({...isFocused, password : true})}
-                        onBlur={() => setIsFocused({...isFocused, password : false})}
-                        onChangeText={(text) => setPassword(text)}
-                    />
-                    <Text style={[styles.errorText, {visibility : passwordError ? 'visible' : 'hidden'}]}>{passwordError}</Text>
-                    </View>
-
-
-                    <View style={styles.forgotWrapper}>
-                    <TouchableOpacity onPress={() => setCurrentScreen('forgot')}>
-                        <Text style={styles.forgotText}>forgot password</Text>
-                    </TouchableOpacity>
-                    </View>
-
-                    <TouchableOpacity onPress={handleLogin} style={[styles.button, CommonStyles.btn]}>
-                        <Text style={styles.buttonText}>get in</Text>
-                    </TouchableOpacity>
+            {currentScreen === "login" && (
+              <View style={styles.inputContainers}>
+                <View style={styles.inputWrapperStyles}>
+                  {isFocused.username || username ? (
+                    <Text style={CommonStyles.focusedLabel}>Username</Text>
+                  ) : (
+                    <></>
+                  )}
+                  <TextInput
+                    style={CommonStyles.input}
+                    placeholder={
+                      !isFocused.username && !username ? "username" : ""
+                    }
+                    placeholderTextColor="#A9A9A9"
+                    value={username}
+                    onFocus={() =>
+                      setIsFocused({ ...isFocused, username: true })
+                    }
+                    onBlur={() =>
+                      setIsFocused({ ...isFocused, username: false })
+                    }
+                    onChangeText={(text) => setUsername(text)}
+                  />
+                  <Text
+                    style={[
+                      styles.errorText,
+                      { visibility: usernameError ? "visible" : "hidden" },
+                    ]}
+                  >
+                    {usernameError}
+                  </Text>
                 </View>
+
+                <View style={styles.inputWrapperStyles}>
+                  {isFocused.password || password ? (
+                    <Text style={CommonStyles.focusedLabel}>password</Text>
+                  ) : (
+                    <></>
+                  )}
+                  <TextInput
+                    style={CommonStyles.input}
+                    placeholder={
+                      !isFocused.password && !password ? "passoword" : ""
+                    }
+                    placeholderTextColor="#A9A9A9"
+                    secureTextEntry
+                    value={password}
+                    onFocus={() =>
+                      setIsFocused({ ...isFocused, password: true })
+                    }
+                    onBlur={() =>
+                      setIsFocused({ ...isFocused, password: false })
+                    }
+                    onChangeText={(text) => setPassword(text)}
+                  />
+                  <Text
+                    style={[
+                      styles.errorText,
+                      { visibility: passwordError ? "visible" : "hidden" },
+                    ]}
+                  >
+                    {passwordError}
+                  </Text>
+                </View>
+
+                <View style={styles.forgotWrapper}>
+                  <TouchableOpacity onPress={() => setCurrentScreen("forgot")}>
+                    <Text style={styles.forgotText}>forgot password</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <TouchableOpacity
+                  onPress={handleLogin}
+                  style={[styles.button, CommonStyles.btn]}
+                >
+                  <Text style={styles.buttonText}>get in</Text>
+                </TouchableOpacity>
+              </View>
             )}
 
             {/* Forgot Password Screen */}
-            {currentScreen === 'forgot' && (
-                <>
-                    <Text style={styles.infoText}>we will send a reset password code to your registered email or phone</Text>
-                    <TextInput
-                        style={CommonStyles.input}
-                        placeholder="email or phone no."
-                        placeholderTextColor="#A9A9A9"
-                        value={emailOrPhone}
-                        onChangeText={setEmailOrPhone}
-                    />
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Creator' as never)}>
-                        <Text style={styles.buttonText}>next</Text>
-                    </TouchableOpacity>
-                </>
+            {currentScreen === "forgot" && (
+              <>
+                <Text style={styles.infoText}>
+                  we will send a reset password code to your registered email or
+                  phone
+                </Text>
+                <TextInput
+                  style={CommonStyles.input}
+                  placeholder="email or phone no."
+                  placeholderTextColor="#A9A9A9"
+                  value={emailOrPhone}
+                  onChangeText={setEmailOrPhone}
+                />
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigation.navigate("Creator" as never)}
+                >
+                  <Text style={styles.buttonText}>next</Text>
+                </TouchableOpacity>
+              </>
             )}
 
             {/* OTP Verification Screen */}
-            {currentScreen === 'otp' && (
-                <>
-                    <Text style={styles.infoText}>enter reset password code, received on email or on phone no.</Text>
-                    <View style={styles.otpContainer}>
-                        {otp.map((digit, index) => (
-                            <TextInput
-                                key={index}
-                                style={styles.otpInput}
-                                maxLength={1}
-                                keyboardType="numeric"
-                                value={digit}
-                                onChangeText={(value) => handleOtpChange(index, value)}
-                            />
-                        ))}
-                    </View>
+            {currentScreen === "otp" && (
+              <>
+                <Text style={styles.infoText}>
+                  enter reset password code, received on email or on phone no.
+                </Text>
+                <View style={styles.otpContainer}>
+                  {otp.map((digit, index) => (
+                    <TextInput
+                      key={index}
+                      style={styles.otpInput}
+                      maxLength={1}
+                      keyboardType="numeric"
+                      value={digit}
+                      onChangeText={(value) => handleOtpChange(index, value)}
+                    />
+                  ))}
+                </View>
 
-                    {/* Resend Timer */}
-                    <View style={styles.resendContainer}>
-                        <TouchableOpacity onPress={() => setTimer(60)} disabled={timer > 0}>
-                            <Text style={[styles.resendText, timer > 0 && { opacity: 0.5 }]}>resend</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.timerText}>{timer > 0 ? `0:${timer}` : ''}</Text>
-                    </View>
+                {/* Resend Timer */}
+                <View style={styles.resendContainer}>
+                  <TouchableOpacity
+                    onPress={() => setTimer(60)}
+                    disabled={timer > 0}
+                  >
+                    <Text
+                      style={[styles.resendText, timer > 0 && { opacity: 0.5 }]}
+                    >
+                      resend
+                    </Text>
+                  </TouchableOpacity>
+                  <Text style={styles.timerText}>
+                    {timer > 0 ? `0:${timer}` : ""}
+                  </Text>
+                </View>
 
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText} onPress={() => navigation.navigate('Creator' as never)}>
-                            verify
-                        </Text>
-                    </TouchableOpacity>
-                </>
+                <TouchableOpacity style={styles.button}>
+                  <Text
+                    style={styles.buttonText}
+                    onPress={() => navigation.navigate("Creator" as never)}
+                  >
+                    verify
+                  </Text>
+                </TouchableOpacity>
+              </>
             )}
-        </View>
+          </View>
         </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
-        </SafeAreaView>
-    );
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F3F5F7',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        paddingHorizontal: 20,
-        overflowY: 'auto',
-        width: '100%',
-    },
-    backText: {
-        fontSize: 24,
-        color: '#1B1B1B',
-        height: 30,
-        width: 60,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#F3F5F7",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingHorizontal: 20,
+    overflowY: "auto",
+    width: "100%",
+  },
+  backText: {
+    fontSize: 24,
+    color: "#1B1B1B",
+    height: 30,
+    width: 60,
+  },
 
-    inputContainers : {
-        flex: 1,
-        width: '100%',
-        justifyContent: 'flex-end',
-    },
+  inputContainers: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "flex-end",
+  },
 
-    inputWrapperStyles : {
-        marginBottom: 15,
-        width: '100%',
-        justifyContent: 'center',   
-        alignItems: 'center',
-    },
+  inputWrapperStyles: {
+    marginBottom: 15,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
-    button: {
-        width: '100%',
-        backgroundColor: '#0F172A',
-        borderRadius: 8,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 20,
-        marginBottom: 20,
-    },
-    buttonText: {
-        color: '#FFFFFF',
-        ...globalStyles.btnText,
-    },
+  button: {
+    width: "100%",
+    backgroundColor: "#0F172A",
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    ...globalStyles.btnText,
+  },
 
-    backButton :{
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        width: '100%',
-        marginTop: 20,
-    },
+  backButton: {
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: "100%",
+    marginTop: 20,
+  },
 
-    forgotWrapper:{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        marginVertical: 15
-    },
+  forgotWrapper: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    marginVertical: 15,
+  },
 
-    forgotText: {
-        color: '#1B1B1B',
-        ...globalStyles.btnText,
-    },
-    infoText: {
-        textAlign: 'center',
-        fontSize: 14,
-        color: '#1B1B1B',
-        marginBottom: 20,
-    },
-    otpContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-    },
-    otpInput: {
-        width: 50,
-        height: 50,
-        borderWidth: 1,
-        borderColor: '#D1D5DB',
-        borderRadius: 8,
-        textAlign: 'center',
-        fontSize: 18,
-        backgroundColor: '#FFFFFF',
-        marginHorizontal: 5,
-    },
-    resendContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-        marginTop: 15,
-        paddingHorizontal: 20,
-    },
-    resendText: {
-        fontSize: 14,
-        color: '#1B1B1B',
-    },
-    timerText: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#1B1B1B',
-    },
-    errorText: {
-        color: 'red',
-        fontSize: 10,
-        marginTop: 5,
-        marginLeft: 15,
-        display: 'flex',
-        width: '100%',
-        justifyContent:'flex-start'
-    },
+  forgotText: {
+    color: "#1B1B1B",
+    ...globalStyles.btnText,
+  },
+  infoText: {
+    textAlign: "center",
+    fontSize: 14,
+    color: "#1B1B1B",
+    marginBottom: 20,
+  },
+  otpContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  otpInput: {
+    width: 50,
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#D1D5DB",
+    borderRadius: 8,
+    textAlign: "center",
+    fontSize: 18,
+    backgroundColor: "#FFFFFF",
+    marginHorizontal: 5,
+  },
+  resendContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginTop: 15,
+    paddingHorizontal: 20,
+  },
+  resendText: {
+    fontSize: 14,
+    color: "#1B1B1B",
+  },
+  timerText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#1B1B1B",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 10,
+    marginTop: 5,
+    marginLeft: 15,
+    display: "flex",
+    width: "100%",
+    justifyContent: "flex-start",
+  },
 });
 
 export default ExistingAccount;

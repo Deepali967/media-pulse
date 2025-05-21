@@ -1,22 +1,24 @@
-import React from 'react';
-import AppNavigator from './app-navigator';
-import { View , StyleSheet, ScrollView} from 'react-native';
+import React from "react";
+import AppNavigator from "./app-navigator";
+import { View, StyleSheet, ScrollView } from "react-native";
 
 export default function App() {
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.app}>
+    <ScrollView
+      contentContainerStyle={styles.scrollContainer}
+      style={styles.app}
+    >
       <AppNavigator />
-    </ScrollView>  
+    </ScrollView>
   );
 }
 
-
 const styles = StyleSheet.create({
-  app : {
-    height: '100%',
-    width: '100%',
+  app: {
+    height: "100%",
+    width: "100%",
     flex: 1,
-    backgroundColor: '#F7FAFC',
+    backgroundColor: "#F7FAFC",
   },
 
   scrollContainer: {
@@ -26,5 +28,5 @@ const styles = StyleSheet.create({
   Image: {
     maxHeight: 100,
     maxWidth: 100,
-  }
-})  
+  },
+});

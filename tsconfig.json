@@ -3,15 +3,16 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "assets/fonts/fonts.js"  ]
+    "expo-env.d.ts",
+    "assets/fonts/fonts.js",
+    "app/components/campaigns/campaigns.jsx",
+    "app/components/campaigns/basic-info.jsx"
+  ]
 }

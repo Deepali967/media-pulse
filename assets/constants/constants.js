@@ -1,21 +1,20 @@
 export const loginTypes = [
-    {
-        id:1,
-        text :'Apply with us',
-        route: 'Apply'
-    },
-    {
-        id:2,
-        text :'I have an account',
-        route: 'Existing'
-    },
-    {
-        id:3,
-        text :'Check application status',
-         route: 'Status'
-    }
-]
-
+  {
+    id: 1,
+    text: "Apply with us",
+    route: "Apply",
+  },
+  {
+    id: 2,
+    text: "I have an account",
+    route: "Existing",
+  },
+  {
+    id: 3,
+    text: "Check application status",
+    route: "Status",
+  },
+];
 
 export const Cities = [
   "Achalpur",
@@ -1215,141 +1214,138 @@ export const Cities = [
   "Zamania",
   "Zira",
   "Zirakpur",
-  "Zunheboto"
-]
+  "Zunheboto",
+];
 
 export const feecardContent = {
-  'instagram' : {
-      title : 'Instagram',
-      fields : [
-          {
-              igReel: { label: 'ig reel', value: '' },
-              igCarouselPost: { label: 'ig carousel post', value: '' },
-              igStaticPost: { label: 'ig static post', value: '' },
-              igLiveSession: { label: 'ig live session (15-30 min)', value: '' },
-              ytVideo: { label: 'Youtube integrated video', value: '' },
-              ytShots: { label: 'Youtube Shots', value: '' },
-              ytCollab: { label: 'Youtube Collab', value: '' },
-          }
-      ]
+  instagram: {
+    title: "Instagram",
+    fields: [
+      {
+        igReel: { label: "ig reel", value: "" },
+        igCarouselPost: { label: "ig carousel post", value: "" },
+        igStaticPost: { label: "ig static post", value: "" },
+        igLiveSession: { label: "ig live session (15-30 min)", value: "" },
+        ytVideo: { label: "Youtube integrated video", value: "" },
+        ytShots: { label: "Youtube Shots", value: "" },
+        ytCollab: { label: "Youtube Collab", value: "" },
+      },
+    ],
   },
-}
+};
 
 export const tabs = [
-    {
-        id:0,
-        text :'Basic Info',
-        route: 'BasicInfo',
-        data : {
-          name: '',
-          titles: [],
-          location: '',
-          locations: Cities,
-          bio: '',
-          instagram: '',
-          youtube: '',
-          currentLocation: 'chandigarh',
-        }
-    },
-    {
-        id:1,
-        text :'Categories',
-        route: 'Categories', 
-        data : {
-          fashion: [
-            { title: "streetwear", selected: false },
-            { title: "luxury fashion", selected: false },
-            { title: "y2k", selected: false },
-            { title: "diy", selected: false },
-            { title: "haute", selected: false },
-            { title: "bridal clothing", selected: false },
-            { title: "vintage", selected: false },
-            { title: "boho", selected: false },
-            { title: "formal wear", selected: false },
-            { title: "beach wear", selected: false },
-            { title: "mens wear", selected: false },
-            { title: "performance wear", selected: false },
-            { title: "kids fashion", selected: false }
-          ],
-          beauty: [
-            { title: "premium beauty", selected: false },
-            { title: "makeup artist", selected: false },
-            { title: "vfx makeup", selected: false },
-            { title: "body care", selected: false },
-            { title: "haircare", selected: false },
-            { title: "skincare", selected: false },
-            { title: "nailcare", selected: false },
-            { title: "deromatologist", selected: false },
-            { title: "nailart", selected: false },
-            { title: "beauty appliance", selected: false },
-            { title: "product review", selected: false },
-            { title: "fragrances", selected: false }
-          ],
-          lifestyle: [
-            { title: "travel blogger", selected: false },
-            { title: "chef", selected: false },
-            { title: "travel photographer", selected: false },
-            { title: "food blogger", selected: false },
-            { title: "mom blogger", selected: false },
-            { title: "athlete", selected: false },
-            { title: "fitness trainer", selected: false },
-            { title: "diy decor", selected: false },
-            { title: "finance", selected: false },
-            { title: "gardening", selected: false },
-            { title: "handcrafts", selected: false }
-          ]
-        }
-    },
-    {
-        id:2,
-        text :'Fee card',
-        route: 'FeeCard', 
-        data : feecardContent
-    }
-]
-
-
-export const campaignTabs = [
   {
-      id:0,
-      text :'Basic Info',
-      route: 'BasicInfo',
-      data : {}
+    id: 0,
+    text: "Basic Info",
+    route: "BasicInfo",
+    data: {
+      name: "",
+      titles: [],
+      location: "",
+      locations: Cities,
+      bio: "",
+      instagram: "",
+      youtube: "",
+      currentLocation: "chandigarh",
+    },
   },
   {
-      id:1,
-      text :'Deliverables',
-      route: 'Deliverables', 
-      data : {}
+    id: 1,
+    text: "Categories",
+    route: "Categories",
+    data: {
+      fashion: [
+        { title: "streetwear", selected: false },
+        { title: "luxury fashion", selected: false },
+        { title: "y2k", selected: false },
+        { title: "diy", selected: false },
+        { title: "haute", selected: false },
+        { title: "bridal clothing", selected: false },
+        { title: "vintage", selected: false },
+        { title: "boho", selected: false },
+        { title: "formal wear", selected: false },
+        { title: "beach wear", selected: false },
+        { title: "mens wear", selected: false },
+        { title: "performance wear", selected: false },
+        { title: "kids fashion", selected: false },
+      ],
+      beauty: [
+        { title: "premium beauty", selected: false },
+        { title: "makeup artist", selected: false },
+        { title: "vfx makeup", selected: false },
+        { title: "body care", selected: false },
+        { title: "haircare", selected: false },
+        { title: "skincare", selected: false },
+        { title: "nailcare", selected: false },
+        { title: "deromatologist", selected: false },
+        { title: "nailart", selected: false },
+        { title: "beauty appliance", selected: false },
+        { title: "product review", selected: false },
+        { title: "fragrances", selected: false },
+      ],
+      lifestyle: [
+        { title: "travel blogger", selected: false },
+        { title: "chef", selected: false },
+        { title: "travel photographer", selected: false },
+        { title: "food blogger", selected: false },
+        { title: "mom blogger", selected: false },
+        { title: "athlete", selected: false },
+        { title: "fitness trainer", selected: false },
+        { title: "diy decor", selected: false },
+        { title: "finance", selected: false },
+        { title: "gardening", selected: false },
+        { title: "handcrafts", selected: false },
+      ],
+    },
   },
-]
-
-
-export const CampaignCard = [
   {
-    "campaignTitle": "simple skincare",
-    "campaignDetails": {
-      "campaignName": "non beauty 2.0",
-      "totalDeliverables": 3,
-      "timeline": "feb 2025 - mar 2025",
-      "dealCost": "₹ 2,00,000",
-      "description": "Creators from different genres like travel, fitness, chef, basically anything but beauty recommend simple products as their go-to skincare because it’s quick, easy, and effective. The campaign focuses on showcasing how these products fit seamlessly into the creators' daily routines. A video with extremely organic integration in the content you are best at will highlight the authenticity and effectiveness of the products.",
-      "deliverables": [
-        {
-          "title": "Instagram Reel",
-          "price": "₹ 20,000"
-        },
-        {
-          "title": "Instagram Story",
-          "price": "₹ 10,000"
-        },
-        {
-          "title": "YouTube Video",
-          "price": "₹ 50,000"
-        }
-      ]
-    }
+    id: 2,
+    text: "Fee card",
+    route: "FeeCard",
+    data: feecardContent,
   },
 ];
 
+export const campaignTabs = [
+  {
+    id: 0,
+    text: "Basic Info",
+    route: "BasicInfo",
+    data: {},
+  },
+  {
+    id: 1,
+    text: "Deliverables",
+    route: "Deliverables",
+    data: {},
+  },
+];
 
+export const CampaignCard = [
+  {
+    campaignTitle: "simple skincare",
+    campaignDetails: {
+      campaignName: "non beauty 2.0",
+      totalDeliverables: 3,
+      timeline: "feb 2025 - mar 2025",
+      dealCost: "₹ 2,00,000",
+      description:
+        "Creators from different genres like travel, fitness, chef, basically anything but beauty recommend simple products as their go-to skincare because it’s quick, easy, and effective. The campaign focuses on showcasing how these products fit seamlessly into the creators' daily routines. A video with extremely organic integration in the content you are best at will highlight the authenticity and effectiveness of the products.",
+      deliverables: [
+        {
+          title: "Instagram Reel",
+          price: "₹ 20,000",
+        },
+        {
+          title: "Instagram Story",
+          price: "₹ 10,000",
+        },
+        {
+          title: "YouTube Video",
+          price: "₹ 50,000",
+        },
+      ],
+    },
+  },
+];
