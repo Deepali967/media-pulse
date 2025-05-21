@@ -62,7 +62,7 @@ const CategoriesScreen = ({ data, handleNextClick }) => {
   };
 
   return (
-    <ScrollView
+    <View
       style={styles.container}
       contentContainerStyle={{ paddingBottom: 100 }}
       keyboardShouldPersistTaps="handled"
@@ -81,12 +81,12 @@ const CategoriesScreen = ({ data, handleNextClick }) => {
       >
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 20, paddingVertical: 20 },
+  container: {paddingHorizontal: 20, paddingVertical: 20 },
 
   categorySection: {
     fontSize: 18,

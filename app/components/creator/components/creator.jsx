@@ -202,10 +202,12 @@ const Creator = () => {
               </View>
 
               {/* Tab Content */}
-              <View style={styles.contentContainer}
+              <ScrollView
+                keyboardShouldPersistTaps="handled"
+                contentContainerStyle={{ paddingBottom: 100 }}
               >
                 {renderContent()}
-              </View>
+              </ScrollView>
             </View>
           ) : (
             <View

@@ -119,10 +119,8 @@ const BasicInfo = ({ data, handleNextClick }) => {
   }, []);
 
   return (
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-      contentContainerStyle={{ ...styles.container, paddingBottom: 100 }}
-      showsVerticalScrollIndicator={false}
+    <View
+      style={{ ...styles.container, paddingBottom: 100 }}
     >
       {/* Image */}
       <View style={styles.imageWrapper}>
@@ -312,17 +310,16 @@ const BasicInfo = ({ data, handleNextClick }) => {
       >
         <Text style={styles.nextButtonText}>next</Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    paddingBottom: 50,
+    paddingHorizontal: 20,
     position: "relative",
     zIndex: 0,
-    flex: 1,
+    paddingTop: 20,
   },
   imageWrapper: {
     alignItems: "center",
