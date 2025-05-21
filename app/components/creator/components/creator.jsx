@@ -202,14 +202,10 @@ const Creator = () => {
               </View>
 
               {/* Tab Content */}
-              <ScrollView
-                style={styles.contentContainer}
-                contentContainerStyle={{ flexGrow: 1 }}
-                keyboardShouldPersistTaps="handled"
-                showsVerticalScrollIndicator={false}
+              <View style={styles.contentContainer}
               >
                 {renderContent()}
-              </ScrollView>
+              </View>
             </View>
           ) : (
             <View

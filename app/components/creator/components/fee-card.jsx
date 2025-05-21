@@ -61,7 +61,7 @@ const FeeCardComponent = ({ data, handleNextClick }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.formContainer}>
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.formContainer}>
         {Object.entries(activeFieldsObject).map(
           ([fieldKey, fieldData], index) => (
             <View key={index} style={styles.inputRow}>

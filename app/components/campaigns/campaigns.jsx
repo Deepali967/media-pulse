@@ -14,7 +14,7 @@ export default function CampaignScreen() {
   const [activeTab, setActiveTab] = useState(campaignTabs[0]);
 
   const [campaignDetails, setCampaignDetails] = useState(
-    getCampaign() || CampaignCard[0],
+    getCampaign() || CampaignCard[0]
   );
 
   const navigation = useNavigation();
