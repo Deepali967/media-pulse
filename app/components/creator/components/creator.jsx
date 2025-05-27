@@ -5,30 +5,25 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
-  ScrollView,
   TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Platform,
   Keyboard,
+  Platform,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
+import localStorageService from "@/app/service/localstorage.service";
 import BasicInfo from "./basic-info";
 import Categories from "./category";
 import FeeCardComponent from "./fee-card";
-
 import { globalStyles } from "@/assets/typography/typography";
 import { tabs } from "@/assets/constants/constants";
 
-import { useNavigation } from "@react-navigation/native";
-import localStorageService from "@/app/service/localstorage.service";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { BlurView } from "expo-blur";
-
 const Creator = () => {
   const [allTabs, setTabs] = useState(tabs);
-  const [activeTab, setActiveTab] = useState(allTabs[0]);
+  const [activeTab, setActiveTab] = useState(tabs[0]);
   const navigation = useNavigation();
   const localstorageService = localStorageService();
-
   const [isLoading, setLoading] = useState(true);
 
   const renderContent = () => {
@@ -37,7 +32,9 @@ const Creator = () => {
         return (
           <BasicInfo
             data={activeTab.data}
-            handleNextClick={(basicInfo) => handleNavigation(basicInfo, "next")}
+            handleNextClick={(basicInfo) =>
+              handleNavigation(basicInfo, "next")
+            }
           />
         );
       case "Categories":
@@ -49,7 +46,6 @@ const Creator = () => {
             }
           />
         );
-
       case "FeeCard":
         return (
           <FeeCardComponent
@@ -57,7 +53,6 @@ const Creator = () => {
             handleNextClick={(info) => handleNavigation(info, "next")}
           />
         );
-
       default:
         return <BasicInfo handleNextClick={() => handleNavigation("next")} />;
     }
@@ -67,34 +62,26 @@ const Creator = () => {
     switch (type) {
       case "next":
         const updatedTabs = allTabs.map((tab) => {
-          if (tab.id === activeTab.id) {
-            return { ...tab, data: info };
-          }
+          if (tab.id === activeTab.id) return { ...tab, data: info };
           return tab;
         });
-
         setTabs(updatedTabs);
-
         localstorageService.setStoreItem("tabs", updatedTabs);
-
         if (activeTab.id === 2) {
           localstorageService.setStoreItem("profileCompletion", true);
           navigation.navigate("DashboardScreen");
           return;
         }
-
         setActiveTab(updatedTabs[activeTab.id + 1]);
         break;
-
       case "previous":
         setActiveTab(allTabs[activeTab.id - 1]);
         break;
     }
   };
+
   const setActiveTabData = (tab) => {
-    if (!allTabs[0]?.data?.name) {
-      return;
-    }
+    if (!allTabs[0]?.data?.name) return;
     if (activeTab === tab) return;
     setActiveTab(tab);
   };
@@ -107,78 +94,52 @@ const Creator = () => {
 
   useEffect(() => {
     const importTabs = async () => {
-      const tabs = await localstorageService.getStoreItem("tabs");
-
-      if (tabs) {
-        setTabs(tabs);
-        setActiveTab(tabs[0]);
-      } else {
-        setTabs(allTabs);
-        setActiveTab(allTabs[0]);
+      const storedTabs = await localstorageService.getStoreItem("tabs");
+      if (storedTabs) {
+        setTabs(storedTabs);
+        setActiveTab(storedTabs[0]);
       }
-
       setLoading(false);
     };
-
     importTabs();
   }, []);
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: "rgba(245, 251, 255, 1)",
-        position: "relative",
-      }}
-    >
-      <BlurView
-        intensity={80}
-        tint="light" // 'light', 'dark', or 'default'
-        style={StyleSheet.absoluteFill}
-      />
-      <TouchableWithoutFeedback
-        onPress={() => {
-          if (Platform.OS !== "web") Keyboard.dismiss();
-        }}
-      >
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === "ios" ? "padding" : undefined}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+    <SafeAreaView style={styles.safeArea}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAwareScrollView
+          contentContainerStyle={styles.scrollContent}
+          enableOnAndroid={true}
+          extraScrollHeight={Platform.OS === "ios" ? 80 : 0}
+          keyboardShouldPersistTaps="handled"
         >
           {!isLoading ? (
-            <View style={styles.container}>
+            <>
               {/* Header */}
               <View style={styles.header}>
                 <TouchableOpacity
                   onPress={() => handleNavigation("", "previous")}
+                  disabled={activeTab.id === 0}
                 >
                   <Image
-                    onPress={() => handleNavigation("", "previous")}
                     source={require("../../../../assets/images/creator/back.png")}
-                    style={{
-                      width: 62,
-                      height: 30,
-                      visibility: activeTab.id === 0 ? "hidden" : "visible",
-                      pointerEvents: activeTab.id === 0 ? "none" : "auto",
-                    }}
+                    style={[
+                      styles.backIcon,
+                      activeTab.id === 0 && styles.hiddenBack,
+                    ]}
                   />
                 </TouchableOpacity>
                 {allTabs[0]?.data?.name && (
                   <Text
-                    style={{
-                      color: "#555",
-                      ...globalStyles.paragraph,
-                      fontSize: 14,
-                    }}
-                    onPress={() => handleSkip()}
+                    style={styles.skipText}
+                    onPress={handleSkip}
                   >
                     skip
                   </Text>
                 )}
               </View>
 
-              {/* Tab List */}
+              {/* Tab Buttons */}
               <View style={styles.tabContainer}>
                 {allTabs.map((tab) => (
                   <TouchableOpacity
@@ -201,52 +162,79 @@ const Creator = () => {
                 ))}
               </View>
 
-              {/* Tab Content */}
-              <ScrollView
-                keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{  minHeight: '100%', paddingBottom: 100 }}
-              >
-                {renderContent()}
-              </ScrollView>
-            </View>
+              {/* Dynamic Content */}
+              <View style={styles.contentWrapper}>{renderContent()}</View>
+            </>
           ) : (
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: "#fff",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <View style={styles.loader}>
               <Text style={{ ...globalStyles.paragraph, fontSize: 14 }}>
                 Loading...
               </Text>
             </View>
           )}
-        </KeyboardAvoidingView>
+        </KeyboardAwareScrollView>
       </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "rgba(245, 251, 255, 1)",
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 40,
+  },
   header: {
-    width: "100%",
-    display: "flex",
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    flexDirection: "row",
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 20,
-    paddingBottom: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
   },
-  container: { flex: 1, backgroundColor: "rgba(245, 251, 255, 1)" },
-  tabContainer: { flexDirection: "row", justifyContent: "space-around" },
-  tabButton: { paddingVertical: 10, paddingHorizontal: 20 },
-  tabText: { ...globalStyles.paragraph, fontSize: 14, color: "#091C38" },
-  activeTabText: { ...globalStyles.notificationText, fontSize: 14 },
-  contentContainer: { flex: 1, paddingBottom: 20 },
+  backIcon: {
+    width: 62,
+    height: 30,
+  },
+  hiddenBack: {
+    opacity: 0,
+  },
+  skipText: {
+    color: "#555",
+    ...globalStyles.paragraph,
+    fontSize: 14,
+  },
+  tabContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 10,
+  },
+  tabButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  tabText: {
+    ...globalStyles.paragraph,
+    fontSize: 14,
+    color: "#091C38",
+  },
+  activeTab: {},
+  activeTabText: {
+    ...globalStyles.notificationText,
+    fontSize: 14,
+  },
+  contentWrapper: {
+    paddingHorizontal: 20,
+    paddingBottom: 50,
+  },
+  loader: {
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default Creator;

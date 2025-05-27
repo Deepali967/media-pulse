@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
   tags: {
     flexDirection: "row",
     flexWrap: "wrap",
+    paddingVertical: 10,
   },
   tag: {
     borderRadius: 6,
@@ -132,6 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
     marginLeft: 20,
+    paddingVertical: 10,
   },
 });
 

@@ -13,7 +13,7 @@ const BasicInfo = ({ data }) => {
       />
 
       <View style={styles.infoHeader}>
-        <View>
+        <View style={{width:'70%'}}>
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.titles}>{titles?.join(", ") || "title -"}</Text>
         </View>
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end",
     marginTop: 16,
+    width:'30%',
   },
 
   name: {

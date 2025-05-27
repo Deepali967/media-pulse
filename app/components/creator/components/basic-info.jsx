@@ -36,7 +36,7 @@ const BasicInfo = ({ data, handleNextClick }) => {
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [allLocations, setAllLocations] = useState(data?.locations || []);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(basicInfo?.location || "");
   const [locations, setLocations] = useState(data?.locations || []);
 
   const handleTitleChange = (text) => {
@@ -194,7 +194,7 @@ const BasicInfo = ({ data, handleNextClick }) => {
           placeholder={
             !isFocused.location && !basicInfo.location ? "location" : ""
           }
-          value={basicInfo?.location}
+          value={query}
           placeholderTextColor="#A9A9A9"
           onFocus={() => setShowDropdown(true)}
           onBlur={() => {

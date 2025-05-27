@@ -86,7 +86,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.tist"
+    namespace 'com.anonymous.tist'
     defaultConfig {
         applicationId 'com.anonymous.tist'
         minSdkVersion rootProject.ext.minSdkVersion
